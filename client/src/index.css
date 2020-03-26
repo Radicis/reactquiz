@@ -1,0 +1,42 @@
+@tailwind base;
+
+.input-text {
+  @apply p-1;
+  @apply border;
+  @apply border-gray-400;
+}
+
+.btn {
+  @apply flex;
+  @apply px-4;
+  @apply py-2;
+  @apply content-center;
+  @apply rounded-full;
+  @apply text-gray-800;
+  @apply bg-gray-400;
+  box-shadow:  5px 5px 10px #adb5be,
+  -5px -5px 10px #e9f5ff;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-size: 14px;
+}
+
+#root {
+  height: calc(100vh - 2rem);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+

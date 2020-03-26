@@ -1,0 +1,6 @@
+package-lock.json
+.next
+node_modules/
+.idea
+/src/styles/tailwind.css
+*.config.*
