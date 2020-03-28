@@ -3,9 +3,6 @@ import {Context} from '../store/Store';
 
 import UserSetup from '../components/UserSetup/UserSetup';
 
-/**
- * @return {string}
- */
 function UserSetupContainer() {
 	// eslint-disable-next-line no-unused-vars
 	const [state] = useContext(Context);
@@ -18,7 +15,7 @@ function UserSetupContainer() {
 		socket.emit('set-name', {id, name});
 	};
 
-	return (player && player.isActive ? '' : <UserSetup setPlayerName={setPlayerName}/>);
+	return <div>{player && player.isActive ? '' : <UserSetup setPlayerName={setPlayerName}/>}</div>;
 }
 
 export default UserSetupContainer;

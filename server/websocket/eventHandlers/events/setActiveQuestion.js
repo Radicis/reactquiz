@@ -7,7 +7,7 @@ module.exports = {
 		questionList.setActiveQuestion();
 		const activeQuestion = questionList.getActiveQuestion();
 		if (activeQuestion) {
-			io.sockets.emit('active-question', activeQuestion)
+			io.sockets.emit('next-question', activeQuestion);
 		} else {
 			io.sockets.emit('quiz-complete');
 		}

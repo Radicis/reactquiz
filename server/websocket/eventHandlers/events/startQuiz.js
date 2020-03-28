@@ -11,9 +11,9 @@ module.exports = {
 		// get the first question
 		questionList.setActiveQuestion();
 
-		const activeQuestions = questionList.getActiveQuestion();
+		const activeQuestion = questionList.getActiveQuestion();
 
 		io.sockets.emit('start-quiz');
-		io.sockets.emit('next-questions', activeQuestions);
+		io.sockets.emit('next-question', activeQuestion);
 	}
 };

@@ -16,22 +16,25 @@ io.on('connection', socket => {
 	// Listen for the set-name event to properly set a player name and update it from UNKNOWN
 	socket.on('set-name', ({id, name}) => {
 		setName({id, name});
-		// Broadcast the player list to ALL connected sockets EXCEPT the one that triggered it
+		// Broadcast the player list to ALL connected sockets
 		io.sockets.emit('players', playerList.getPlayers())
 	});
 
 	socket.on('start-quiz', () => {
+		// TODO: Check if this socket if the owner of the quiz
 		// create a new question set and reset scores then emit new values to clients
 		startQuiz(io);
 	});
 
 	// Listen for set-next-question events and set the active question in the question list
 	socket.on('set-next-question', () => {
+		// TODO: Check if this socket if the owner of the quiz
 		setActiveQuestion(io);
 	});
 
 	// Listen for get-answer events and display in the ui
 	socket.on('get-answer', () => {
+		// TODO: Check if this socket if the owner of the quiz
 		getAnswer(io);
 	});
 
