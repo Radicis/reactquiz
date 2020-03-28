@@ -12,6 +12,7 @@ class PlayerList {
 	 */
 	addPlayer (player) {
 		this.players.push(player);
+		return player;
 	}
 
 	/**

@@ -5,10 +5,10 @@ const server = require('http').createServer();
 const io = socketIO(server, {origins: '*:*'});
 
 // Import event handlers
-const { connection, setName } = require('./eventHandlers');
+const { connection, setName, startQuiz, setActiveQuestion, getAnswer } = require('./eventHandlers');
 
 // Listen for connection events to create new players
-io.on('connection', (socket) => {
+io.on('connection', socket => {
 	connection(socket, io);
 });
 
@@ -16,6 +16,19 @@ io.on('connection', (socket) => {
 io.on('set-name', setName);
 
 
-io.on('', setName);
+io.on('start-quiz', () => {
+	// create a new question set and reset scores then emit new values to clients
+	startQuiz(io);
+});
+
+// Listen for set-next-question events and set the active question in the question list
+io.on('set-next-question', () => {
+	setActiveQuestion(io);
+});
+
+// Listen for get-answer events and display in the ui
+io.on('get-answer', () => {
+	getAnswer(io);
+});
 
 module.exports = server;

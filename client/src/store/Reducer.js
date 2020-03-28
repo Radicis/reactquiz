@@ -1,41 +1,38 @@
 /* eslint-disable no-case-declarations */
 const Reducer = (state, action) => {
 	switch (action.type) {
-	case 'SET_SHOW_PLAYERS':
+	case 'START_QUIZ':
 		return {
 			...state,
 			showAnswer: false,
 			showWaiting: false,
-			showPlayers: true
-		};
-	case 'SET_SHOW_ANSWER':
-		return {
-			...state,
-			showAnswer: true,
-			showWaiting: false,
-			showPlayers: false
-		};
-	case 'SET_SHOW_WAITING':
-		return {
-			...state,
-			showAnswer: false,
-			showWaiting: true,
-			showPlayers: false
-		};
-	case 'SET_PLAYERS':
-		return {
-			...state,
-			players: action.payload
-		};
-	case 'SET_QUESTIONS':
-		return {
-			...state,
-			questions: action.payload
 		};
 	case 'SET_ACTIVE_QUESTION':
 		return {
 			...state,
 			activeQuestion: action.payload
+		};
+	case 'SET_SHOW_ANSWER':
+		return {
+			...state,
+			showAnswer: true,
+			showWaiting: false
+		};
+	case 'SET_SHOW_WAITING':
+		return {
+			...state,
+			showAnswer: false,
+			showWaiting: true
+		};
+	case 'SET_PLAYER':
+		return {
+			...state,
+			player: action.payload
+		};
+	case 'SET_PLAYERS':
+		return {
+			...state,
+			players: action.payload
 		};
 	case 'SET_LOADING':
 		return {

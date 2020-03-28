@@ -1,21 +1,13 @@
 import React, { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
-import io from 'socket.io-client';
-
-import { port, host } from '../config';
-
-const newSocket = io(`http://${host}:${port}`);
 
 const initialState = {
 	loading: false,
 	connected: false,
-	showPlayers: true,
-	showAnswer: false,
 	error: null,
-	questions: [],
 	players: [],
 	activeQuestion: null,
-	socket: newSocket
+	answer: null
 };
 
 // eslint-disable-next-line react/prop-types
