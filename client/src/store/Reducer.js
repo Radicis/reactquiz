@@ -1,6 +1,11 @@
 /* eslint-disable no-case-declarations */
 const Reducer = (state, action) => {
 	switch (action.type) {
+	case 'SET_SOCKET':
+		return {
+			...state,
+			socket: action.payload
+		};
 	case 'START_QUIZ':
 		return {
 			...state,
@@ -30,6 +35,18 @@ const Reducer = (state, action) => {
 			player: action.payload
 		};
 	case 'SET_PLAYERS':
+		// update the player too
+		const { player } = state;
+		const players = action.payload;
+		const updatedPlayer = players.find(p => p.id === player.id);
+		// if an updated player is found then update the player in the state
+		if (updatedPlayer) {
+			return {
+				...state,
+				players,
+				player: updatedPlayer
+			};
+		}
 		return {
 			...state,
 			players: action.payload

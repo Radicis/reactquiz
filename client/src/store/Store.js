@@ -1,7 +1,12 @@
 import React, { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
+import io from 'socket.io-client';
+import {host, port} from '../config';
+
+const newSocket = io(`http://${host}:${port}`);
 
 const initialState = {
+	socket: newSocket,
 	loading: false,
 	connected: false,
 	error: null,

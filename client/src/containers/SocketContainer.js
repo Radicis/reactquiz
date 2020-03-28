@@ -1,17 +1,15 @@
 import React, {useContext, useEffect} from 'react';
 import {Context} from '../store/Store';
-import io from 'socket.io-client';
-
-import { port, host } from '../config';
-
-const socket = io(`http://${host}:${port}`);
 
 function SocketContainer() {
 	// eslint-disable-next-line no-unused-vars
 	const [state, dispatch] = useContext(Context);
 
+	const { socket } = state;
+
 	useEffect(() => {
-		console.log('Socket container');
+		console.log('Init Socket');
+
 		socket.on('connect', () => {
 			dispatch({
 				type: 'SET_CONNECTED'
@@ -41,7 +39,7 @@ function SocketContainer() {
 			});
 		});
 
-		socket.on('init-player', (player) => {
+		socket.on('init-player', player => {
 			dispatch({
 				type: 'SET_PLAYER',
 				payload: player
@@ -50,10 +48,12 @@ function SocketContainer() {
 			console.log(player);
 		});
 
-		socket.on('players', data => dispatch({
-			type: 'SET_PLAYERS',
-			payload: data
-		}));
+		socket.on('players', data => {
+			dispatch({
+				type: 'SET_PLAYERS',
+				payload: data
+			});
+		});
 	}, [dispatch]); // Pass in array here to prevent re-render
 	return (<div/>);
 }

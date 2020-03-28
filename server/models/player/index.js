@@ -6,12 +6,14 @@ class Player {
 		this.name = 'UNKNOWN'; // default
 		this.id = id;
 		this.score = 0;
+		this.isActive = false;
 		this.isOwner = isOwner || false;
 		console.log(`Player ${name} created.`);
 	}
 
 	setName (name) {
 		this.name = name;
+		this.isActive = true;
 	}
 
 	setScore (score) {

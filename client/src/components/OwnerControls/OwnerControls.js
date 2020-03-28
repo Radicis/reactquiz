@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 function OwnerControls(props) {
 	const {player} = props;
 
-	console.log(player);
-
 	return (
 		<div>
 			{ player && player.isOwner ? (<div className="flex justify-center items-center border bg-gray-100">
