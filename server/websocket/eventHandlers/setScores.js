@@ -1,8 +1,8 @@
-const playerList = require('../../../models/playerList');
+const playerList = require('../../models/playerList');
 
 module.exports = {
 	name: 'setScores',
-	method: (players) => {
+	method: ({players}) => {
 		// Find the player in the list by it's id and update the score
 		players.forEach(p => {
 			const { id, score, name } = p;

@@ -1,5 +1,5 @@
-const Player = require('../../../models/player');
-const playerList = require('../../../models/playerList');
+const Player = require('../../models/player');
+const playerList = require('../../models/playerList');
 
 module.exports = {
 	name: 'connection',

@@ -24,7 +24,7 @@ class QuestionList {
 	setQuestions () {
 		// Get all questions from data and randomize order
 		shuffleArray(questions.map(q => {
-			delete q.answered; // removed any answered values
+			delete q.answered; // remove any answered values
 			return q;
 		}));
 		this.questions = questions;

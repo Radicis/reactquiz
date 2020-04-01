@@ -1,8 +1,8 @@
-const questionList = require('../../../models/questionList');
+const questionList = require('../../models/questionList');
 
 module.exports = {
 	name: 'setActiveQuestion',
-	method: io => {
+	method: ({io}) => {
 		// get the next unanswered question for this session and set it as active
 		questionList.setActiveQuestion();
 		const activeQuestion = questionList.getActiveQuestion();

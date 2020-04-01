@@ -1,4 +1,4 @@
-const playerList = require('../../../models/playerList');
+const playerList = require('../../models/playerList');
 
 module.exports = {
 	name: 'setName',

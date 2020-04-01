@@ -39,6 +39,23 @@ class PlayerList {
 	findPlayerById (id) {
 		return this.players.find(p => p.id === id);
 	}
+
+	/**
+	 * Resets all [layers scores to 0
+	 */
+	resetScores () {
+		this.players.forEach(p => p.score = 0);
+	}
+
+	/**
+	 * Checks if a given player is id the owner of the quiz (currently global)
+	 * @param id
+	 * @returns {T|*|boolean}
+	 */
+	checkIsOwner (id) {
+		const player = this.findPlayerById(id);
+		return player && player.isOwner;
+	}
 }
 
 module.exports = new PlayerList(); // singleton

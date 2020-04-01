@@ -1,8 +1,8 @@
-const questionList = require('../../../models/questionList');
+const questionList = require('../../models/questionList');
 
 module.exports = {
 	name: 'getAnswer',
-	method: io => {
+	method: ({io}) => {
 		const activeQuestion = questionList.getActiveQuestion();
 		const answer = questionList.getAnswer(activeQuestion.id);
 		if (activeQuestion && typeof answer !== undefined) {
