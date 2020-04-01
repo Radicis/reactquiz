@@ -41,6 +41,9 @@ const Reducer = (state, action) => {
 		const updatedPlayer = players.find(p => p.id === player.id);
 		// if an updated player is found then update the player in the state
 		if (updatedPlayer) {
+			if (players.length === 1) {
+				updatedPlayer.isOwner = true;
+			}
 			return {
 				...state,
 				players,

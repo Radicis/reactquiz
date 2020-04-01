@@ -5,9 +5,9 @@ const { apply } = require('../middleware');
 
 module.exports = {
 	name: 'startQuiz',
-	method: ({io}, ...args) => {
+	method: ({io, id}, ...args) => {
 		try {
-			apply({io}, args);
+			apply({io, id}, args);
 		} catch (e) {
 			console.log(e);
 			return false;

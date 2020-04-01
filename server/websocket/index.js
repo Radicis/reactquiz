@@ -18,35 +18,35 @@ io.on('connection', socket => {
 	connection({socket, io});
 
 	// Listen for the set-name event to properly set a player name and update it from UNKNOWN
-	socket.on('set-name', ({id, name}) => {
+	socket.on('set-name', ({name}) => {
+		const { id } = socket;
 		setName({id, name});
 		// Broadcast the player list to ALL connected sockets to update the players list
 		io.sockets.emit('players', playerList.getPlayers())
 	});
 
-	socket.on('start-quiz', ({id}) => {
+	socket.on('start-quiz', () => {
+		const { id } = socket;
 		// create a new question set and reset scores then emit new values to clients
 		startQuiz({io, id}, getPlayer, checkIsOwner);
 	});
 
 	// Listen for set-next-question events and set the active question in the question list
-	socket.on('set-next-question', ({id}) => {
+	socket.on('next-question', () => {
+		const { id } = socket;
 		setActiveQuestion({io, id}, getPlayer, checkIsOwner);
 	});
 
 	// Listen for get-answer events and display in the ui
-	socket.on('get-answer', ({id}) => {
+	socket.on('get-answer', () => {
+		const { id } = socket;
 		getAnswer({io, id}, getPlayer, checkIsOwner);
 	});
 
-	// Listen for set-next-question events and set the active question in the question list
-	socket.on('set-next-question', ({id}) => {
-		setActiveQuestion({io, id}, getPlayer, checkIsOwner);
-	});
-
 	// When a client is disconnected, remove it from the list and broadcast updated player list
-	socket.on('disconnect', socket => {
-		handleDisconnect({io, socket});
+	socket.on('disconnect', () => {
+		const { id } = socket;
+		handleDisconnect({io, id});
 	});
 });
 

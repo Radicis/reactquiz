@@ -1,8 +1,16 @@
 const playerList = require('../../models/playerList');
 
+const { apply } = require('../middleware');
+
 module.exports = {
 	name: 'setScores',
-	method: ({players}) => {
+	method: ({io, players}, ...args) => {
+		try {
+			apply({io}, args);
+		} catch (e) {
+			console.log(e);
+			return false;
+		}
 		// Find the player in the list by it's id and update the score
 		players.forEach(p => {
 			const { id, score, name } = p;

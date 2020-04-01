@@ -14,14 +14,14 @@ function shuffleArray(array) {
  * Class to encapsulate question list functionality
  */
 class QuestionList {
-	constructor () {
+	constructor() {
 		this.questions = [];
 	}
 
 	/**
 	 * set the questions in a random order
 	 */
-	setQuestions () {
+	setQuestions() {
 		// Get all questions from data and randomize order
 		shuffleArray(questions.map(q => {
 			delete q.answered; // remove any answered values
@@ -35,11 +35,11 @@ class QuestionList {
 	 * @param id
 	 * @returns {T}
 	 */
-	findQuestionById (id) {
+	findQuestionById(id) {
 		return this.questions.find(q => q.id === id);
 	}
 
-	getAnswer (id) {
+	getAnswer(id) {
 		const question = this.findQuestionById(id);
 		if (question && 'answer' in question) {
 			return question.answer;
@@ -49,8 +49,8 @@ class QuestionList {
 	/**
 	 * Set the active question to the next unanswered question
 	 */
-	setActiveQuestion () {
-		const nextActiveQuestion = _.find(q => !q.answered);
+	setActiveQuestion() {
+		const nextActiveQuestion = this.questions.find(q => !q.answered);
 		if (nextActiveQuestion) {
 			this.activeQuestion = nextActiveQuestion;
 		} else {

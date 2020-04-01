@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function OwnerControls(props) {
-	const {player} = props;
-
+function OwnerControls({player, startQuiz, nextQuestion, getAnswer}) {
 	return (
 		<div>
-			{ player && player.isOwner ? (<div className="flex justify-center items-center border bg-gray-100">
-				<div className="p-4 text-2xl">I AM THE OWNER OF THIS QUIZ</div>
+			{ player ? (<div className="flex flex-row justify-center items-center border bg-gray-100 py-2">
+				<button className="border p-4 font-semibold mx-4" onClick={() => startQuiz()}>Start</button>
+				<button className=" border p-4 font-semibold mx-4" onClick={() => getAnswer()}>Get Answer</button>
+				<button className="border p-4 font-semibold mx-4" onClick={() => nextQuestion()}>Next Question</button>
 			</div>) : '' }
 		</div>
 	);
@@ -15,6 +15,9 @@ function OwnerControls(props) {
 
 OwnerControls.propTypes = {
 	player: PropTypes.object,
+	startQuiz: PropTypes.func,
+	nextQuestion: PropTypes.func,
+	getAnswer: PropTypes.func,
 };
 
 export default OwnerControls;

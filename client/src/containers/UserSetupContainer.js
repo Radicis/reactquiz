@@ -10,9 +10,8 @@ function UserSetupContainer() {
 	const {socket, player} = state;
 
 	const setPlayerName = name => {
-		const {id} = player;
 		// Emit the set name event on the socket
-		socket.emit('set-name', {id, name});
+		socket.emit('set-name', {name});
 	};
 
 	return <div>{player && player.isActive ? '' : <UserSetup setPlayerName={setPlayerName}/>}</div>;
