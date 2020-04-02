@@ -68,7 +68,7 @@ function SocketContainer() {
 				payload: data
 			});
 		});
-	}, [dispatch]); // Pass in array here to prevent re-render
+	}, [dispatch, socket]); // Pass in array here to prevent re-render
 	return (<div/>);
 }
 

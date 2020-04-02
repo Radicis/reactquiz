@@ -12,7 +12,9 @@ const initialState = {
 	error: null,
 	players: [],
 	activeQuestion: null,
-	answer: null
+	showWaiting: false,
+	playerAnswer: null,
+	answer: null,
 };
 
 // eslint-disable-next-line react/prop-types

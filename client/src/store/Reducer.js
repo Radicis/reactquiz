@@ -25,6 +25,12 @@ const Reducer = (state, action) => {
 			answer: action.payload,
 			showWaiting: false
 		};
+	case 'SET_PLAYER_ANSWER':
+		return {
+			...state,
+			playerAnswer: action.payload,
+			showWaiting: true
+		};
 	case 'SET_SHOW_WAITING':
 		return {
 			...state,

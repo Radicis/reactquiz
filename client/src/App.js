@@ -7,6 +7,7 @@ import OwnerControlsContainer from './containers/OwnerControlsContainer';
 import PlayersContainer from './containers/PlayersContainer';
 import ErrorContainer from './containers/ErrorContainer';
 import UserSetupContainer from './containers/UserSetupContainer';
+import AnswerContainer from './containers/AnswerContainer';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<header className="text-4xl">Quiz Game <span className="text-gray-500 text-lg">Best game</span></header>
 					<SocketContainer />
 					<QuestionContainer/>
+					<AnswerContainer/>
 					<PlayersContainer/>
 					<OwnerControlsContainer/>
 				</div>
