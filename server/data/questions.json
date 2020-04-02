@@ -1,10 +1,28 @@
 [
   {
     "id": 1,
-    "content": "Testing"
+    "type": "TEXT",
+    "content": "Boolean Test",
+    "answerType": "BOOL",
+    "answer": true
   },
   {
     "id": 2,
-    "content": "Testing 2"
+    "content": "Multi Choice Test",
+    "answerType": "MULTI",
+    "choices": ["Foo", "Bar", "Baz"],
+    "answer": "Foo"
+  },
+  {
+    "id": 3,
+    "content": "Text Test",
+    "answerType": "TEXT",
+    "answer": "Hello"
+  },
+  {
+    "id": 4,
+    "content": "Closest Number Test",
+    "answerType": "CLOSEST_NUMBER",
+    "answer": "123"
   }
 ]

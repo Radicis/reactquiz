@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Error(props) {
-	const {error} = props;
+function Error({error}) {
 	return (
 		<div>
 			{error ? (<div className="opacity-75 fixed top-0 left-0 w-full h-full bg-gray-400 flex items-center justify-center">

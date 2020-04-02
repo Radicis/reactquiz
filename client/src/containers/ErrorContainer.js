@@ -9,7 +9,7 @@ function ErrorContainer() {
 
 	useEffect(() => {},[error]);
 
-	return <Error error={error}/>;
+	return <Error error={error && JSON.stringify(error)}/>;
 }
 
 export default ErrorContainer;

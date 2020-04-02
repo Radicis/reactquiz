@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import ImageContent from './ImageContent/ImageContent';
 import VideoContent from './VideoContent/VideoContent';
 
-function Question(props) {
-	const {questionType, questionPath, questionContent} = props;
+function Question({questionType = 'TEXT', questionPath = '', questionContent = ''}) {
 	return (
 		<div className="flex flex-col">
 			<div className="mb-4">{questionContent}</div>
-			{questionType === 'image' ? <ImageContent path={questionPath}/> : ''}
-			{questionType === 'video' ? <VideoContent path={questionPath}/> : ''}
+			{questionType === 'IMAGE' ? <ImageContent path={questionPath}/> : ''}
+			{questionType === 'VIDEO' ? <VideoContent path={questionPath}/> : ''}
 		</div>
 	);
 }

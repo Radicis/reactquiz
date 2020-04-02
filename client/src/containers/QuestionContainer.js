@@ -16,13 +16,15 @@ function QuestionContainer() {
 	return (
 		<section className="flex flex-grow flex-col">
 			<div className="flex flex-grow justify-center items-center">
-				{activeQuestion ? <Question question={activeQuestion}/> : <div>No Question Ready</div>}
+				{activeQuestion ?
+					<Question questionType={activeQuestion.type} questionContent={activeQuestion.content}/> :
+					<div>No Question Ready</div>}
 			</div>
-			<div className="my-4 h-24 flex justify-center items-center border bg-gray-100">
-				{showWaiting ? <WaitingForPlayers/> : ''}
-				{showAnswer ? <Answer/> : ''}
-				{!(showAnswer || showWaiting) ? 'No Question Ready' : ''}
-			</div>
+			{activeQuestion ?
+				<div className="flex justify-center items-center border bg-gray-100">
+					{showWaiting ? <WaitingForPlayers/> : ''}
+					{showAnswer ? <Answer answerType={activeQuestion.answerType}/> : ''}
+				</div> : ''}
 		</section>);
 }
 

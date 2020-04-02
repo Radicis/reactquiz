@@ -5,7 +5,7 @@ import OwnerControls from '../components/OwnerControls/OwnerControls';
 
 function OwnerControlsContainer() {
 	const [state] = useContext(Context);
-	const {player, socket} = state;
+	const {socket, player, answer, activeQuestion, quizIsActive} = state;
 
 	const startQuiz = () => {
 		// Emit the set name event on the socket
@@ -22,7 +22,9 @@ function OwnerControlsContainer() {
 		socket.emit('next-question');
 	};
 
-	return <OwnerControls player={player} startQuiz={startQuiz} getAnswer={getAnswer} nextQuestion={nextQuestion}/>;
+	return <OwnerControls player={player} activeQuestion={activeQuestion} answer={answer}
+						  quizIsActive={quizIsActive} startQuiz={startQuiz} getAnswer={getAnswer}
+						  nextQuestion={nextQuestion}/>;
 }
 
 export default OwnerControlsContainer;

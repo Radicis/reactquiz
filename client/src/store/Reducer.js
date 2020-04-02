@@ -15,18 +15,20 @@ const Reducer = (state, action) => {
 	case 'SET_ACTIVE_QUESTION':
 		return {
 			...state,
-			activeQuestion: action.payload
+			activeQuestion: action.payload,
+			answer: null,
+			showWaiting: true
 		};
-	case 'SET_SHOW_ANSWER':
+	case 'SET_ANSWER':
 		return {
 			...state,
-			showAnswer: true,
+			answer: action.payload,
 			showWaiting: false
 		};
 	case 'SET_SHOW_WAITING':
 		return {
 			...state,
-			showAnswer: false,
+			answer: null,
 			showWaiting: true
 		};
 	case 'SET_PLAYER':

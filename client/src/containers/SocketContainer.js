@@ -39,6 +39,20 @@ function SocketContainer() {
 			});
 		});
 
+		socket.on('next-question', data => {
+			dispatch({
+				type: 'SET_ACTIVE_QUESTION',
+				payload: data
+			});
+		});
+
+		socket.on('get-answer', data => {
+			dispatch({
+				type: 'SET_ANSWER',
+				payload: data
+			});
+		});
+
 		socket.on('init-player', player => {
 			dispatch({
 				type: 'SET_PLAYER',
