@@ -10,7 +10,7 @@ function QuestionContainer() {
 	return (
 		<section className="flex flex-grow flex-col justify-center border rounded items-center">
 			{activeQuestion ?
-				<Question questionType={activeQuestion.type} questionContent={activeQuestion.content}/> :
+				<Question questionType={activeQuestion.type} questionPath={activeQuestion.path} questionContent={activeQuestion.content}/> :
 				<div>No Question Ready</div>}
 		</section>);
 }
