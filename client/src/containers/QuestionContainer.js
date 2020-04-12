@@ -8,12 +8,10 @@ function QuestionContainer() {
 	const {activeQuestion} = state;
 
 	return (
-		<section className="flex flex-grow flex-col">
-			<div className="flex flex-grow justify-center items-center">
-				{activeQuestion ?
-					<Question questionType={activeQuestion.type} questionContent={activeQuestion.content}/> :
-					<div>No Question Ready</div>}
-			</div>
+		<section className="flex flex-grow flex-col justify-center shadow border rounded items-center">
+			{activeQuestion ?
+				<Question questionType={activeQuestion.type} questionContent={activeQuestion.content}/> :
+				<div>No Question Ready</div>}
 		</section>);
 }
 

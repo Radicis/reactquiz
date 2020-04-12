@@ -16,7 +16,7 @@ module.exports = {
 		if (activeQuestion) {
 			const answer = questionList.getAnswer(activeQuestion.id);
 			if (typeof answer !== undefined) {
-				io.sockets.emit('show-answer', answer)
+				io.sockets.emit('show-answer', answer);
 			} else {
 				io.sockets.emit('error', 'No answer found');
 			}
