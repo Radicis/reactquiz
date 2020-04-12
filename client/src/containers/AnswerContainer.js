@@ -16,7 +16,7 @@ function AnswerContainer() {
 	return (
 		<section>
 			{activeQuestion ?
-				<div className="flex justify-center items-center border bg-gray-100">
+				<div className="flex justify-center items-center">
 					{!playerAnswer ?
 						<AnswerInput submitAnswer={submitAnswer} answerType={activeQuestion.answerType}/> : ''}
 					{playerAnswer && showWaiting ? <WaitingForPlayers/> : ''}

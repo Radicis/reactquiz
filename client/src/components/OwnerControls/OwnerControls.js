@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faChevronRight, faQuestion } from '@fortawesome/free-solid-svg-icons';
+
+
 function OwnerControls({player, answer, activeQuestion, startQuiz, nextQuestion, getAnswer}) {
 	return (
 		<div>
-			{player ? (<div className="flex flex-row justify-center items-center border bg-gray-100 py-2">
-				<button className="border p-4 font-semibold mx-4" onClick={() => startQuiz()}>Start</button>
+			{player ? (<div className="flex flex-row justify-center items-center py-2">
+				<button className="btn" onClick={() => startQuiz()}><span>Start</span> <FontAwesomeIcon icon={faArrowRight} /></button>
 				{activeQuestion && activeQuestion ?
-					<button className=" border p-4 font-semibold mx-4" onClick={() => getAnswer()}>Get
-						Answer</button> : ''}
+					<button className=" btn" onClick={() => getAnswer()}><span>Get
+						Answer</span> <FontAwesomeIcon icon={faQuestion} /></button> : ''}
 				{ activeQuestion && answer ?
-					<button className="border p-4 font-semibold mx-4" onClick={() => nextQuestion()}>Next
-						Question</button> : ''}
+					<button className="btn" onClick={() => nextQuestion()}><span>Next
+						Question</span><FontAwesomeIcon icon={faChevronRight} /></button> : ''}
 			</div>) : ''}
 		</div>
 	);

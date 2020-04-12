@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function BoolAnswerInput({answer, setAnswer}) {
-	const btnStyle = 'p-2 border mx-2 font-semibold';
-	const activeBtnStyle = `${btnStyle} bg-green-300`;
+import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
+function BoolAnswerInput({setAnswer}) {
+
 	return (
-		<div className="p-4">
-			<button className={answer ? activeBtnStyle : btnStyle} onClick={() => setAnswer(true)}>TRUE</button>
-			<button className={typeof answer !== 'undefined' && !answer ? activeBtnStyle : btnStyle}
-					onClick={() => setAnswer(false)}>FALSE
-			</button>
+		<div className="p-4 flex flex-row">
+			<div className="radio-btn">
+				<label htmlFor="answerTrue">True</label>
+				<input type="radio" id="answerTrue" name="answer" value="true"
+							  />
+			</div>
+			<div className="radio-btn">
+				<label htmlFor="answerFalse">True</label>
+				<input type="radio" id="answerFalse" name="answer" value="false"
+							  />
+			</div>
 		</div>
 	);
 }
