@@ -3,7 +3,7 @@ import React from 'react';
 import Store from './store/Store';
 import QuestionContainer from './containers/QuestionContainer';
 import SocketContainer from './containers/SocketContainer';
-// import OwnerControlsContainer from './containers/OwnerControlsContainer';
+import OwnerControlsContainer from './containers/OwnerControlsContainer';
 import PlayersContainer from './containers/PlayersContainer';
 import ErrorContainer from './containers/ErrorContainer';
 // import UserSetupContainer from './containers/UserSetupContainer';
@@ -24,7 +24,7 @@ function App() {
 					<div className="flex flex-col">
 						<AnswerContainer/>
 						<PlayersContainer/>
-						{/*<OwnerControlsContainer/>*/}
+						<OwnerControlsContainer/>
 					</div>
 				</div>
 			</main>

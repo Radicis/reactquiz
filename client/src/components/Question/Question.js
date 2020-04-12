@@ -6,12 +6,21 @@ import VideoContent from './VideoContent/VideoContent';
 
 function Question({questionType = 'TEXT', questionPath = '', questionContent = ''}) {
 	return (
-		<div className="flex flex-col">
-			{questionType === 'IMAGE' ? <ImageContent path={questionPath}/> : ''}
-			{questionType === 'VIDEO' ? <VideoContent path={questionPath}/> : ''}
-			<div className="mb-4">{questionContent}</div>
+		<div className="flex flex-col flex-grow">
+			{renderSwitch(questionType)}
 		</div>
 	);
+
+	function renderSwitch(param){
+		switch(param) {
+		case 'IMAGE':
+			return <ImageContent path={questionPath} content={questionContent}/>;
+		case 'VIDEO':
+			return <VideoContent path={questionPath} content={questionContent}/>;
+		default:
+			return (<div className="mb-4">{questionContent}</div>);
+		}
+	}
 }
 
 Question.propTypes = {
