@@ -5,9 +5,12 @@ import Players from '../components/Players/Players';
 
 function PlayersContainer() {
 	const [state] = useContext(Context);
-	const {players} = state;
+	const {players, showPlayers} = state;
 
-	return <Players players={players}/>;
+	return (
+		<div>
+			{ showPlayers ? <Players players={players}/> : '' }
+		</div>);
 }
 
 export default PlayersContainer;

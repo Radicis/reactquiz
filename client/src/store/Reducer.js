@@ -10,6 +10,8 @@ const Reducer = (state, action) => {
 		return {
 			...state,
 			showAnswer: false,
+			showPlayers: false,
+			showTimer: false,
 			showWaiting: false,
 		};
 	case 'SET_ACTIVE_QUESTION':
@@ -17,7 +19,9 @@ const Reducer = (state, action) => {
 			...state,
 			activeQuestion: action.payload,
 			answer: null,
-			showWaiting: true
+			showAnswer: false,
+			showPlayers: false,
+			showTimer: true
 		};
 	case 'SET_ANSWER':
 		return {

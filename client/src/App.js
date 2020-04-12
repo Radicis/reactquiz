@@ -8,6 +8,7 @@ import PlayersContainer from './containers/PlayersContainer';
 import ErrorContainer from './containers/ErrorContainer';
 // import UserSetupContainer from './containers/UserSetupContainer';
 import AnswerContainer from './containers/AnswerContainer';
+import TimerContainer from './containers/TImerContainer';
 
 function App() {
 	return (
@@ -18,12 +19,13 @@ function App() {
 			<main className="container mx-auto h-full text-lg">
 				<div className="p-4 h-full flex flex-col">
 					<header className="text-2xl flex-grow-0">Quiz Game <span className="text-gray-500 text-lg">Best game</span></header>
-					<div className="flex flex-grow my-4">
+					<TimerContainer/>
+					<div className="flex flex-grow mb-4">
 						<QuestionContainer/>
 					</div>
 					<div className="flex flex-col">
 						<AnswerContainer/>
-						{/*<PlayersContainer/>*/}
+						<PlayersContainer/>
 						<OwnerControlsContainer/>
 					</div>
 				</div>

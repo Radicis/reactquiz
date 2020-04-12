@@ -47,3 +47,30 @@ body {
   @apply cursor-pointer;
   @apply mr-2;
 }
+
+.timer-container {
+  height: 10px;
+}
+
+.timer {
+  height: 10px;
+}
+
+.timer:before {
+  content: '';
+  @apply bg-blue-400;
+  @apply absolute;
+  top: 0;
+  left: -1px;
+  width: 0;
+  height: 10px;
+  border-radius: 0.25rem 0 0 0.25rem;
+  animation: grow 30s linear forwards;
+}
+
+
+@keyframes grow {
+  0%   { width: 0; }
+  98%   { width: 98%;   border-radius: 0.25rem 0 0 0.25rem; }
+  100% { width: 100%; border-radius: 0.25rem }
+}
