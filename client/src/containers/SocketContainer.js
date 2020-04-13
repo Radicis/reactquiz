@@ -41,6 +41,9 @@ function SocketContainer() {
 
 		socket.on('next-question', data => {
 			dispatch({
+				type: 'RESET_QUESTION'
+			});
+			dispatch({
 				type: 'SET_ACTIVE_QUESTION',
 				payload: data
 			});

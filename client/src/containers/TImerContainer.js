@@ -7,7 +7,7 @@ function TimerContainer() {
 	const [state] = useContext(Context);
 	const {questionTime} = state;
 	return (
-		<div className='relative timer-container my-4'>
+		<div className='relative my-4'>
 			{ questionTime ? <Timer questionTime={questionTime}/> : '' }
 		</div>
 	);

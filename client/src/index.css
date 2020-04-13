@@ -1,11 +1,5 @@
 @tailwind base;
 
-.input-text {
-  @apply p-1;
-  @apply border;
-  @apply border-gray-400;
-}
-
 input[type=text] {
   @apply p-2;
   @apply w-full;
@@ -66,7 +60,7 @@ body {
   @apply text-gray-500;
   @apply mx-4;
   @apply shadow-sm;
-  position: relative;
+  @apply relative;
   @apply cursor-pointer;
 }
 
@@ -75,23 +69,8 @@ body {
   @apply mr-2;
 }
 
-.timer-container {
-  height: 10px;
-}
-
-.timer {
-  height: 10px;
-}
-
-.timer:before {
-  content: '';
-  @apply bg-blue-400;
-  @apply absolute;
-  top: 0;
-  left: -1px;
-  width: 0;
-  height: 10px;
-  border-radius: 0.25rem 0 0 0.25rem;
+.timer, .timer > div {
+    border-radius: 0.25rem 0 0 0.25rem;
 }
 
 .timer-animation {

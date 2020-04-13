@@ -14,7 +14,7 @@ function App() {
 	return (
 		<Store>
 			<ErrorContainer/>
-			<UserSetupContainer/>
+			{/*<UserSetupContainer/>*/}
 			<SocketContainer />
 			<main className="container mx-auto h-full text-lg">
 				<div className="p-4 h-full flex flex-col">
