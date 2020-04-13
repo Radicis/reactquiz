@@ -6,7 +6,7 @@ import SocketContainer from './containers/SocketContainer';
 import OwnerControlsContainer from './containers/OwnerControlsContainer';
 import PlayersContainer from './containers/PlayersContainer';
 import ErrorContainer from './containers/ErrorContainer';
-// import UserSetupContainer from './containers/UserSetupContainer';
+import UserSetupContainer from './containers/UserSetupContainer';
 import AnswerContainer from './containers/AnswerContainer';
 import TimerContainer from './containers/TImerContainer';
 
@@ -14,7 +14,7 @@ function App() {
 	return (
 		<Store>
 			<ErrorContainer/>
-			{/*<UserSetupContainer/>*/}
+			<UserSetupContainer/>
 			<SocketContainer />
 			<main className="container mx-auto h-full text-lg">
 				<div className="p-4 h-full flex flex-col">

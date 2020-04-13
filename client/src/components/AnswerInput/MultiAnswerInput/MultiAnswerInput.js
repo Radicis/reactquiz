@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CustomButton from '../../common/CustomButton/CustomButton';
 
 function MultiAnswerInput({answers, setAnswer}) {
 
 	function renderAnswer (answer) {
 		return (
-			<div className="btn">
-				<label htmlFor={answer}>answer
-					<input type="radio" id={answer} name="radio-group" onChange={() => setAnswer(answer)}
-					/></label>
-			</div>
+			<CustomButton label={answer} clickAction={setAnswer} />
 		);
 	}
 

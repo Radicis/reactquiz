@@ -15,7 +15,8 @@ const initialState = {
 	showWaiting: false,
 	playerAnswer: null,
 	answer: null,
-	showTimer: false
+	showTimer: false,
+	timerTime: 1000 * 30
 };
 
 // eslint-disable-next-line react/prop-types

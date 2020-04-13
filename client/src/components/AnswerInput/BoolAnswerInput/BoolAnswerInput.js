@@ -1,20 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CustomButton from '../../common/CustomButton/CustomButton';
 
 function BoolAnswerInput({setAnswer}) {
 
 	return (
 		<div className="p-4 flex flex-row">
-			<div className="btn">
-				<label htmlFor="answerTrue">True
-					<input type="radio" id="answerTrue" name="radio-group" onChange={() => setAnswer(true)}
-					/></label>
-			</div>
-			<div className="btn">
-				<label htmlFor="answerFalse">False
-					<input type="radio" id="answerFalse" name="radio-group"  onChange={() => setAnswer(false)}
-					/></label>
-			</div>
+			<CustomButton label="True" clickAction={setAnswer} />
+			<CustomButton label="True" clickAction={setAnswer} />
 		</div>
 	);
 }
