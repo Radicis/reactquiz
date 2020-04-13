@@ -21,7 +21,8 @@ const Reducer = (state, action) => {
 			answer: null,
 			showAnswer: false,
 			showPlayers: false,
-			showTimer: true
+			showTimer: true,
+			questionTime: action.payload.questionTime || 1000 * 30
 		};
 	case 'SET_ANSWER':
 		return {

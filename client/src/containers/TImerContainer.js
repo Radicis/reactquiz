@@ -5,10 +5,10 @@ import {Context} from '../store/Store';
 
 function TimerContainer() {
 	const [state] = useContext(Context);
-	const {showTimer} = state;
+	const {questionTime} = state;
 	return (
 		<div className='relative timer-container my-4'>
-			{ showTimer ? <Timer/> : '' }
+			{ questionTime ? <Timer questionTime={questionTime}/> : '' }
 		</div>
 	);
 }
