@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 function TextAnswerInput({setAnswer}) {
 
 	return (
-		<div className="p-4 flex flex-row">
-			<input type="text" onChange={setAnswer} />
-		</div>
+		<input type="text" onChange={setAnswer} />
 	);
 }
 
