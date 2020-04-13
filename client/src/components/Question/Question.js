@@ -18,7 +18,7 @@ function Question({questionType = 'TEXT', questionPath = '', questionContent = '
 		case 'VIDEO':
 			return <VideoContent path={questionPath} content={questionContent}/>;
 		default:
-			return (<div className="mb-4">{questionContent}</div>);
+			return (<div className="flex justify-center items-center text-center p-4 flex-grow text-xl text-question">{questionContent}</div>);
 		}
 	}
 }

@@ -6,6 +6,15 @@
   @apply border-gray-400;
 }
 
+input[type=text] {
+  @apply p-2;
+  @apply w-full;
+  @apply border;
+  @apply shadow;
+  @apply rounded-md;
+  @apply border-gray-400;
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -27,6 +36,43 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   @apply text-gray-600;
+}
+
+.text-question{
+  position: relative;
+}
+
+.text-question::before{
+  content: "";
+  background-image: url("./images/question.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 10rem;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.1;
+}
+
+.btn {
+  @apply border;
+  @apply py-2;
+  @apply px-4;
+  @apply rounded;
+  @apply font-semibold;
+  @apply text-gray-500;
+  @apply mx-4;
+  @apply shadow-sm;
+  position: relative;
+  @apply cursor-pointer;
+}
+
+.btn span, .btn label {
+  @apply cursor-pointer;
+  @apply mr-2;
 }
 
 .timer-container {

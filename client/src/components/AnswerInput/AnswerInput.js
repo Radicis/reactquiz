@@ -18,7 +18,7 @@ function AnswerInput({answerType = 'BOOL'}) {
 	}
 
 	return (
-		<div className="p-4 flex flex-col justify-center items-center">
+		<div className="p-4 flex flex-grow flex-col justify-center items-center">
 			{getAnswerComponent(answerType)}
 		</div>
 	);
