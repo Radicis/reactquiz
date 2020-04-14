@@ -8,12 +8,12 @@ class Question {
 		this.content = content;
 		this.answerType = answerType;
 		this.answer = answer;
-		this.anwsers = [];
+		this.anwsers = {}; // hash for ease of lookup and overwriting
 		this.answered = false;
 	}
 
-	addAnswer ({id, answer}) {
-		this.anwsers.push({id, answer})
+	setAnswer ({id, answer}) {
+		this.anwsers[id] = answer;
 	}
 }
 

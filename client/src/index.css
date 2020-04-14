@@ -38,7 +38,7 @@ body {
 
 .text-question::before{
   content: "";
-  background-image: url("./images/question.svg");
+  /*background-image: url("./images/question.svg");*/
   background-repeat: no-repeat;
   background-position: center;
   font-size: 10rem;

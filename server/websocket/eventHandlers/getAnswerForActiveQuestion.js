@@ -3,15 +3,16 @@ const questionList = require('../../models/questionList');
 const { apply } = require('../middleware');
 
 module.exports = {
-	name: 'getAnswer',
-	method: ({io, id}, ...args) => {
+	name: 'getAnswerForActiveQuestion',
+	method: (options, ...args) => {
 		try {
-			apply({io, id}, args);
+			apply(options, args);
 		} catch (e) {
 			console.log(e);
 			return false;
 		}
-		console.log('Getting answer');
+		const { io } = options;
+		console.log('Getting answer for active question');
 		const activeQuestion = questionList.getActiveQuestion();
 		if (activeQuestion) {
 			const answer = questionList.getAnswer(activeQuestion.id);

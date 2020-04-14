@@ -11,6 +11,7 @@ function shuffleArray(array) {
 		array[i] = array[j];
 		array[j] = temp;
 	}
+	return array;
 }
 
 /**
@@ -44,10 +45,9 @@ class QuestionList {
 		return this.questions.find(q => q.id === id);
 	}
 
-	getAnswer(id) {
-		const question = this.findQuestionById(id);
-		if (question && 'answer' in question) {
-			return question.answer;
+	getAnswerForActiveQuestion() {
+		if (this.activeQuestion && 'answer' in this.activeQuestion) {
+			return this.activeQuestion.answer;
 		}
 	}
 
@@ -65,6 +65,12 @@ class QuestionList {
 
 	getActiveQuestion() {
 		return this.activeQuestion;
+	}
+
+	setAnswerForActiveQuestion ({id, answer}) {
+		if (this.activeQuestion) {
+			this.activeQuestion.setAnswer({id, answer});
+		}
 	}
 }
 

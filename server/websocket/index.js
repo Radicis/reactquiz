@@ -7,7 +7,7 @@ const playerList = require('../models/playerList');
 const io = socketIO(server, {origins: '*:*'});
 
 // Import event handlers
-const {connection, setName, startQuiz, setActiveQuestion, getAnswer, handleDisconnect} = require('./events');
+const {connection, setName, startQuiz, setActiveQuestion, getAnswerForActiveQuestion, handleDisconnect, setAnswerForActiveQuestion} = require('./events');
 
 // Import middleware
 const { middleware } = require('./middleware');
@@ -38,10 +38,16 @@ io.on('connection', socket => {
 		setActiveQuestion({io, id}, getPlayer, checkIsOwner);
 	});
 
-	// Listen for get-answer events and display in the ui
-	socket.on('get-answer', () => {
+	// Listen for set-answer events and display in the ui
+	socket.on('set-answer-for-active-question', () => {
 		const { id } = socket;
-		getAnswer({io, id}, getPlayer, checkIsOwner);
+		setAnswerForActiveQuestion({io, id}, getPlayer);
+	});
+
+	// Listen for get-answer events and display in the ui
+	socket.on('get-answer-for-active-question', () => {
+		const { id } = socket;
+		getAnswerForActiveQuestion({io, id}, getPlayer, checkIsOwner);
 	});
 
 	// When a client is disconnected, remove it from the list and broadcast updated player list
