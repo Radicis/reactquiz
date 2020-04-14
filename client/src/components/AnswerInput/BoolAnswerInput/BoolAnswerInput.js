@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CustomButton from '../../common/CustomButton/CustomButton';
 
-function BoolAnswerInput({answer, setAnswer}) {
-	const btnStyle = 'p-2 border mx-2 font-semibold';
-	const activeBtnStyle = `${btnStyle} bg-green-300`;
+function BoolAnswerInput({setAnswer}) {
+
 	return (
-		<div className="p-4">
-			<button className={answer ? activeBtnStyle : btnStyle} onClick={() => setAnswer(true)}>TRUE</button>
-			<button className={typeof answer !== 'undefined' && !answer ? activeBtnStyle : btnStyle}
-					onClick={() => setAnswer(false)}>FALSE
-			</button>
+		<div className="p-4 flex flex-row">
+			<CustomButton label="True" clickAction={setAnswer} />
+			<CustomButton label="True" clickAction={setAnswer} />
 		</div>
 	);
 }

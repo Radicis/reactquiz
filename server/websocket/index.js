@@ -22,13 +22,14 @@ io.on('connection', socket => {
 		const { id } = socket;
 		setName({id, name});
 		// Broadcast the player list to ALL connected sockets to update the players list
-		io.sockets.emit('players', playerList.getPlayers())
+		io.sockets.emit('players', playerList.getPlayers());
 	});
 
 	socket.on('start-quiz', () => {
 		const { id } = socket;
 		// create a new question set and reset scores then emit new values to clients
 		startQuiz({io, id}, getPlayer, checkIsOwner);
+		io.sockets.emit('start-quiz');
 	});
 
 	// Listen for set-next-question events and set the active question in the question list

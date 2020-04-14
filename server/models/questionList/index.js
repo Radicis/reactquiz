@@ -1,6 +1,8 @@
 const questions = require('../../data/questions');
 const Question = require('../question');
 
+const { defaultQuestionTime } = require('../../config');
+
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 function shuffleArray(array) {
 	for (let i = array.length - 1; i > 0; i--) {
@@ -23,13 +25,13 @@ class QuestionList {
 	 * set the questions in a random order
 	 */
 	setQuestions() {
-		// Get all questions from data and randomize order
 		this.questions = shuffleArray(questions.map(q => new Question({
 			id: q.id,
 			type: q.type,
 			content: q.content,
 			answerType: q.answerType,
-			answer: q.answer
+			answer: q.answer,
+			questionTime: q.questionTime || defaultQuestionTime
 		})));
 	}
 

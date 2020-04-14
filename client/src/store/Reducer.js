@@ -10,14 +10,25 @@ const Reducer = (state, action) => {
 		return {
 			...state,
 			showAnswer: false,
+			showPlayers: false,
 			showWaiting: false,
+		};
+	case 'RESET_QUESTION':
+		return {
+			...state,
+			activeQuestion: null,
+			questionTime: 0,
+			answer: null,
+			showAnswer: false
 		};
 	case 'SET_ACTIVE_QUESTION':
 		return {
 			...state,
 			activeQuestion: action.payload,
 			answer: null,
-			showWaiting: true
+			showAnswer: false,
+			showPlayers: false,
+			questionTime: action.payload.questionTime || 1000 * 30
 		};
 	case 'SET_ANSWER':
 		return {

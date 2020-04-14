@@ -15,6 +15,7 @@ const initialState = {
 	showWaiting: false,
 	playerAnswer: null,
 	answer: null,
+	questionTime: 0
 };
 
 // eslint-disable-next-line react/prop-types

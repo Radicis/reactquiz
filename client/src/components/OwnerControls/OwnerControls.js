@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function OwnerControls({player, answer, activeQuestion, startQuiz, nextQuestion, getAnswer}) {
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import CustomButton from '../common/CustomButton/CustomButton';
+
+function OwnerControls({player, startQuiz}) {
 	return (
 		<div>
-			{player ? (<div className="flex flex-row justify-center items-center border bg-gray-100 py-2">
-				<button className="border p-4 font-semibold mx-4" onClick={() => startQuiz()}>Start</button>
-				{activeQuestion && activeQuestion ?
-					<button className=" border p-4 font-semibold mx-4" onClick={() => getAnswer()}>Get
-						Answer</button> : ''}
-				{ activeQuestion && answer ?
-					<button className="border p-4 font-semibold mx-4" onClick={() => nextQuestion()}>Next
-						Question</button> : ''}
-			</div>) : ''}
+			{player ? (<div className="flex flex-row justify-center items-center py-2">
+				<CustomButton label="Start Quiz" clickAction={() => startQuiz()} faIcon={faArrowRight} /></div>) : '' }
 		</div>
 	);
 }

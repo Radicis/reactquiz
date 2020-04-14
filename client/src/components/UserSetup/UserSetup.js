@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import CustomButton from '../common/CustomButton/CustomButton';
 
 function UserSetup(props) {
 	const [name, setName] = useState('');
@@ -15,7 +17,7 @@ function UserSetup(props) {
 		<div>Set Your Name</div>
 		<div>
 			<input type="text" value={name} onChange={handleInputChange} />
-			<button onClick={() => setPlayerName(name)}>OK</button>
+			<CustomButton label="OK" clickAction={() => setPlayerName(name)} faIcon={faCheck} />
 		</div>
 	</div>);
 }

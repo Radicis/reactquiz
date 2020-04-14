@@ -1,21 +1,12 @@
 @tailwind base;
 
-.input-text {
-  @apply p-1;
+input[type=text] {
+  @apply p-2;
+  @apply w-full;
   @apply border;
+  @apply shadow;
+  @apply rounded-md;
   @apply border-gray-400;
-}
-
-.btn {
-  @apply flex;
-  @apply px-4;
-  @apply py-2;
-  @apply content-center;
-  @apply rounded-full;
-  @apply text-gray-800;
-  @apply bg-gray-400;
-  box-shadow:  5px 5px 10px #adb5be,
-  -5px -5px 10px #e9f5ff;
 }
 
 @tailwind components;
@@ -26,7 +17,7 @@
 }
 
 #root {
-  height: calc(100vh - 2rem);
+  @apply h-screen;
 }
 
 body {
@@ -38,5 +29,57 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  @apply text-gray-600;
 }
 
+.text-question{
+  position: relative;
+}
+
+.text-question::before{
+  content: "";
+  background-image: url("./images/question.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 10rem;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.1;
+}
+
+.btn {
+  @apply border;
+  @apply py-2;
+  @apply px-4;
+  @apply rounded;
+  @apply font-semibold;
+  @apply text-gray-500;
+  @apply mx-4;
+  @apply shadow-sm;
+  @apply relative;
+  @apply cursor-pointer;
+}
+
+.btn span, .btn label {
+  @apply cursor-pointer;
+  @apply mr-2;
+}
+
+.timer, .timer > div {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.timer-animation {
+  animation: grow 30s linear forwards;
+}
+
+
+@keyframes grow {
+  0%   { width: 0; }
+  98%   { width: 98%;   border-radius: 0.25rem 0 0 0.25rem; }
+  100% { width: 100%; border-radius: 0.25rem }
+}

@@ -3,11 +3,11 @@ import {Context} from '../store/Store';
 
 import Answer from '../components/Answer/Answer';
 import AnswerInput from '../components/AnswerInput/AnswerInput';
-import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
+// import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
 
 function AnswerContainer() {
 	const [state] = useContext(Context);
-	const {showAnswer, activeQuestion, showWaiting, socket, playerAnswer} = state;
+	const {showAnswer, activeQuestion, socket, showPlayers} = state;
 
 	const submitAnswer = answer => {
 		socket.emit('submit-answer', answer);
@@ -15,11 +15,11 @@ function AnswerContainer() {
 
 	return (
 		<section>
-			{activeQuestion ?
-				<div className="flex justify-center items-center border bg-gray-100">
-					{!playerAnswer ?
+			{!showPlayers && activeQuestion ?
+				<div className="flex justify-center items-center">
+					{!showAnswer ?
 						<AnswerInput submitAnswer={submitAnswer} answerType={activeQuestion.answerType}/> : ''}
-					{playerAnswer && showWaiting ? <WaitingForPlayers/> : ''}
+					{/*{playerAnswer && showWaiting ? <WaitingForPlayers/> : ''}*/}
 					{showAnswer ? <Answer answerType={activeQuestion.answerType}/> : ''}
 				</div> : ''}
 		</section>);
