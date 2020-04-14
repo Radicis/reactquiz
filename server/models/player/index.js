@@ -19,6 +19,10 @@ class Player {
 	setScore (score) {
 		this.score = score;
 	}
+
+	setIsOwner () {
+		this.isOwner = true;
+	}
 }
 
 module.exports = Player;

@@ -46,7 +46,7 @@ io.on('connection', socket => {
 	// When a client is disconnected, remove it from the list and broadcast updated player list
 	socket.on('disconnect', () => {
 		const { id } = socket;
-		handleDisconnect({io, id});
+		handleDisconnect({io, id}, getPlayer);
 	});
 });
 

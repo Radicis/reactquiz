@@ -23,6 +23,10 @@ class PlayerList {
 		this.players.splice(this.players.findIndex(p => p.id === id), 1);
 	}
 
+	setOwner(id) {
+		this.findPlayerById(id).setIsOwner();
+	}
+
 	/**
 	 * Returns the players array
 	 * @returns {[]|Array}

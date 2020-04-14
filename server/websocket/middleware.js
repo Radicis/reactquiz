@@ -1,4 +1,3 @@
-// Require all of the event handler files
 const glob = require('glob');
 const path = require('path');
 
