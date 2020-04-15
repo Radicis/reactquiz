@@ -38,9 +38,9 @@ io.on('connection', socket => {
 		setActiveQuestion({io, playerId: id}, getPlayer, checkIsOwner);
 	});
 
-	socket.on('set-player-answer-for-active-question', () => {
+	socket.on('set-player-answer-for-active-question', ({answer}) => {
 		const {id} = socket;
-		setAnswerForActiveQuestion({io, playerId: id}, getPlayer, checkIsOwner);
+		setAnswerForActiveQuestion({io, playerId: id, answer}, getPlayer, checkIsOwner);
 	});
 
 	// When a client is disconnected, remove it from the list and broadcast updated player list

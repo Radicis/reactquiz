@@ -10,7 +10,7 @@ function AnswerContainer() {
 	const {showAnswer, activeQuestion, socket, showPlayers} = state;
 
 	const submitAnswer = answer => {
-		socket.emit('submit-answer', answer);
+		socket.emit('set-player-answer-for-active-question', {answer});
 	};
 
 	return (
