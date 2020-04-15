@@ -16,6 +16,13 @@ function SocketContainer() {
 			});
 		});
 
+		socket.on('connect_timeout', () => {
+			dispatch({
+				type: 'SET_ERROR',
+				payload: 'Connection Timeout'
+			});
+		});
+
 		socket.on('connect_error', () => {
 			console.log('Cannot connect');
 			dispatch({
@@ -49,10 +56,15 @@ function SocketContainer() {
 			});
 		});
 
-		socket.on('set-answer', data => {
+		socket.on('show-answer', () => {
 			dispatch({
-				type: 'SET_ANSWER',
-				payload: data
+				type: 'SHOW_ANSWER'
+			});
+		});
+
+		socket.on('quiz-complete', () => {
+			dispatch({
+				type: 'SET_QUIZ_COMPLETE'
 			});
 		});
 

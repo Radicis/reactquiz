@@ -9,28 +9,29 @@ module.exports = {
 	name: 'handleDisconnect',
 	method: (options, ...args) => {
 		try {
-			apply(options, args);
+			options = apply(options, args);
 		} catch (e) {
 			console.log(e);
 			return false;
 		}
 		const { io, player } = options;
-		const { id: playerId, name, isOwner, quizId = 'test' } = player;
+		const { id: playerId, name, quizId = 'test' } = player;
 		console.log(`Player ${playerId} : ${name} disconnected`);
 		// Wait for the specified timeout then delete the player to allow for reconnects w/cookies
 		setTimeout(() => {
 			const quiz = QuizList.getQuiz(quizId);
 			GlobalPlayerList.removePlayer(playerId);
-			// if the removed player was the owner then promote
-			if (isOwner) {
-				const newOwner = quiz.getPlayers()[0];
+			const remainingPlayers = quiz.getPlayers();
+			// if the removed player was the owner then promote the new 0 index player
+			if (quiz.checkIsOwner(playerId)) {
+				const newOwner = remainingPlayers[0];
 				if (newOwner) {
 					quiz.setOwner(newOwner.id);
 				}
 			}
 			console.log(`Removing player ${playerId} as they timed out`);
-			io.sockets.emit('players', quiz.getPlayers());
-			console.log(`${quiz.getPlayers().length} players remain`);
+			io.sockets.emit('players', remainingPlayers);
+			console.log(`${remainingPlayers.length} players remain`);
 		}, playerTimeout);
 	}
 };

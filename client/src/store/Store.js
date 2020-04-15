@@ -9,12 +9,14 @@ const initialState = {
 	socket: newSocket,
 	loading: false,
 	connected: false,
-	error: null,
+	error: '',
 	players: [],
 	activeQuestion: null,
 	showWaiting: false,
-	playerAnswer: null,
-	answer: null,
+	showPlayers: true,
+	showAnswer: false,
+	isComplete: true,
+	isStarted: false,
 	questionTime: 0
 };
 

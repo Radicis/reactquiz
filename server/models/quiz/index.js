@@ -31,23 +31,8 @@ class Quiz {
 		return this.playerList.getPlayers();
 	}
 
-	findPlayerById(playerId) {
-		return this.playerList.findPlayerById(playerId);
-	}
-
 	addPlayer(playerId) {
 		this.playerList.addPlayer(playerId);
-	}
-
-	setPlayerName ({playerId, name}) {
-		const player = this.playerList.findPlayerById(playerId);
-		if (player) {
-			player.setName(name);
-		}
-	}
-
-	removePlayer(playerId) {
-		this.playerList.removePlayer(playerId);
 	}
 
 	/**
@@ -58,11 +43,15 @@ class Quiz {
 		return this.questionList.getActiveQuestion();
 	}
 
+	getNextActiveQuestion () {
+		return this.questionList.getNextActiveQuestion();
+	}
+
 	/**
 	 * Set the active question to the next unanswered question
 	 */
 	setActiveQuestion() {
-		this.questionList.setActiveQuestion();
+		this.questionList.getNextActiveQuestion();
 	}
 
 	calculateScoresForActiveQuestion () {
@@ -86,7 +75,7 @@ class Quiz {
 			} else {
 				this.answers[activeQuestion.id] = {
 					[player.id]: answer
-				}
+				};
 			}
 		}
 	}

@@ -2,18 +2,14 @@
  * Class to encapsulate question functionality
  */
 class Question {
-	constructor({id, type, content, answerType, answer}) {
+	constructor({id, type, content, answerType, answer, choices, questionTime}) {
 		this.id = id;
 		this.type = type;
 		this.content = content;
 		this.answerType = answerType;
+		this.choices = choices;
 		this.answer = answer;
-		this.anwsers = {}; // hash for ease of lookup and overwriting
-		this.answered = false;
-	}
-
-	setAnswer ({id, answer}) {
-		this.anwsers[id] = answer;
+		this.questionTime = questionTime;
 	}
 }
 

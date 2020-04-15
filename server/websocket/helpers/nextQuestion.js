@@ -11,7 +11,7 @@ module.exports = {
 		// being the timer before the answer is sent
 		setTimeout(() => {
 			// Send the answer along with the updated scores to sockets
-			io.sockets.emit('set-answer');
-		}, questionTime + (2 * 1000)); // 2s extra to allow for latency
+			io.sockets.emit('show-answer');
+		}, questionTime);
 	}
 };

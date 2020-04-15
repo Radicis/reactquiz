@@ -30,14 +30,16 @@ class PlayerList {
 	 */
 	getPlayers () {
 		let players = [];
+		let playersToRemove = [];
 		this.playerIds.forEach(id => {
 			const player = GlobalPlayerList.findPlayerById(id);
 			if (!player) {
-				this.removePlayer(id);
+				playersToRemove.push(id);
 			} else {
 				players.push(player);
 			}
 		});
+		playersToRemove.forEach(id => this.removePlayer(id));
 		return players;
 	}
 

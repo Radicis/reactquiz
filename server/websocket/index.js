@@ -7,7 +7,7 @@ const QuizList = require('../models/quizList');
 const io = socketIO(server, {origins: '*:*'});
 
 // Import event handlers
-const {connection, setName, startQuiz, setActiveQuestion, setAnswerForActiveQuestion, handleDisconnect} = require('./events');
+const {connection, setName, startQuiz, setNextActiveQuestion, setAnswerForActiveQuestion, handleDisconnect} = require('./events');
 
 // Import middleware
 const {middleware} = require('./middleware');
@@ -29,13 +29,12 @@ io.on('connection', socket => {
 		const {id} = socket;
 		// create a new question set and reset scores then emit new values to clients
 		startQuiz({io, playerId: id}, getPlayer, checkIsOwner);
-		io.sockets.emit('start-quiz');
 	});
 
 	// Listen for set-next-question events and set the active question in the question list
 	socket.on('get-next-question', () => {
 		const {id} = socket;
-		setActiveQuestion({io, playerId: id}, getPlayer, checkIsOwner);
+		setNextActiveQuestion({io, playerId: id}, getPlayer, checkIsOwner);
 	});
 
 	socket.on('set-player-answer-for-active-question', ({answer}) => {

@@ -12,6 +12,19 @@ const Reducer = (state, action) => {
 			showAnswer: false,
 			showPlayers: false,
 			showWaiting: false,
+			isComplete: false,
+			isStarted: true
+		};
+	case 'SET_QUIZ_COMPLETE':
+		return {
+			...state,
+			showAnswer: false,
+			activeQuestion: null,
+			questionTime: 0,
+			answer: null,
+			showPlayers: true,
+			showWaiting: false,
+			isComplete: true
 		};
 	case 'RESET_QUESTION':
 		return {
@@ -28,12 +41,12 @@ const Reducer = (state, action) => {
 			answer: null,
 			showAnswer: false,
 			showPlayers: false,
-			questionTime: action.payload.questionTime || 1000 * 30
+			questionTime: action.payload.questionTime
 		};
-	case 'SET_ANSWER':
+	case 'SHOW_ANSWER':
 		return {
 			...state,
-			answer: action.payload,
+			showAnswer: true,
 			showWaiting: false
 		};
 	case 'SET_PLAYER_ANSWER':
@@ -42,10 +55,9 @@ const Reducer = (state, action) => {
 			playerAnswer: action.payload,
 			showWaiting: true
 		};
-	case 'SET_SHOW_WAITING':
+	case 'SET_WAITING':
 		return {
 			...state,
-			answer: null,
 			showWaiting: true
 		};
 	case 'SET_PLAYER':

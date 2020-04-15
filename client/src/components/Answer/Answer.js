@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Answer(props) {
-	const {answerText} = props;
+function Answer({answer}) {
 	return (
 		<div>
-			<div>{answerText}</div>
+			<div>{answer}</div>
 		</div>
 	);
 }
 
 Answer.propTypes = {
-	answerText: PropTypes.string
+	answer: PropTypes.string
 };
 
 export default Answer;

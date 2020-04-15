@@ -2,23 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CustomButton from '../../common/CustomButton/CustomButton';
 
-function MultiAnswerInput({answers, setAnswer}) {
+function MultiAnswerInput({choices = [], setAnswer}) {
 
-	function renderAnswer (answer) {
+	function renderChoice (choice) {
 		return (
-			<CustomButton label={answer} clickAction={setAnswer} />
+			<CustomButton key={choice} label={choice} clickAction={() => setAnswer(choice)} />
 		);
 	}
 
 	return (
 		<div className="p-4 flex flex-row">
-			{ answers.map(renderAnswer)}
+			{ choices.map(renderChoice)}
 		</div>
 	);
 }
 
 MultiAnswerInput.propTypes = {
-	answers: PropTypes.array,
+	choices: PropTypes.array,
 	setAnswer: PropTypes.func
 };
 

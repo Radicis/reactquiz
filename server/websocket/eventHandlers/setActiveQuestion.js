@@ -1,12 +1,13 @@
 const { apply } = require('../middleware');
+const { nextQuestion } = require('../helpers');
 
 const QuizList = require('../../models/quizList');
 
 module.exports = {
-	name: 'setActiveQuestion',
+	name: 'setNextActiveQuestion',
 	method: (options, ...args) => {
 		try {
-			apply(options, args);
+			options = apply(options, args);
 		} catch (e) {
 			console.log(e);
 			return false;
@@ -14,14 +15,12 @@ module.exports = {
 		const { io }  = options;
 		console.log('Setting active question');
 
-		// get the next unanswered question for this session and set it as active
-
 		const quiz = QuizList.getQuiz('test');
 
 		quiz.setActiveQuestion();
-		const activeQuestion = quiz.getActiveQuestion();
+		const activeQuestion = quiz.getNextActiveQuestion();
 		if (activeQuestion) {
-			io.sockets.emit('next-question', activeQuestion);
+			nextQuestion({io, question: activeQuestion});
 		} else {
 			io.sockets.emit('quiz-complete');
 		}

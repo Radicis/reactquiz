@@ -8,9 +8,10 @@ function PlayersContainer() {
 	const {players, showPlayers} = state;
 
 	return (
-		<div>
+		<React.Fragment>
 			{ showPlayers ? <Players players={players}/> : '' }
-		</div>);
+		</React.Fragment>
+	);
 }
 
 export default PlayersContainer;

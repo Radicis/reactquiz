@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
-function TextAnswerInput({setAnswer}) {
+function NumberAnswerInput({setAnswer}) {
 	const [answer, setTempAnswer] = useState('');
 
 	function handleChange(e) {
@@ -11,14 +11,14 @@ function TextAnswerInput({setAnswer}) {
 
 	return (
 		<form onSubmit={() => setAnswer(answer)}>
-			<input type="text" onChange={handleChange} />
+			<input type="number" onChange={handleChange} />
 		</form>
 	);
 }
 
-TextAnswerInput.propTypes = {
+NumberAnswerInput.propTypes = {
 	answer: PropTypes.bool,
 	setAnswer: PropTypes.func
 };
 
-export default TextAnswerInput;
+export default NumberAnswerInput;

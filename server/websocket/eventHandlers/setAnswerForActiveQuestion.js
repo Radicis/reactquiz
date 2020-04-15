@@ -6,7 +6,7 @@ module.exports = {
 	name: 'setAnswerForActiveQuestion',
 	method: (options, ...args) => {
 		try {
-			apply(options, args);
+			options = apply(options, args);
 		} catch (e) {
 			console.log(e);
 			return false;
@@ -16,7 +16,7 @@ module.exports = {
 
 		const quiz = QuizList.getQuiz('test');
 
-		console.log(`Setting answer for active question for player: ${name}`);
+		console.log(`Setting answer: ${answer} for active question for player: ${name}`);
 		quiz.setPlayerAnswerForActiveQuestion({playerId, answer});
 	}
 };

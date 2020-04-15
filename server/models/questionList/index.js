@@ -31,6 +31,7 @@ class QuestionList {
 			type: q.type,
 			content: q.content,
 			answerType: q.answerType,
+			...(q.answerType === 'MULTI' && { choices: q.choices || []}),
 			answer: q.answer,
 			questionTime: q.questionTime || defaultQuestionTime
 		})));
@@ -39,13 +40,17 @@ class QuestionList {
 	/**
 	 * Set the active question to the next unanswered question
 	 */
-	setActiveQuestion() {
-		const nextActiveQuestion = this.questions.find(q => !q.answered);
-		if (nextActiveQuestion) {
-			this.activeQuestion = nextActiveQuestion;
-		} else {
-			this.activeQuestion = null;
+	getNextActiveQuestion() {
+		if (!this.activeQuestion) {
+			this.activeQuestion = this.questions[0]; //get the first one
+			return this.activeQuestion || false;
 		}
+		const activeQuestionIndex = this.questions.findIndex(q => q.id === this.activeQuestion.id);
+		if (activeQuestionIndex !== -1 && activeQuestionIndex + 1 <= this.questions.length + 1) {
+			this.activeQuestion = this.questions[activeQuestionIndex + 1];
+			return this.activeQuestion;
+		}
+		return false; // quiz is done
 	}
 
 	/**

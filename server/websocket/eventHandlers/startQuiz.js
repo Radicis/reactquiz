@@ -7,7 +7,7 @@ module.exports = {
 	name: 'startQuiz',
 	method: (options, ...args) => {
 		try {
-			apply(options, args);
+			options = apply(options, args);
 		} catch (e) {
 			console.log(e);
 			return false;
@@ -19,7 +19,7 @@ module.exports = {
 
 		const quiz = QuizList.getQuiz('test');
 
-		// get the first question
+		// Get the first question
 		quiz.setActiveQuestion();
 
 		const activeQuestion = quiz.getActiveQuestion();

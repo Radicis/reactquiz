@@ -5,14 +5,15 @@ import Question from '../components/Question/Question';
 
 function QuestionContainer() {
 	const [state] = useContext(Context);
-	const {activeQuestion} = state;
+	const {activeQuestion, isComplete, isStarted} = state;
 
 	return (
-		<section className="flex flex-grow flex-col justify-center shadow border rounded-lg items-center m-4 items-stretch">
-			{activeQuestion ?
-				<Question questionType={activeQuestion.type} questionPath={activeQuestion.path} questionContent={activeQuestion.content}/> :
-				<div>No Question Ready</div>}
-		</section>);
+		<div className="flex flex-col justify-center h-full shadow border rounded-lg m-4 p-4">
+			{isStarted && activeQuestion ?
+				(<Question questionType={activeQuestion.type} questionPath={activeQuestion.path} questionContent={activeQuestion.content}/>) : ''}
+			{isStarted && isComplete ? <div className="text-2xl flex justify-center">Quiz Complete!</div> : '' }
+			{!isStarted ? <div className="text-2xl flex justify-center">Ready To Start!</div> : '' }
+		</div>);
 }
 
 export default QuestionContainer;

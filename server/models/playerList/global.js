@@ -28,7 +28,7 @@ class GlobalPlayerList {
 	 * @returns {[]|Array}
 	 */
 	getPlayers () {
-		return this.playerList
+		return this.playerList;
 	}
 
 	/**
@@ -37,7 +37,7 @@ class GlobalPlayerList {
 	 * @returns {T}
 	 */
 	findPlayerById (playerId) {
-		return this.playerList[playerId] || null
+		return this.playerList[playerId] || null;
 	}
 }
 
