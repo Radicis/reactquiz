@@ -1,14 +1,5 @@
 @tailwind base;
 
-input[type=text] {
-  @apply p-2;
-  @apply w-full;
-  @apply border;
-  @apply shadow;
-  @apply rounded-md;
-  @apply border-gray-400;
-}
-
 @tailwind components;
 @tailwind utilities;
 
@@ -23,20 +14,30 @@ input[type=text] {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   @apply text-gray-600;
 }
 
-.text-question{
+input[type="text"],
+input[type="number"] {
+  @apply p-2;
+  @apply w-full;
+  @apply border;
+  @apply shadow;
+  @apply rounded-md;
+  @apply border-gray-400;
+}
+
+.text-question {
   position: relative;
 }
 
-.text-question::before{
+.text-question::before {
   content: "";
   /*background-image: url("./images/question.svg");*/
   background-repeat: no-repeat;
@@ -51,35 +52,38 @@ body {
   opacity: 0.1;
 }
 
-.btn {
-  @apply border;
-  @apply py-2;
-  @apply px-4;
-  @apply rounded;
-  @apply font-semibold;
-  @apply text-gray-500;
-  @apply mx-4;
-  @apply shadow-sm;
+.timer > div {
   @apply relative;
-  @apply cursor-pointer;
+  background: rgb(137, 200, 246);
+  background: linear-gradient(
+    270deg,
+    rgba(137, 200, 246, 1) 0%,
+    rgba(99, 179, 237, 1) 100%
+  );
+  border-radius: 0.25rem 0 0 0.25rem;
 }
 
-.btn span, .btn label {
-  @apply cursor-pointer;
-  @apply mr-2;
+.timer > div:after {
+  content: "";
+  @apply absolute;
+  @apply bg-gray-100;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  border-radius: 0.25rem;
 }
-
-.timer, .timer > div {
-    border-radius: 0.25rem 0 0 0.25rem;
-}
-
-.timer-animation {
-  animation: grow 30s linear forwards;
-}
-
 
 @keyframes grow {
-  0%   { width: 0; }
-  98%   { width: 98%;   border-radius: 0.25rem 0 0 0.25rem; }
-  100% { width: 100%; border-radius: 0.25rem }
+  0% {
+    width: 0;
+  }
+  98% {
+    width: 98%;
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+  100% {
+    width: 100%;
+    border-radius: 0.25rem;
+  }
 }

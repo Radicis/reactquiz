@@ -20,10 +20,10 @@ function App() {
 				<div className="p-4 h-full flex flex-col">
 					<header className="text-2xl flex-grow-0">Quiz Game <span className="text-gray-500 text-lg">Best game</span></header>
 					<TimerContainer/>
-					<div className="flex-2">
+					<div className="flex-2 my-2">
 						<QuestionContainer/>
 					</div>
-					<div className="flex flex-1 justify-center">
+					<div className="flex flex-1 justify-center mb-2">
 						<AnswerContainer/>
 						<PlayersContainer/>
 					</div>

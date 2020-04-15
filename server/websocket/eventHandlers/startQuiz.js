@@ -19,13 +19,14 @@ module.exports = {
 
 		const quiz = QuizList.getQuiz('test');
 
-		// Get the first question
-		quiz.setActiveQuestion();
-
-		const activeQuestion = quiz.getActiveQuestion();
+		const activeQuestion = quiz.getNextActiveQuestion();
 
 		io.sockets.emit('start-quiz');
 
-		nextQuestion({io, question: activeQuestion});
+		if (activeQuestion) {
+			nextQuestion({io, question: activeQuestion});
+		} else {
+			io.sockets.emit('error', 'No question found?');
+		}
 	}
 };

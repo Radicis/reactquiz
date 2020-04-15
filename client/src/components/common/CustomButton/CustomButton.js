@@ -5,7 +5,7 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 
 function CustomButton({clickAction, faIcon = faCheckCircle, label, active = false}) {
 	return (
-		<button className={`border py-2 px-4 rounded font-semibold text-gray-500 mx-4 shadow-sm relative cursor-pointer ${ active ? 'text-blue-600' : ''}`} onClick={clickAction}>
+		<button className={`transition duration-200 border py-2 px-4 rounded font-semibold text-gray-500 mx-4 shadow-sm relative cursor-pointer hover:text-blue-400 hover:border-blue-400 ${ active ? 'text-blue-600' : ''}`} onClick={clickAction}>
 			<span className="mr-2">{label}</span>
 			<FontAwesomeIcon icon={faIcon} />
 		</button>

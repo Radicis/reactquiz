@@ -47,13 +47,6 @@ class Quiz {
 		return this.questionList.getNextActiveQuestion();
 	}
 
-	/**
-	 * Set the active question to the next unanswered question
-	 */
-	setActiveQuestion() {
-		this.questionList.getNextActiveQuestion();
-	}
-
 	calculateScoresForActiveQuestion () {
 		const activeQuestion = this.getActiveQuestion();
 		if (activeQuestion) {

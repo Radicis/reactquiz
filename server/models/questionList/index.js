@@ -19,6 +19,7 @@ function shuffleArray(array) {
  */
 class QuestionList {
 	constructor() {
+		this.questions = [];
 		this.setQuestions(); // init questions
 	}
 
@@ -42,14 +43,16 @@ class QuestionList {
 	 */
 	getNextActiveQuestion() {
 		if (!this.activeQuestion) {
-			this.activeQuestion = this.questions[0]; //get the first one
+			this.activeQuestion = this.questions[0]; // Get the first one
 			return this.activeQuestion || false;
 		}
+
 		const activeQuestionIndex = this.questions.findIndex(q => q.id === this.activeQuestion.id);
-		if (activeQuestionIndex !== -1 && activeQuestionIndex + 1 <= this.questions.length + 1) {
+		if (activeQuestionIndex !== -1 && activeQuestionIndex + 1 < this.questions.length) {
 			this.activeQuestion = this.questions[activeQuestionIndex + 1];
 			return this.activeQuestion;
 		}
+
 		return false; // quiz is done
 	}
 
@@ -58,6 +61,9 @@ class QuestionList {
 	 * @returns {T | null}
 	 */
 	getActiveQuestion() {
+		if (!this.activeQuestion) {
+			return false;
+		}
 		return this.activeQuestion;
 	}
 }

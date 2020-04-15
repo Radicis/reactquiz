@@ -15,14 +15,16 @@
   },
   {
     "id": 3,
+    "type": "TEXT",
     "content": "Text Test",
     "answerType": "TEXT",
     "answer": "Hello"
   },
   {
     "id": 4,
+    "type": "TEXT",
     "content": "Closest Number Test",
-    "answerType": "CLOSEST_NUMBER",
+    "answerType": "NUMBER",
     "answer": "123"
   }
 ]
