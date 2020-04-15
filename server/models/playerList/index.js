@@ -1,65 +1,54 @@
+const GlobalPlayerList = require('./global');
+
 /**
- * Class to encapsulate player functionality
+ * Class to encapsulate player list functionality
  */
 class PlayerList {
 	constructor () {
-		this.players = [];
+		this.playerIds = [];
 	}
 
 	/**
 	 * Adds a player to the list
-	 * @param player - player object
+	 * @param playerId - player id
 	 */
-	addPlayer (player) {
-		this.players.push(player);
-		return player;
+	addPlayer (playerId) {
+		this.playerIds.push(playerId);
 	}
 
 	/**
 	 * Removes a player from the list by id
-	 * @param id - uuid string
+	 * @param playerId - uuid string
 	 */
-	removePlayer (id) {
-		this.players.splice(this.players.findIndex(p => p.id === id), 1);
-	}
-
-	setOwner(id) {
-		this.findPlayerById(id).setIsOwner();
+	removePlayer (playerId) {
+		this.playerIds.splice(this.playerIds.indexOf(playerId), 1);
 	}
 
 	/**
-	 * Returns the players array
+	 * Returns the players array enriched from the global list
 	 * @returns {[]|Array}
 	 */
 	getPlayers () {
-		return this.players
+		let players = [];
+		this.playerIds.forEach(id => {
+			const player = GlobalPlayerList.findPlayerById(id);
+			if (!player) {
+				this.removePlayer(id);
+			} else {
+				players.push(player);
+			}
+		});
+		return players;
 	}
 
 	/**
 	 * Finds a player in the list by id
-	 * @param id
+	 * @param playerId
 	 * @returns {T}
 	 */
-	findPlayerById (id) {
-		return this.players.find(p => p.id === id);
-	}
-
-	/**
-	 * Resets all [layers scores to 0
-	 */
-	resetScores () {
-		this.players.forEach(p => p.score = 0);
-	}
-
-	/**
-	 * Checks if a given player is id the owner of the quiz (currently global)
-	 * @param id
-	 * @returns {T|*|boolean}
-	 */
-	checkIsOwner (id) {
-		const player = this.findPlayerById(id);
-		return player && player.isOwner;
+	findPlayerById (playerId) {
+		return GlobalPlayerList.findPlayerById(playerId);
 	}
 }
 
-module.exports = new PlayerList(); // singleton
+module.exports = PlayerList;

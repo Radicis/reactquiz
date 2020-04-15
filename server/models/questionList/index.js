@@ -19,7 +19,7 @@ function shuffleArray(array) {
  */
 class QuestionList {
 	constructor() {
-		this.questions = [];
+		this.setQuestions(); // init questions
 	}
 
 	/**
@@ -37,21 +37,6 @@ class QuestionList {
 	}
 
 	/**
-	 * Finds a question in the list by id
-	 * @param id
-	 * @returns {T}
-	 */
-	findQuestionById(id) {
-		return this.questions.find(q => q.id === id);
-	}
-
-	getAnswerForActiveQuestion() {
-		if (this.activeQuestion && 'answer' in this.activeQuestion) {
-			return this.activeQuestion.answer;
-		}
-	}
-
-	/**
 	 * Set the active question to the next unanswered question
 	 */
 	setActiveQuestion() {
@@ -63,15 +48,13 @@ class QuestionList {
 		}
 	}
 
+	/**
+	 * Getter for the active question
+	 * @returns {T | null}
+	 */
 	getActiveQuestion() {
 		return this.activeQuestion;
 	}
-
-	setAnswerForActiveQuestion ({id, answer}) {
-		if (this.activeQuestion) {
-			this.activeQuestion.setAnswer({id, answer});
-		}
-	}
 }
 
-module.exports = new QuestionList(); // singleton
+module.exports = QuestionList;

@@ -49,7 +49,7 @@ function SocketContainer() {
 			});
 		});
 
-		socket.on('get-answer', data => {
+		socket.on('set-answer', data => {
 			dispatch({
 				type: 'SET_ANSWER',
 				payload: data

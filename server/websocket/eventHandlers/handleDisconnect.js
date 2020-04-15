@@ -1,4 +1,5 @@
-const playerList = require('../../models/playerList');
+const QuizList = require('../../models/quizList');
+const GlobalPlayerList = require('../../models/playerList/global');
 
 const { apply } = require('../middleware');
 
@@ -14,21 +15,22 @@ module.exports = {
 			return false;
 		}
 		const { io, player } = options;
-		const { id, name, isOwner } = player;
-		console.log(`Player ${id} : ${name} disconnected`);
+		const { id: playerId, name, isOwner, quizId = 'test' } = player;
+		console.log(`Player ${playerId} : ${name} disconnected`);
 		// Wait for the specified timeout then delete the player to allow for reconnects w/cookies
 		setTimeout(() => {
-			playerList.removePlayer(id);
+			const quiz = QuizList.getQuiz(quizId);
+			GlobalPlayerList.removePlayer(playerId);
 			// if the removed player was the owner then promote
 			if (isOwner) {
-				const newOwner = playerList.getPlayers()[0];
+				const newOwner = quiz.getPlayers()[0];
 				if (newOwner) {
-					playerList.setOwner(newOwner.id);
+					quiz.setOwner(newOwner.id);
 				}
 			}
-			console.log(`Removing player ${id} as they timed out`);
-			io.sockets.emit('players', playerList.getPlayers());
-			console.log(`${playerList.getPlayers().length} players remain`);
+			console.log(`Removing player ${playerId} as they timed out`);
+			io.sockets.emit('players', quiz.getPlayers());
+			console.log(`${quiz.getPlayers().length} players remain`);
 		}, playerTimeout);
 	}
 };

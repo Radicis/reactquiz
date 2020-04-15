@@ -1,6 +1,6 @@
-const questionList = require('../../models/questionList');
-
 const { apply } = require('../middleware');
+
+const QuizList = require('../../models/quizList');
 
 module.exports = {
 	name: 'setAnswerForActiveQuestion',
@@ -11,8 +11,12 @@ module.exports = {
 			console.log(e);
 			return false;
 		}
-		const { player, id, answer = null } = options;
-		console.log(`Setting answer for active question for player: ${player.name}`);
-		questionList.setAnswerForActiveQuestion({id, answer});
+		const { player, answer = null } = options;
+		const { name, id: playerId } = player;
+
+		const quiz = QuizList.getQuiz('test');
+
+		console.log(`Setting answer for active question for player: ${name}`);
+		quiz.setPlayerAnswerForActiveQuestion({playerId, answer});
 	}
 };

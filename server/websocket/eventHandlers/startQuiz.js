@@ -1,34 +1,31 @@
-const questionList = require('../../models/questionList');
-const playerList = require('../../models/playerList');
-
 const { apply } = require('../middleware');
+const { nextQuestion } = require('../helpers');
+
+const QuizList = require('../../models/quizList');
 
 module.exports = {
 	name: 'startQuiz',
-	method: ({io, id}, ...args) => {
+	method: (options, ...args) => {
 		try {
-			apply({io, id}, args);
+			apply(options, args);
 		} catch (e) {
 			console.log(e);
 			return false;
 		}
 
+		const { io } = options;
+
 		console.log('Starting Quiz');
 
-		// Reset player scores
-		playerList.resetScores();
-
-		// get a new list of random questions and reset their answered values
-		questionList.setQuestions();
+		const quiz = QuizList.getQuiz('test');
 
 		// get the first question
-		questionList.setActiveQuestion();
+		quiz.setActiveQuestion();
 
-		const activeQuestion = questionList.getActiveQuestion();
+		const activeQuestion = quiz.getActiveQuestion();
 
 		io.sockets.emit('start-quiz');
 
-		// send the active question to connected sockets
-		io.sockets.emit('next-question', activeQuestion);
+		nextQuestion({io, question: activeQuestion});
 	}
 };

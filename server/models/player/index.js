@@ -2,10 +2,12 @@
  * Class to encapsulate player functionality
  */
 class Player {
-	constructor ({name, id, isOwner}) {
+	constructor ({name, id, isOwner, quizId}) {
 		this.name = 'UNKNOWN'; // default
 		this.id = id;
 		this.score = 0;
+		this.quizId = quizId;
+		this.isActive = false;
 		this.isActive = false;
 		this.isOwner = isOwner || false;
 		console.log(`Player ${name} created.`);
@@ -18,10 +20,6 @@ class Player {
 
 	setScore (score) {
 		this.score = score;
-	}
-
-	setIsOwner () {
-		this.isOwner = true;
 	}
 }
 
