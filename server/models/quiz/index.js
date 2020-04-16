@@ -47,10 +47,45 @@ class Quiz {
 		return this.questionList.getNextActiveQuestion();
 	}
 
+	isClosestNumber (playerAnswer, answers, answer) {
+		const answerValues = Object.keys(answers).map(k => answers[k]);
+		const closest = answerValues.reduce((prev, curr) => {
+			return (Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev);
+		});
+		return closest === playerAnswer;
+	}
+
 	calculateScoresForActiveQuestion () {
 		const activeQuestion = this.getActiveQuestion();
 		if (activeQuestion) {
 			// for each score compared with the type and answer, set the players scores;
+			const { id, answer, answerType } = activeQuestion;
+			// get the answers
+			const answers = this.answers[id];
+			if (answers) {
+				for (let [playerId, value] of Object.entries(answers)) {
+					let scoreToAdd = 0;
+					// find the player in the local player list
+					const player = this.playerList.findPlayerById(playerId);
+					if (player) {
+						const playerAnswer = value;
+						// Determine if score it to be awarded based on the answerType
+						if (['MULTI', 'BOOL'].includes(answerType)) {
+							if (answer === playerAnswer) {
+								scoreToAdd++;
+							}
+						}
+						if (['NUMBER'].includes(answerType)) {
+							if(this.isClosestNumber(playerAnswer, answers, answer)) {
+								scoreToAdd++;
+							}
+						}
+
+						// Update the players score
+						player.setScore(player.score + scoreToAdd);
+					}
+				}
+			}
 		}
 	}
 

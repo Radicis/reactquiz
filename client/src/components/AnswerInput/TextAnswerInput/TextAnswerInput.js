@@ -11,7 +11,7 @@ function TextAnswerInput({setAnswer}) {
 
 	return (
 		<form className="flex flex-grow" onSubmit={() => setAnswer(answer)}>
-			<input type="text" onChange={handleChange} />
+			<input className="flex flex-grow" type="text" onChange={handleChange} />
 		</form>
 	);
 }
