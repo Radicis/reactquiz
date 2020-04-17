@@ -80,7 +80,6 @@ class Quiz {
 								scoreToAdd++;
 							}
 						}
-
 						// Update the players score
 						player.setScore(player.score + scoreToAdd);
 					}

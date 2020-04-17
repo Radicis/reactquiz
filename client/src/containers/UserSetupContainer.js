@@ -4,7 +4,6 @@ import {Context} from '../store/Store';
 import UserSetup from '../components/UserSetup/UserSetup';
 
 function UserSetupContainer() {
-	// eslint-disable-next-line no-unused-vars
 	const [state] = useContext(Context);
 
 	const {socket, player} = state;
@@ -14,7 +13,7 @@ function UserSetupContainer() {
 		socket.emit('set-name', {name});
 	};
 
-	return <div>{player && player.isActive ? '' : <UserSetup setPlayerName={setPlayerName}/>}</div>;
+	return <React.Fragment>{player && player.isActive ? '' : <UserSetup setPlayerName={setPlayerName}/>}</React.Fragment>;
 }
 
 export default UserSetupContainer;
