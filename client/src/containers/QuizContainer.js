@@ -13,16 +13,16 @@ function QuizContainer() {
 
 	return (
 		<React.Fragment>
-			{ player && player.active ? <div className="flex flex-col justify-center h-full p-4">
+			{ player && player.isActive ? <div className="flex flex-col justify-center h-full p-4">
 				<TimerContainer />
 				<div className="flex-2 my-2">
 					<QuestionContainer />
+					<OwnerControlsContainer />
 				</div>
 				<div className="flex flex-1 justify-center mb-2">
 					<AnswerContainer />
 					<PlayersContainer />
 				</div>
-				<OwnerControlsContainer />
 			</div> : '' }
 		</React.Fragment>
 	);

@@ -26,7 +26,7 @@ module.exports = {
 		if (activeQuestion) {
 			nextQuestion({io, question: activeQuestion});
 		} else {
-			io.sockets.emit('error', 'No question found?');
+			io.sockets.emit('error', 'No question found!');
 		}
 	}
 };

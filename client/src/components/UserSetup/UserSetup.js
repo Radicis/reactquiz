@@ -12,19 +12,28 @@ function UserSetup(props) {
 		setName(value);
 	};
 
+	const handleKeyDown = e => {
+		if (e.key === 'Enter') {
+			setPlayerName(name);
+		}
+	};
+
 	const { setPlayerName } = props;
 
 	return (
 		<div className="flex flex-col top-0 left-0 h-full w-full bg-gray-100 items-center justify-center">
+			<span className="mb-4 text-3xl font-semibold text-gray-500">Welcome to Quiz!</span>
 			<div className="my-8">
 				<CustomInput
 					handleChange={handleInputChange}
+					handleKeyDown={handleKeyDown}
 					placeHolder="Set Your Name"
 				/>
 			</div>
 			<div className="flex flex-grow-0">
 				<CustomButton
 					label="OK"
+					disabled={!name}
 					clickAction={() => setPlayerName(name)}
 					faIcon={faCheck}
 				/></div>

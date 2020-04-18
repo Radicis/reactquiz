@@ -6,6 +6,11 @@ const Reducer = (state, action) => {
 			...state,
 			socket: action.payload
 		};
+	case 'SET_ACCENT':
+		return {
+			...state,
+			accentOpen: action.payload
+		};
 	case 'START_QUIZ':
 		return {
 			...state,
@@ -69,7 +74,10 @@ const Reducer = (state, action) => {
 		// update the player too
 		const { player } = state;
 		const players = action.payload;
-		const updatedPlayer = players.find(p => p.id === player.id);
+		let updatedPlayer;
+		if (player) {
+			updatedPlayer = players.find(p => p.id === player.id);
+		}
 		// if an updated player is found then update the player in the state
 		if (updatedPlayer) {
 			if (players.length === 1) {

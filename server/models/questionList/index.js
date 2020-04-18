@@ -61,9 +61,6 @@ class QuestionList {
 	 * @returns {T | null}
 	 */
 	getActiveQuestion() {
-		if (!this.activeQuestion) {
-			return false;
-		}
 		return this.activeQuestion;
 	}
 }

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import CustomInput from '../../common/CustomInput/CustomInput';
 
 function NumberAnswerInput({setAnswer}) {
 	const [answer, setTempAnswer] = useState('');
@@ -11,7 +12,11 @@ function NumberAnswerInput({setAnswer}) {
 
 	return (
 		<form className="flex flex-grow" onSubmit={() => setAnswer(answer)}>
-			<input className="flex flex-grow" type="number" onChange={handleChange} />
+			<CustomInput
+				type='number'
+				handleChange={handleChange}
+				placeHolder="Set your answer"
+			/>
 		</form>
 	);
 }

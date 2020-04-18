@@ -18,6 +18,7 @@ module.exports = {
 			io.sockets.emit('show-answer');
 			// Broadcast the player list to ALL connected sockets
 			io.sockets.emit('players', quiz.getPlayers());
+			quiz.getNextActiveQuestion();
 		}, questionTime);
 	}
 };

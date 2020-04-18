@@ -7,9 +7,9 @@ function TimerContainer() {
 	const [state] = useContext(Context);
 	const {questionTime} = state;
 	return (
-		<div className='relative'>
+		<React.Fragment>
 			{ questionTime ? <Timer questionTime={questionTime}/> : '' }
-		</div>
+		</React.Fragment>
 	);
 }
 

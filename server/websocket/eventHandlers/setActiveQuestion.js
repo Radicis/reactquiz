@@ -17,7 +17,8 @@ module.exports = {
 
 		const quiz = QuizList.getQuiz('test');
 
-		const activeQuestion = quiz.getNextActiveQuestion();
+		const activeQuestion = quiz.getActiveQuestion();
+
 		if (activeQuestion) {
 			nextQuestion({io, question: activeQuestion});
 		} else {

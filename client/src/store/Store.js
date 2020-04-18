@@ -17,7 +17,8 @@ const initialState = {
 	showAnswer: false,
 	isComplete: true,
 	isStarted: false,
-	questionTime: 0
+	questionTime: 0,
+	accentOpen: false
 };
 
 // eslint-disable-next-line react/prop-types
