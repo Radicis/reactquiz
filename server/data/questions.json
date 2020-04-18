@@ -4,7 +4,7 @@
     "id": 2,
     "content": "Multi Choice Test",
     "answerType": "MULTI",
-    "choices": ["Foo", "Bar", "Baz"],
+    "choices": ["Foo", "Bar", "Baz", "Zap", "Zorp"],
     "answer": "Foo"
   }
 ]

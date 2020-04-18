@@ -3,35 +3,34 @@ const GlobalPlayerList = require('../../models/playerList/global');
 const Player = require('../../models/player');
 
 module.exports = {
-	name: 'connection',
-	method: (options) => {
-		const { socket, io } = options;
-		const { id: playerId } = socket;
+  name: 'connection',
+  method: (options) => {
+    const { socket, io } = options;
+    const { id: playerId } = socket;
 
-		// TODO: check for existing w/cookie
+    // TODO: check for existing w/cookie
 
-		console.log(`Client ${playerId} Connected`);
+    console.log(`Client ${playerId} Connected`);
 
-		const newPlayer = new Player({id: playerId});
+    const newPlayer = new Player({ id: playerId });
 
-		const quiz = QuizList.getQuiz('test');
+    const quiz = QuizList.getQuiz('test');
 
-		// if this is the first player, they own the quiz
-		if (quiz.getPlayers().length === 0) {
-			quiz.setOwner(playerId);
-		}
+    // if this is the first player, they own the quiz
+    if (quiz.getPlayers().length === 0) {
+      quiz.setOwner(playerId);
+    }
 
-		// Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
-		GlobalPlayerList.addPlayer(newPlayer);
+    // Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
+    GlobalPlayerList.addPlayer(newPlayer);
 
-		// Add the reference to the quiz
-		quiz.addPlayer(playerId);
+    // Add the reference to the quiz
+    quiz.addPlayer(playerId);
 
+    // Send the init-player event to the connected socket only
+    socket.emit('init-player', newPlayer);
 
-		// Send the init-player event to the connected socket only
-		socket.emit('init-player', newPlayer);
-
-		// Broadcast the player list to ALL connected sockets
-		io.sockets.emit('players', quiz.getPlayers());
-	}
+    // Broadcast the player list to ALL connected sockets
+    io.sockets.emit('players', quiz.getPlayers());
+  }
 };
