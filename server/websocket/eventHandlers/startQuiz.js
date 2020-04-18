@@ -19,6 +19,8 @@ module.exports = {
 
 		const quiz = QuizList.getQuiz('test');
 
+		quiz.reset();
+
 		const activeQuestion = quiz.getNextActiveQuestion();
 
 		io.sockets.emit('start-quiz');

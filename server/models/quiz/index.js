@@ -15,6 +15,11 @@ class Quiz {
 		this.answers = {};
 	}
 
+	reset() {
+		this.answers = {};
+		this.questionList = new QuestionList();
+	}
+
 	setOwner(playerId) {
 		this.ownerId = playerId;
 	}
