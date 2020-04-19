@@ -29,7 +29,8 @@ const Reducer = (state, action) => {
         answer: null,
         showPlayers: true,
         showWaiting: false,
-        isComplete: true
+        isComplete: true,
+        winner: state.players.sort((a, b) => a.score > b.score)[0].name
       };
     case 'RESET_QUESTION':
       return {

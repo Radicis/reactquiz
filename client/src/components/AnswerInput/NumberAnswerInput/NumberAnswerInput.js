@@ -16,12 +16,16 @@ function NumberAnswerInput({ setAnswer }) {
   }
 
   return (
-    <form className="flex flex-grow" onSubmit={() => setAnswer(answer)}>
+    <form
+      className="flex flex-col items-center"
+      onSubmit={() => setAnswer(answer)}
+    >
       <CustomInput
         type="number"
         handleChange={handleChange}
         placeHolder="Set your answer"
       />
+      <div className="my-2" />
       <CustomButton
         label="OK"
         disabled={!answer}
