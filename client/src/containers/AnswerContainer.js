@@ -1,32 +1,42 @@
-import React, {useContext} from 'react';
-import {Context} from '../store/Store';
+import React, { useContext } from 'react';
+import { Context } from '../store/Store';
 
-import Answer from '../components/Answer/Answer';
+import { config, useSpring, animated } from 'react-spring';
+
 import AnswerInput from '../components/AnswerInput/AnswerInput';
 import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
 
 function AnswerContainer() {
-	const [state, dispatch] = useContext(Context);
-	const {showAnswer, activeQuestion, socket, showPlayers, showWaiting} = state;
+  const [state, dispatch] = useContext(Context);
+  const { activeQuestion, socket, showPlayers, showWaiting } = state;
 
-	const submitAnswer = answer => {
-		dispatch({
-			type: 'SET_WAITING'
-		});
-		socket.emit('set-player-answer-for-active-question', {answer});
-	};
+  const props = useSpring({
+    config: config.stiff,
+    from: { opacity: 0, transform: 'translate3d(-1000px, 0, 0)' },
+    to: { opacity: 1, transform: 'translate3d(0px, 0, 0)' }
+  });
 
-	return (
-		<React.Fragment>
-			{!showPlayers && activeQuestion && !showWaiting ?
-				<div className="flex justify-center items-center flex-grow">
-					{!showAnswer ?
-						<AnswerInput submitAnswer={submitAnswer} answerType={activeQuestion.answerType} choices={activeQuestion.choices}/> : ''}
-					{showAnswer ? <Answer answer={activeQuestion.answer.toString()}/> : ''}
-				</div> : ''}
-			{showWaiting ? <WaitingForPlayers/> : ''}
-		</React.Fragment>
-	);
+  const submitAnswer = (answer) => {
+    dispatch({
+      type: 'SET_WAITING'
+    });
+    socket.emit('set-player-answer-for-active-question', { answer });
+  };
+
+  return (
+    <React.Fragment>
+      {!showPlayers && activeQuestion && !showWaiting ? (
+        <AnswerInput
+          submitAnswer={submitAnswer}
+          answerType={activeQuestion.answerType}
+          choices={activeQuestion.choices}
+        />
+      ) : (
+        ''
+      )}
+      {showWaiting ? <WaitingForPlayers /> : ''}
+    </React.Fragment>
+  );
 }
 
 export default AnswerContainer;

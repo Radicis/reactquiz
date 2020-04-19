@@ -1,22 +1,8 @@
 [
   {
-    "id": 1,
-    "type": "TEXT",
-    "content": "Boolean Test",
-    "answerType": "BOOL",
-    "answer": true
-  },
-  {
-    "id": 2,
-    "content": "Multi Choice Test",
-    "answerType": "MULTI",
-    "choices": ["Foo", "Bar", "Baz"],
-    "answer": "Foo"
-  },
-  {
     "id": 4,
     "type": "TEXT",
-    "content": "Closest Number Test",
+    "content": "What was the long sentence that happened in 1999 but also was a long sentence?",
     "answerType": "NUMBER",
     "answer": "123"
   }

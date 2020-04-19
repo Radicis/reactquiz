@@ -1,20 +1,30 @@
-import React, {useContext} from 'react';
-import {Context} from '../store/Store';
+import React, { useContext } from 'react';
+import { Context } from '../store/Store';
 
 import UserSetup from '../components/UserSetup/UserSetup';
+import { useSpring, animated, config } from 'react-spring';
 
 function UserSetupContainer() {
-	// eslint-disable-next-line no-unused-vars
-	const [state] = useContext(Context);
+  const [state] = useContext(Context);
 
-	const {socket, player} = state;
+  const { socket, player } = state;
 
-	const setPlayerName = name => {
-		// Emit the set name event on the socket
-		socket.emit('set-name', {name});
-	};
+  const props = useSpring({
+    config: config.wobbly,
+    transform: player ? 'translate3d(0px, 0, 0)' : 'translate3d(-1000px, 0, 0)',
+    display: player && player.isActive ? 'none' : 'block'
+  });
 
-	return <div>{player && player.isActive ? '' : <UserSetup setPlayerName={setPlayerName}/>}</div>;
+  const setPlayerName = (name) => {
+    // Emit the set name event on the socket
+    socket.emit('set-name', { name });
+  };
+
+  return (
+    <animated.div style={props} className="flex flex-grow">
+      {player ? <UserSetup setPlayerName={setPlayerName} /> : ''}
+    </animated.div>
+  );
 }
 
 export default UserSetupContainer;

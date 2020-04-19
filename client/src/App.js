@@ -1,37 +1,34 @@
 import React from 'react';
 
 import Store from './store/Store';
-import QuestionContainer from './containers/QuestionContainer';
 import SocketContainer from './containers/SocketContainer';
-import OwnerControlsContainer from './containers/OwnerControlsContainer';
-import PlayersContainer from './containers/PlayersContainer';
 import ErrorContainer from './containers/ErrorContainer';
+import QuizContainer from './containers/QuizContainer';
 import UserSetupContainer from './containers/UserSetupContainer';
-import AnswerContainer from './containers/AnswerContainer';
+import AccentContainer from './containers/AccentContainer';
+import OwnerControlsContainer from './containers/OwnerControlsContainer';
 import TimerContainer from './containers/TImerContainer';
 
 function App() {
-	return (
-		<Store>
-			<ErrorContainer/>
-			{/*<UserSetupContainer/>*/}
-			<SocketContainer />
-			<main className="container mx-auto h-full text-lg">
-				<div className="p-4 h-full flex flex-col">
-					<header className="text-2xl flex-grow-0">Quiz Game <span className="text-gray-500 text-lg">Best game</span></header>
-					<TimerContainer/>
-					<div className="flex-2 my-2">
-						<QuestionContainer/>
-					</div>
-					<div className="flex flex-1 justify-center mb-2">
-						<AnswerContainer/>
-						<PlayersContainer/>
-					</div>
-					<OwnerControlsContainer/>
-				</div>
-			</main>
-		</Store>
-	);
+  return (
+    <Store>
+      <SocketContainer />
+      <header className="absolute text-2xl font-semibold flex-grow-0 z-10 px-4 text-gray-100 z-30">
+        Quiz
+      </header>
+      <main className="overflow-hidden h-full flex text-lg relative border-l-0 border-r-0 border-gray-400 bg-gray-100 md:border-r-2 md:border-l-2 p-4 text-2xl font-semibold text-gray-600">
+        <ErrorContainer />
+        <TimerContainer />
+        <AccentContainer />
+        <UserSetupContainer />
+        <QuizContainer />
+        <OwnerControlsContainer />
+      </main>
+      <div className="absolute bottom-0 w-full z-40 right-0 mr-4 text-sm font-semibold text-right mb-1 text-gray-400">
+        HawkDeluxe 2020
+      </div>
+    </Store>
+  );
 }
 
 export default App;
