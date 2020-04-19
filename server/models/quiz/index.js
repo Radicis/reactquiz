@@ -1,4 +1,5 @@
 const UUID = require('uuid').v4;
+const { stringSimilarity } = require('string-similarity-js');
 const QuestionList = require('../questionList');
 const PlayerList = require('../playerList');
 
@@ -36,6 +37,10 @@ class Quiz {
     return this.playerList.getPlayers();
   }
 
+  /**
+   * Add a player to the local player list for this quiz
+   * @param playerId
+   */
   addPlayer(playerId) {
     this.playerList.addPlayer(playerId);
   }
@@ -52,6 +57,13 @@ class Quiz {
     return this.questionList.getNextActiveQuestion();
   }
 
+  /**
+   * Determines which answer si closest to the number
+   * @param playerAnswer
+   * @param answers
+   * @param answer
+   * @returns {boolean}
+   */
   isClosestNumber(playerAnswer, answers, answer) {
     const answerValues = Object.keys(answers).map((k) => answers[k]);
     const closest = answerValues.reduce((prev, curr) => {
@@ -60,6 +72,29 @@ class Quiz {
     return closest === playerAnswer;
   }
 
+  /**
+   * Determines which answer si closest to string similarity or contains the answer
+   * @param playerAnswer
+   * @param answers
+   * @param answer
+   * @returns {boolean}
+   */
+  isClosestString(playerAnswer, answers, answer) {
+    const answerValues = Object.keys(answers).map((k) => answers[k]);
+    const closest = answerValues.reduce((prev, curr) => {
+      return stringSimilarity(prev.toUpperCase(), answer.toUpperCase()) < stringSimilarity(curr.toUpperCase(), answer.toUpperCase())
+        ? curr
+        : prev;
+    });
+    return (
+      closest.toUpperCase() === playerAnswer.toUpperCase() ||
+      answer.toUpperCase().contains(playerAnswer.toUpperCase())
+    );
+  }
+
+  /**
+   * Calculates and assigns the scores for the active question
+   */
   calculateScoresForActiveQuestion() {
     const activeQuestion = this.getActiveQuestion();
     if (activeQuestion) {
@@ -75,16 +110,31 @@ class Quiz {
           if (player) {
             const playerAnswer = value;
             // Determine if score it to be awarded based on the answerType
-            if (['MULTI', 'BOOL'].includes(answerType)) {
-              if (answer === playerAnswer) {
-                scoreToAdd++;
-              }
+            switch (answerType) {
+              case 'MULTI':
+                if (answer === playerAnswer) {
+                  scoreToAdd++;
+                }
+                break;
+              case 'BOOL':
+                if (answer === playerAnswer) {
+                  scoreToAdd++;
+                }
+                break;
+              case 'NUMBER':
+                if (this.isClosestNumber(playerAnswer, answers, answer)) {
+                  scoreToAdd++;
+                }
+                break;
+              case 'TEXT':
+                if (this.isClosestString(playerAnswer, answers, answer)) {
+                  scoreToAdd++;
+                }
+                break;
+              default:
+                break;
             }
-            if (['NUMBER'].includes(answerType)) {
-              if (this.isClosestNumber(playerAnswer, answers, answer)) {
-                scoreToAdd++;
-              }
-            }
+
             // Update the players score
             player.setScore(player.score + scoreToAdd);
           }

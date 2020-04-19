@@ -5,7 +5,7 @@ function VideoContent({ path, content }) {
   return (
     <React.Fragment>
       <div className="flex flex-grow justify-center items-center bg-gray-100">
-        <video width="100%" height="100%" controls>
+        <video className="question-video">
           <source src={path} type="video/mp4" />
         </video>
       </div>

@@ -54,9 +54,11 @@ function SocketContainer() {
     });
 
     socket.on('show-answer', () => {
-      dispatch({
-        type: 'SHOW_ANSWER'
-      });
+      setTimeout(() => {
+        dispatch({
+          type: 'SHOW_ANSWER'
+        });
+      }, 1000); // add a small delay to allow for last minute input
     });
 
     socket.on('quiz-complete', () => {
