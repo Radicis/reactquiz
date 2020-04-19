@@ -17,6 +17,8 @@ function AnswerInput({ answerType = 'BOOL', choices, submitAnswer }) {
         return <NumberAnswerInput setAnswer={submitAnswer} />;
       case 'MULTI':
         return <MultiAnswerInput setAnswer={submitAnswer} choices={choices} />;
+      default:
+        break;
     }
   }
 

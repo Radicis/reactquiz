@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from '../store/Store';
 
 import UserSetup from '../components/UserSetup/UserSetup';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, config } from 'react-spring';
 
 function UserSetupContainer() {
   const [state] = useContext(Context);
@@ -10,8 +10,9 @@ function UserSetupContainer() {
   const { socket, player } = state;
 
   const props = useSpring({
-    delay: 1000,
-    opacity: player ? 1 : 0
+    config: config.wobbly,
+    transform: player ? 'translate3d(0px, 0, 0)' : 'translate3d(-1000px, 0, 0)',
+    display: player && player.isActive ? 'none' : 'block'
   });
 
   const setPlayerName = (name) => {
@@ -20,16 +21,8 @@ function UserSetupContainer() {
   };
 
   return (
-    <animated.div style={props}>
-      {player ? (
-        player.isActive ? (
-          ''
-        ) : (
-          <UserSetup setPlayerName={setPlayerName} />
-        )
-      ) : (
-        ''
-      )}
+    <animated.div style={props} className="flex flex-grow">
+      {player ? <UserSetup setPlayerName={setPlayerName} /> : ''}
     </animated.div>
   );
 }

@@ -11,9 +11,9 @@ function QuestionContainer() {
     <div className="flex flex-col justify-center h-full p-4">
       {isStarted && activeQuestion ? (
         <Question
-          questionType={activeQuestion.type}
-          questionPath={activeQuestion.path}
-          questionContent={activeQuestion.content}
+          type={activeQuestion.type}
+          path={activeQuestion.path}
+          content={activeQuestion.content}
         />
       ) : (
         ''

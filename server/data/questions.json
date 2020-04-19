@@ -1,10 +1,33 @@
 [
-
+  {
+    "id": 1,
+    "type": "TEXT",
+    "content": "What was the long sentence that happened in 1999 but also was a long sentence?",
+    "answerType": "BOOL",
+    "answer": true
+  },
   {
     "id": 2,
-    "content": "Multi Choice Test",
+    "type": "TEXT",
+    "content": "What was the long sentence that happened in 1999 but also was a long sentence?",
     "answerType": "MULTI",
-    "choices": ["Foo", "Bar", "Baz", "Zap", "Zorp"],
+    "choices": ["This thing", "No", "Something Kinda Long", "Foo", "All of the above"],
     "answer": "Foo"
+  },
+  {
+    "id": 2,
+    "type": "IMAGE",
+    "path": "https://i.etsystatic.com/16669487/r/il/317e27/2016250067/il_570xN.2016250067_hgbx.jpg",
+    "content": "What is the model of this blaster?",
+    "answerType": "MULTI",
+    "choices": ["This thing", "No", "Something Kinda Long", "Foo", "All of the above"],
+    "answer": "Foo"
+  },
+  {
+    "id": 4,
+    "type": "TEXT",
+    "content": "What was the long sentence that happened in 1999 but also was a long sentence?",
+    "answerType": "NUMBER",
+    "answer": "123"
   }
 ]

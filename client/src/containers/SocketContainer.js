@@ -8,8 +8,6 @@ function SocketContainer() {
   const { socket } = state;
 
   useEffect(() => {
-    console.log('Init Socket');
-
     socket.on('connect', () => {
       dispatch({
         type: 'SET_CONNECTED'
@@ -24,7 +22,6 @@ function SocketContainer() {
     });
 
     socket.on('connect_error', () => {
-      console.log('Cannot connect');
       dispatch({
         type: 'SET_ERROR',
         payload: 'Connection Error'
@@ -56,11 +53,11 @@ function SocketContainer() {
       });
     });
 
-    // socket.on('show-answer', () => {
-    // 	dispatch({
-    // 		type: 'SHOW_ANSWER'
-    // 	});
-    // });
+    socket.on('show-answer', () => {
+      dispatch({
+        type: 'SHOW_ANSWER'
+      });
+    });
 
     socket.on('quiz-complete', () => {
       dispatch({
@@ -73,8 +70,6 @@ function SocketContainer() {
         type: 'SET_PLAYER',
         payload: player
       });
-      console.log('Player created');
-      console.log(player);
     });
 
     socket.on('players', (data) => {

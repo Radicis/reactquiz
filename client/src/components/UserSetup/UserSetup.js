@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 import CustomButton from '../common/CustomButton/CustomButton';
 import CustomInput from '../common/CustomInput/CustomInput';
 
-function UserSetup(props) {
+function UserSetup({ setPlayerName }) {
   const [name, setName] = useState('');
 
   const handleInputChange = (e) => {
@@ -17,8 +18,6 @@ function UserSetup(props) {
       setPlayerName(name);
     }
   };
-
-  const { setPlayerName } = props;
 
   return (
     <div className="flex flex-col top-0 left-0 h-full w-full bg-gray-100 items-center justify-center user-setup-container">

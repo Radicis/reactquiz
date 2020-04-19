@@ -52,7 +52,8 @@ const Reducer = (state, action) => {
       return {
         ...state,
         showAnswer: true,
-        showWaiting: false
+        showWaiting: false,
+        showPlayers: true
       };
     case 'SET_PLAYER_ANSWER':
       return {

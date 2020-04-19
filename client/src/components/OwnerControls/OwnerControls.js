@@ -19,7 +19,7 @@ function OwnerControls({
         <div className="absolute flex flex-row justify-center items-center py-2 bottom-0 z-40">
           {isComplete || !isStarted ? (
             <CustomButton
-              label="Start Quiz"
+              label="Start"
               clickAction={() => startQuiz()}
               faIcon={faArrowRight}
             />
@@ -28,7 +28,7 @@ function OwnerControls({
           )}
           {!isComplete && showAnswer ? (
             <CustomButton
-              label="Next Question"
+              label="Next"
               clickAction={() => nextQuestion()}
               faIcon={faArrowRight}
             />

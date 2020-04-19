@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 function Answer({ answer }) {
   return (
-    <div>
-      <div>{answer}</div>
+    <div className="flex justify-center">
+      <span className="font-light pr-2">Answer:</span> {answer}
     </div>
   );
 }

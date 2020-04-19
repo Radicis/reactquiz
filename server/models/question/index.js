@@ -9,10 +9,12 @@ class Question {
     answerType,
     answer,
     choices,
+    path,
     questionTime
   }) {
     this.id = id;
     this.type = type;
+    this.path = path;
     this.content = content;
     this.answerType = answerType;
     this.choices = choices;

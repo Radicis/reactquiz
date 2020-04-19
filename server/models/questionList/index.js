@@ -34,6 +34,7 @@ class QuestionList {
             id: q.id,
             type: q.type,
             content: q.content,
+            ...(q.path && { path: q.path }),
             answerType: q.answerType,
             ...(q.answerType === 'MULTI' && { choices: q.choices || [] }),
             answer: q.answer,
@@ -57,7 +58,7 @@ class QuestionList {
     );
     if (
       activeQuestionIndex !== -1 &&
-      activeQuestionIndex + 1 < this.questions.length
+      activeQuestionIndex + 1 <= this.questions.length
     ) {
       this.activeQuestion = this.questions[activeQuestionIndex + 1];
       return this.activeQuestion;
