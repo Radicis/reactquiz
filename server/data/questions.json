@@ -1,9 +1,40 @@
 [
   {
+    "id": 1,
+    "type": "TEXT",
+    "content": "Joe has 2 balls",
+    "answerType": "BOOL",
+    "answer": false
+  },
+  {
+    "id": 2,
+    "type": "TEXT",
+    "content": "True or false, The Bahamas is made up of over 700 islands?",
+    "answerType": "BOOL",
+    "answer": true
+  },
+  {
+    "id": 3,
+    "type": "IMAGE",
+    "path": "https://i.etsystatic.com/16669487/r/il/317e27/2016250067/il_570xN.2016250067_hgbx.jpg",
+    "content": "What is the model of this blaster?",
+    "answerType": "MULTI",
+    "choices": ["DHL-44", "DL-44", "DPD-44", "DN-44", "DN-44"],
+    "answer": "DL-44"
+  },
+  {
     "id": 4,
     "type": "TEXT",
-    "content": "What was the long sentence that happened in 1999 but also was a long sentence?",
-    "answerType": "NUMBER",
-    "answer": "123"
+    "content": "Marble is a common name for which chemical compound?",
+    "answerType": "MULTI",
+    "choices": ["Calcium Carbonate", "Calcium Chloride", "Calcium Bicarbonate", "Calcium Dioxide"],
+    "answer": "Calcium Carbonate"
+  },
+  {
+    "id": 5,
+    "type": "TEXT",
+    "content": "What does the Beaufort scale measure?",
+    "answerType": "TEXT",
+    "answer": "The strength of the wind"
   }
 ]

@@ -66,7 +66,7 @@ main {
   background-image: url("./images/bottom.svg");
 }
 
-.question-image {
+.question-image, .question-video {
   max-width: 500px;
   max-height: 300px;
   width: 80%;

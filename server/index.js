@@ -1,7 +1,7 @@
 const server = require('./websocket');
 
-const { port, host } = require('./config');
+const { port } = require('./config');
 
-server.listen(port, host, () => {
+server.listen(port, () => {
   console.info(`${new Date()}: Server started on port ${port}`);
 });
