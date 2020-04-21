@@ -27,9 +27,7 @@ io.on('connection', (socket) => {
   // Listen for the set-name event to properly set a player name and update it from UNKNOWN
   socket.on('set-name', ({ name }) => {
     const { id } = socket;
-    setName({ playerId: id, name });
-    // Broadcast the player list to ALL connected sockets to update the players list
-    io.sockets.emit('players', QuizList.getQuiz('test').getPlayers());
+    setName({ io, playerId: id, name });
   });
 
   socket.on('start-quiz', () => {
@@ -38,18 +36,11 @@ io.on('connection', (socket) => {
     startQuiz({ io, playerId: id }, getPlayer, checkIsOwner);
   });
 
-  // Listen for set-next-question events and set the active question in the question list
-  socket.on('get-next-question', () => {
-    const { id } = socket;
-    setNextActiveQuestion({ io, playerId: id }, getPlayer, checkIsOwner);
-  });
-
-  socket.on('set-player-answer-for-active-question', ({ answer }) => {
+  socket.on('set-player-answer-for-question', ({ questionId, isCorrect }) => {
     const { id } = socket;
     setAnswerForActiveQuestion(
-      { io, playerId: id, answer },
-      getPlayer,
-      checkIsOwner
+        { socket, io, playerId: id, questionId, isCorrect },
+        getPlayer
     );
   });
 

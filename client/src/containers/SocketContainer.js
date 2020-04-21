@@ -29,23 +29,15 @@ function SocketContainer() {
     });
 
     socket.on('error', (err) => {
-      console.log(`Error: ${err}`);
       dispatch({
         type: 'SET_ERROR',
         payload: err
       });
     });
 
-    socket.on('start-quiz', () => {
-      console.log('Starting Quiz');
+    socket.on('start-quiz', (data) => {
       dispatch({
         type: 'START_QUIZ'
-      });
-    });
-
-    socket.on('next-question', (data) => {
-      dispatch({
-        type: 'RESET_QUESTION'
       });
       dispatch({
         type: 'SET_ACTIVE_QUESTION',
@@ -53,12 +45,11 @@ function SocketContainer() {
       });
     });
 
-    socket.on('show-answer', () => {
-      setTimeout(() => {
-        dispatch({
-          type: 'SHOW_ANSWER'
-        });
-      }, 1000); // add a small delay to allow for last minute input
+    socket.on('next-question', (data) => {
+      dispatch({
+        type: 'SET_ACTIVE_QUESTION',
+        payload: data
+      });
     });
 
     socket.on('quiz-complete', () => {
@@ -71,6 +62,13 @@ function SocketContainer() {
       dispatch({
         type: 'SET_PLAYER',
         payload: player
+      });
+    });
+
+    socket.on('update-player', (data) => {
+      dispatch({
+        type: 'UPDATE_PLAYER',
+        payload: data
       });
     });
 

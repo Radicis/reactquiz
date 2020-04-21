@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
 import io from 'socket.io-client';
-import { host, port, env } from '../config';
+import { host, port } from '../config';
 
 const newSocket = io(`http://${host}:${port}`);
 
@@ -11,15 +11,14 @@ const initialState = {
   connected: false,
   error: '',
   players: [],
+  player: {},
   activeQuestion: null,
   showWaiting: false,
   showPlayers: true,
   showAnswer: false,
   isComplete: true,
   isStarted: false,
-  questionTime: 0,
-  accentOpen: false,
-  isDev: env === 'dev' // to disable testing code
+  accentOpen: false
 };
 
 // eslint-disable-next-line react/prop-types

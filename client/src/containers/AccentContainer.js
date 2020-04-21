@@ -57,7 +57,10 @@ function AccentContainer() {
         className="bg-cover top z-20 top-0 left-0 absolute pointer-events-none bg-no-repeat"
         style={topProps}
       />
-      <animated.div className="bottom bottom-0 z-20" style={bottomProps} />
+      <animated.div
+        className="bg-cover bottom z-20 bottom-0 left-0 absolute pointer-events-none bg-no-repeat"
+        style={bottomProps}
+      />
     </React.Fragment>
   );
 }

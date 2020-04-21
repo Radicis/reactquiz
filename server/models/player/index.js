@@ -6,7 +6,6 @@ class Player {
     this.name = 'UNKNOWN'; // default
     this.id = id;
     this.score = 0;
-    this.quizId = quizId;
     this.isActive = false;
     console.log(`Player ${name} created with ID: ${id}`);
   }

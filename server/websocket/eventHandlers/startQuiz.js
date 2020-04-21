@@ -21,14 +21,8 @@ module.exports = {
 
     quiz.reset();
 
-    const activeQuestion = quiz.getNextActiveQuestion();
+    const nextQuestion = quiz.getNextQuestion();
 
-    io.sockets.emit('start-quiz');
-
-    if (activeQuestion) {
-      nextQuestion({ io, question: activeQuestion });
-    } else {
-      io.sockets.emit('error', 'No question found!');
-    }
+    io.sockets.emit('start-quiz', nextQuestion);
   }
 };

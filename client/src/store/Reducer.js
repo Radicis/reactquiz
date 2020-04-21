@@ -47,7 +47,7 @@ const Reducer = (state, action) => {
         answer: null,
         showAnswer: false,
         showPlayers: false,
-        questionTime: action.payload.questionTime
+        questionStartTime: new Date()
       };
     case 'SHOW_ANSWER':
       return {
@@ -72,25 +72,20 @@ const Reducer = (state, action) => {
         ...state,
         player: action.payload
       };
-    case 'SET_PLAYERS':
-      // update the player too
-      const { player } = state;
-      const players = action.payload;
-      let updatedPlayer;
-      if (player) {
-        updatedPlayer = players.find((p) => p.id === player.id);
-      }
-      // if an updated player is found then update the player in the state
-      if (updatedPlayer) {
-        if (players.length === 1) {
-          updatedPlayer.isOwner = true;
-        }
+    case 'UPDATE_PLAYER':
+      // find and update the player
+      const { id } = action.payload;
+      const playerIndex = state.players.findIndex((p) => p.id === id);
+      if (playerIndex) {
+        state.players.splice(playerIndex, 1, action.payload);
         return {
           ...state,
-          players,
-          player: updatedPlayer
+          player: action.payload,
+          players: state.players
         };
       }
+      break;
+    case 'SET_PLAYERS':
       return {
         ...state,
         players: action.payload
