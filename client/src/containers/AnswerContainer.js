@@ -3,43 +3,58 @@ import { Context } from '../store/Store';
 
 import AnswerInput from '../components/AnswerInput/AnswerInput';
 import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
+import Ready from '../components/Ready/Ready';
+import Answer from '../components/Answer/Answer';
 
 function AnswerContainer() {
+  // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(Context);
   const {
+    showAnswer,
+    isCorrect,
     activeQuestion,
     socket,
-    showPlayers,
-    showWaiting,
-    questionStartTime
+    questionStartTime,
+    player
   } = state;
 
   const submitAnswer = (playerAnswer) => {
-    dispatch({
-      type: 'SET_WAITING'
-    });
-    const { id: questionId, answer } = activeQuestion;
+    const { id: questionIndex, answer } = activeQuestion;
     const isCorrect = playerAnswer === answer;
     socket.emit('set-player-answer-for-question', {
-      questionId,
+      questionIndex,
       isCorrect,
       playerAnswer,
       answeredTime: new Date() - questionStartTime
     });
   };
 
+  const setPlayerReady = () => {
+    socket.emit('set-player-ready');
+  };
+
   return (
     <React.Fragment>
-      {!showPlayers && activeQuestion && !showWaiting ? (
+      {activeQuestion ? (
         <AnswerInput
           submitAnswer={submitAnswer}
           answerType={activeQuestion.answerType}
           choices={activeQuestion.choices}
         />
       ) : (
-        ''
+        <React.Fragment>
+          {player.isReady ? <WaitingForPlayers /> : ''}
+          {!player.isReady ? <Ready setPlayerReady={setPlayerReady} /> : ''}
+          {showAnswer ? (
+            <Answer
+              answer={activeQuestion.answer.toString()}
+              isCorrect={isCorrect}
+            />
+          ) : (
+            ''
+          )}
+        </React.Fragment>
       )}
-      {showWaiting ? <WaitingForPlayers /> : ''}
     </React.Fragment>
   );
 }

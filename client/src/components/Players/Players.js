@@ -18,7 +18,12 @@ function Players({ players }) {
     >
       {players.length > 0 ? (
         players.map((player) => (
-          <Player key={player.id} name={player.name} score={player.score} />
+          <Player
+            key={player.id}
+            name={player.name}
+            score={player.score}
+            isReady={player.isReady}
+          />
         ))
       ) : (
         <div className="text-2xl">No Players yet!</div>

@@ -1,30 +1,30 @@
-const { apply } = require('../middleware');
+const {apply} = require('../middleware');
 
 const QuizList = require('../../models/quizList');
 
 module.exports = {
-  name: 'setAnswerForActiveQuestion',
+  name: 'setAnswerForQuestion',
   method: (options, ...args) => {
-    try {
-      options = apply(options, args);
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-    const { socket, io, player, questionId, isCorrect } = options;
-    const { id: playerId } = player;
+	try {
+	  options = apply(options, args);
+	} catch (e) {
+	  console.log(e);
+	  return false;
+	}
+	const {io, player, questionIndex, isCorrect} = options;
+	const {id: playerId} = player;
 
-    const quiz = QuizList.getQuiz('test');
+	const quiz = QuizList.getQuiz('test');
 
-    quiz.setPlayerAnswerForQuestion({ player, questionId, isCorrect });
+	quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
 
-    const nextQuestion = quiz.getNextQuestion();
+	const nextQuestion = quiz.getNextQuestion(questionIndex);
 
-    if (nextQuestion) {
-      socket.broadcast.to(playerId).emit( 'next-question', nextQuestion );
-    } else {
-      io.sockets.emit('quiz-complete');
-    }
+	if (nextQuestion) {
+	  io.to(playerId).emit('next-question', {...nextQuestion, id: questionIndex + 1});
+	} else {
+	  io.sockets.emit('quiz-complete');
+	}
 
   }
 };

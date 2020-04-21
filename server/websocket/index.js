@@ -11,8 +11,8 @@ const {
   connection,
   setName,
   startQuiz,
-  setNextActiveQuestion,
-  setAnswerForActiveQuestion,
+  setPlayerReady,
+  setAnswerForQuestion,
   handleDisconnect
 } = require('./events');
 
@@ -26,28 +26,33 @@ io.on('connection', (socket) => {
 
   // Listen for the set-name event to properly set a player name and update it from UNKNOWN
   socket.on('set-name', ({ name }) => {
-    const { id } = socket;
-    setName({ io, playerId: id, name });
+    const { id: playerId } = socket;
+    setName({ io, playerId, name });
+  });
+
+  socket.on('set-player-ready', () => {
+    const { id: playerId } = socket;
+    setPlayerReady({ io, playerId }, getPlayer);
   });
 
   socket.on('start-quiz', () => {
-    const { id } = socket;
+    const { id: playerId } = socket;
     // create a new question set and reset scores then emit new values to clients
-    startQuiz({ io, playerId: id }, getPlayer, checkIsOwner);
+    startQuiz({ io, playerId }, getPlayer, checkIsOwner);
   });
 
-  socket.on('set-player-answer-for-question', ({ questionId, isCorrect }) => {
-    const { id } = socket;
-    setAnswerForActiveQuestion(
-        { socket, io, playerId: id, questionId, isCorrect },
+  socket.on('set-player-answer-for-question', ({ questionIndex, isCorrect }) => {
+    const { id: playerId } = socket;
+    setAnswerForQuestion(
+        { io, playerId, questionIndex, isCorrect },
         getPlayer
     );
   });
 
   // When a client is disconnected, remove it from the list and broadcast updated player list
   socket.on('disconnect', () => {
-    const { id } = socket;
-    handleDisconnect({ io, playerId: id }, getPlayer);
+    const { id: playerId } = socket;
+    handleDisconnect({ io, playerId }, getPlayer);
   });
 });
 

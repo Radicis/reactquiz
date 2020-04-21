@@ -6,11 +6,6 @@ const Reducer = (state, action) => {
         ...state,
         socket: action.payload
       };
-    case 'SET_ACCENT':
-      return {
-        ...state,
-        accentOpen: action.payload
-      };
     case 'START_QUIZ':
       return {
         ...state,
@@ -25,7 +20,6 @@ const Reducer = (state, action) => {
         ...state,
         showAnswer: false,
         activeQuestion: null,
-        questionTime: 0,
         answer: null,
         showPlayers: true,
         showWaiting: false,
@@ -73,18 +67,17 @@ const Reducer = (state, action) => {
         player: action.payload
       };
     case 'UPDATE_PLAYER':
-      // find and update the player
+      // Find and update the player
       const { id } = action.payload;
       const playerIndex = state.players.findIndex((p) => p.id === id);
-      if (playerIndex) {
+      if (playerIndex !== -1) {
         state.players.splice(playerIndex, 1, action.payload);
-        return {
-          ...state,
-          player: action.payload,
-          players: state.players
-        };
       }
-      break;
+      return {
+        ...state,
+        player: action.payload,
+        players: state.players
+      };
     case 'SET_PLAYERS':
       return {
         ...state,

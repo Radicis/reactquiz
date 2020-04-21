@@ -46,26 +46,6 @@ main {
     0 10px 10px -5px rgba(0, 0, 0, 0.75);
 }
 
-.top,
-.bottom {
-  height: 50vh;
-  transition: height 500ms ease-in-out;
-  opacity: 0;
-  width: 110%;;
-}
-
-.top {
-  transform: translate3d(0, -15%, 0);
-  background-position: bottom left;
-  background-image: url("./images/top.svg");
-}
-
-.bottom {
-  transform: translate3d(0, 15%, 0);
-  background-position: top left;
-  background-image: url("./images/bottom.svg");
-}
-
 .question-image, .question-video {
   max-width: 500px;
   max-height: 300px;

@@ -19,7 +19,7 @@
     "path": "https://i.etsystatic.com/16669487/r/il/317e27/2016250067/il_570xN.2016250067_hgbx.jpg",
     "content": "What is the model of this blaster?",
     "answerType": "MULTI",
-    "choices": ["DHL-44", "DL-44", "DPD-44", "DN-44", "DN-44"],
+    "choices": ["DHL-44", "DL-44", "DPD-44", "DN-44"],
     "answer": "DL-44"
   },
   {
@@ -29,12 +29,5 @@
     "answerType": "MULTI",
     "choices": ["Calcium Carbonate", "Calcium Chloride", "Calcium Bicarbonate", "Calcium Dioxide"],
     "answer": "Calcium Carbonate"
-  },
-  {
-    "id": 5,
-    "type": "TEXT",
-    "content": "What does the Beaufort scale measure?",
-    "answerType": "TEXT",
-    "answer": "The strength of the wind"
   }
 ]

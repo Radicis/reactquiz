@@ -47,17 +47,16 @@ class QuestionList {
   /**
    * Set the active question to the next unanswered question
    */
-  getNextQuestion(previousQuestionIndex) {
-	if (!previousQuestionIndex) {
-	  return this.questions[0] || false;
+  getNextQuestion(previousQuestionIndex = -1) {
+	if (previousQuestionIndex === -1) {
+	  return { ...this.questions[0], id: 0 } || false;
 	}
 
 	if (
 		previousQuestionIndex !== -1 &&
 		previousQuestionIndex + 1 <= this.questions.length
 	) {
-	  this.activeQuestion = this.questions[previousQuestionIndex + 1];
-	  return this.activeQuestion;
+	  return { ...this.questions[previousQuestionIndex + 1], id: previousQuestionIndex + 1  };
 	}
 
 	return false; // quiz is done

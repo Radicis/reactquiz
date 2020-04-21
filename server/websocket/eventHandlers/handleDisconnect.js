@@ -27,6 +27,7 @@ module.exports = {
         const newOwner = remainingPlayers[0];
         if (newOwner) {
           quiz.setOwner(newOwner.id);
+          io.sockets.emit('set-owner', newOwner);
         }
       }
       console.log(`Removing player ${playerId} as they timed out`);

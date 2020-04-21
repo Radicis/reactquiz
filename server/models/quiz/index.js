@@ -15,6 +15,7 @@ class Quiz {
 
   setOwner (playerId) {
     this.owner = playerId;
+    this.playerList.findPlayerById(playerId).setIsOwner();
   }
 
   checkIsOwner (playerId) {

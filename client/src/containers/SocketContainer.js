@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
 
 function SocketContainer() {
-  // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(Context);
 
   const { socket } = state;
@@ -58,14 +57,21 @@ function SocketContainer() {
       });
     });
 
-    socket.on('init-player', (player) => {
+    socket.on('init-player', (data) => {
       dispatch({
         type: 'SET_PLAYER',
-        payload: player
+        payload: data
       });
     });
 
     socket.on('update-player', (data) => {
+      dispatch({
+        type: 'UPDATE_PLAYER',
+        payload: data
+      });
+    });
+
+    socket.on('set-owner', (data) => {
       dispatch({
         type: 'UPDATE_PLAYER',
         payload: data

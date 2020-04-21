@@ -1,9 +1,9 @@
 import React, { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
 import io from 'socket.io-client';
-import { host, port } from '../config';
+import { host, port, protocol } from '../config';
 
-const newSocket = io(`http://${host}:${port}`);
+const newSocket = io(`${protocol}://${host}:${port}`);
 
 const initialState = {
   socket: newSocket,
@@ -11,14 +11,14 @@ const initialState = {
   connected: false,
   error: '',
   players: [],
-  player: {},
+  player: null,
   activeQuestion: null,
   showWaiting: false,
   showPlayers: true,
   showAnswer: false,
   isComplete: true,
   isStarted: false,
-  accentOpen: false
+  isCorrect: false
 };
 
 // eslint-disable-next-line react/prop-types

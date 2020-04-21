@@ -12,17 +12,17 @@ module.exports = {
 
     console.log(`Client ${playerId} Connected`);
 
+    const quiz = QuizList.getQuiz('test');
+
     const newPlayer = new Player({ id: playerId });
 
-    const quiz = QuizList.getQuiz('test');
+    // Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
+    GlobalPlayerList.addPlayer(newPlayer);
 
     // if this is the first player, they own the quiz
     if (quiz.getPlayers().length === 0) {
       quiz.setOwner(playerId);
     }
-
-    // Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
-    GlobalPlayerList.addPlayer(newPlayer);
 
     // Add the reference to the quiz
     quiz.addPlayer(playerId);

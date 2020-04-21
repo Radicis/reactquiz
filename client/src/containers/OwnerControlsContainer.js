@@ -9,10 +9,8 @@ function OwnerControlsContainer() {
     socket,
     player,
     activeQuestion,
-    showAnswer,
     isStarted,
-    isComplete,
-    isDev
+    isComplete
   } = state;
 
   const startQuiz = () => {
@@ -20,21 +18,13 @@ function OwnerControlsContainer() {
     socket.emit('start-quiz');
   };
 
-  const nextQuestion = () => {
-    // Emit the set name event on the socket
-    socket.emit('get-next-question');
-  };
-
   return (
     <OwnerControls
       player={player}
       activeQuestion={activeQuestion}
-      showAnswer={showAnswer}
       isStarted={isStarted}
       startQuiz={startQuiz}
       isComplete={isComplete}
-      alwaysShow={isDev}
-      nextQuestion={nextQuestion}
     />
   );
 }
