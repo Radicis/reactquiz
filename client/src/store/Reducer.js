@@ -15,30 +15,34 @@ const Reducer = (state, action) => {
         isComplete: false,
         isStarted: true
       };
+    case 'SET_PLAYER_COMPLETE':
+      return {
+        ...state,
+        showAnswer: false,
+        activeQuestion: null,
+        showPlayers: true,
+        showWaiting: true
+      };
     case 'SET_QUIZ_COMPLETE':
       return {
         ...state,
         showAnswer: false,
         activeQuestion: null,
-        answer: null,
         showPlayers: true,
         showWaiting: false,
-        isComplete: true,
-        winner: state.players.sort((a, b) => a.score > b.score)[0].name
+        isComplete: true
       };
     case 'RESET_QUESTION':
       return {
         ...state,
         activeQuestion: null,
         questionTime: 0,
-        answer: null,
         showAnswer: false
       };
     case 'SET_ACTIVE_QUESTION':
       return {
         ...state,
         activeQuestion: action.payload,
-        answer: null,
         showAnswer: false,
         showPlayers: false,
         questionStartTime: new Date()

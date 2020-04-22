@@ -3,6 +3,7 @@ import { Context } from '../store/Store';
 
 import UserSetup from '../components/UserSetup/UserSetup';
 import { useSpring, animated, config } from 'react-spring';
+import Countdown from '../components/Countdown/Countdown';
 
 function UserSetupContainer() {
   const [state] = useContext(Context);

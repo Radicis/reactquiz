@@ -23,7 +23,7 @@ module.exports = {
 	if (nextQuestion) {
 	  io.to(playerId).emit('next-question', {...nextQuestion, id: questionIndex + 1});
 	} else {
-	  io.sockets.emit('quiz-complete');
+	  io.sockets.emit('player-complete');
 	}
 
   }

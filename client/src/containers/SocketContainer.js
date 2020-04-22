@@ -47,6 +47,10 @@ function SocketContainer() {
     socket.on('next-question', (data) => {
       dispatch({
         type: 'SET_ACTIVE_QUESTION',
+        payload: null
+      });
+      dispatch({
+        type: 'SET_ACTIVE_QUESTION',
         payload: data
       });
     });
@@ -54,6 +58,12 @@ function SocketContainer() {
     socket.on('quiz-complete', () => {
       dispatch({
         type: 'SET_QUIZ_COMPLETE'
+      });
+    });
+
+    socket.on('player-complete', () => {
+      dispatch({
+        type: 'SET_PLAYER_COMPLETE'
       });
     });
 
