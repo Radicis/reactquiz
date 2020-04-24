@@ -14,7 +14,9 @@ function MultiAnswerInput({ choices = [], setAnswer }) {
   }
 
   return (
-    <div className="flex flex-row flex-wrap justify-center">{choices.map(renderChoice)}</div>
+    <div className="flex flex-row flex-wrap justify-center">
+      {choices.map(renderChoice)}
+    </div>
   );
 }
 

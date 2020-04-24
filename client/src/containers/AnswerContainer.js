@@ -5,6 +5,8 @@ import AnswerInput from '../components/AnswerInput/AnswerInput';
 import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
 import Ready from '../components/Ready/Ready';
 import Answer from '../components/Answer/Answer';
+import { animated, config, useSpring } from 'react-spring';
+import Countdown from '../components/Countdown/Countdown';
 
 function AnswerContainer() {
   // eslint-disable-next-line no-unused-vars
@@ -15,8 +17,17 @@ function AnswerContainer() {
     activeQuestion,
     socket,
     questionStartTime,
-    player
+    showWaiting,
+    showReady,
+    showAnswerInput,
+    showCountdown
   } = state;
+
+  const props = useSpring({
+    config: config.stiff,
+    from: { opacity: 0, transform: 'translate3d(-1000px, 0, 0)' },
+    to: { opacity: 1, transform: 'translate3d(0px, 0, 0)' }
+  });
 
   const submitAnswer = (playerAnswer) => {
     const { id: questionIndex, answer } = activeQuestion;
@@ -31,25 +42,51 @@ function AnswerContainer() {
 
   const setPlayerReady = () => {
     socket.emit('set-player-ready');
+    dispatch({
+      type: 'SET_SHOW_WAITING'
+    });
   };
 
   return (
     <React.Fragment>
-      {activeQuestion ? (
-        <AnswerInput
-          submitAnswer={submitAnswer}
-          answerType={activeQuestion.answerType}
-          choices={activeQuestion.choices}
-        />
+      {showWaiting ? (
+        <animated.div style={props} className="flex justify-center">
+          <WaitingForPlayers />
+        </animated.div>
+      ) : (
+        ''
+      )}
+      {showCountdown ? (
+        <animated.div style={props} className="flex justify-center">
+          <Countdown time={10} />
+        </animated.div>
+      ) : (
+        ''
+      )}
+      {activeQuestion && showAnswerInput ? (
+        <animated.div style={props} className="flex justify-center">
+          <AnswerInput
+            submitAnswer={submitAnswer}
+            answerType={activeQuestion.answerType}
+            choices={activeQuestion.choices}
+          />
+        </animated.div>
       ) : (
         <React.Fragment>
-          {player.isReady ? <WaitingForPlayers /> : ''}
-          {!player.isReady ? <Ready setPlayerReady={setPlayerReady} /> : ''}
+          {showReady ? (
+            <animated.div style={props} className="flex justify-center">
+              <Ready setPlayerReady={setPlayerReady} />{' '}
+            </animated.div>
+          ) : (
+            ''
+          )}
           {showAnswer ? (
-            <Answer
-              answer={activeQuestion.answer.toString()}
-              isCorrect={isCorrect}
-            />
+            <animated.div style={props} className="flex justify-center">
+              <Answer
+                answer={activeQuestion.answer.toString()}
+                isCorrect={isCorrect}
+              />
+            </animated.div>
           ) : (
             ''
           )}

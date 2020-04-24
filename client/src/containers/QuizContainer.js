@@ -4,12 +4,11 @@ import { Context } from '../store/Store';
 import QuestionContainer from './QuestionContainer';
 import AnswerContainer from './AnswerContainer';
 import PlayersContainer from './PlayersContainer';
-import Answer from '../components/Answer/Answer';
 
 function QuizContainer() {
   const [state] = useContext(Context);
 
-  const { player, showAnswer, activeQuestion, isCorrect } = state;
+  const { player, activeQuestion } = state;
 
   return (
     <React.Fragment>
@@ -20,14 +19,6 @@ function QuizContainer() {
           </div>
           <div className="flex flex-1 justify-center items-center mb-2">
             <AnswerContainer />
-            {showAnswer ? (
-              <Answer
-                answer={activeQuestion.answer.toString()}
-                isCorrect={isCorrect}
-              />
-            ) : (
-              ''
-            )}
           </div>
         </div>
       ) : (

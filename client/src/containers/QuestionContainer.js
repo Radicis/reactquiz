@@ -6,7 +6,7 @@ import { config, useSpring, animated } from 'react-spring';
 
 function QuestionContainer() {
   const [state] = useContext(Context);
-  const { activeQuestion, isComplete, isStarted, winner, starting } = state;
+  const { activeQuestion, isComplete, isStarted, winner } = state;
 
   const props = useSpring({
     config: config.stiff,
@@ -36,7 +36,7 @@ function QuestionContainer() {
       ) : (
         ''
       )}
-      {!isStarted && !starting ? (
+      {!isStarted ? (
         <animated.div style={props} className="flex justify-center">
           Ready To Start!
         </animated.div>

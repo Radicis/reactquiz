@@ -1,4 +1,52 @@
 /* eslint-disable no-case-declarations */
+
+const toggleAnswerViews = (state, type) => {
+  const values = {
+    showAnswer: false,
+    showWaiting: false,
+    showReady: false,
+    showAnswerInput: false,
+    showCountdown: false
+  };
+  switch (type) {
+    case 'showCountdown':
+      return {
+        ...state,
+        ...values,
+        showCountdown: true
+      };
+    case 'showAnswer':
+      return {
+        ...state,
+        ...values,
+        showAnswer: true
+      };
+    case 'showWaiting':
+      return {
+        ...state,
+        ...values,
+        showWaiting: true
+      };
+    case 'showReady':
+      return {
+        ...state,
+        ...values,
+        showReady: true
+      };
+    case 'showAnswerInput':
+      return {
+        ...state,
+        ...values,
+        showAnswerInput: true
+      };
+    default:
+      return {
+        ...state,
+        values
+      };
+  }
+};
+
 const Reducer = (state, action) => {
   switch (action.type) {
     case 'SET_SOCKET':
@@ -32,43 +80,36 @@ const Reducer = (state, action) => {
         showWaiting: false,
         isComplete: true
       };
-    case 'RESET_QUESTION':
-      return {
-        ...state,
-        activeQuestion: null,
-        questionTime: 0,
-        showAnswer: false
-      };
     case 'SET_ACTIVE_QUESTION':
       return {
         ...state,
         activeQuestion: action.payload,
         showAnswer: false,
-        showPlayers: false,
+        showAnswerInput: true,
         questionStartTime: new Date()
       };
+    case 'SET_COUNTDOWN':
+      return toggleAnswerViews(state, 'showCountdown');
+    case 'SET_SHOW_WAITING':
+      return toggleAnswerViews(state, 'showWaiting');
     case 'SHOW_ANSWER':
+      return toggleAnswerViews(state, 'showAnswer');
+    case 'SET_SHOW_ANSWER_INPUT':
+      return toggleAnswerViews(state, 'showAnswerInput');
+    case 'SET_WAITING':
+      return toggleAnswerViews(state, 'showWaiting');
+    case 'SET_SHOW_READY':
+      return toggleAnswerViews(state, 'showReady');
+    case 'SET_PLAYER':
       return {
         ...state,
-        showAnswer: true,
-        showWaiting: false,
-        showPlayers: true
+        player: action.payload
       };
     case 'SET_PLAYER_ANSWER':
       return {
         ...state,
         playerAnswer: action.payload,
         showWaiting: true
-      };
-    case 'SET_WAITING':
-      return {
-        ...state,
-        showWaiting: true
-      };
-    case 'SET_PLAYER':
-      return {
-        ...state,
-        player: action.payload
       };
     case 'UPDATE_PLAYER':
       // Find and update the player
