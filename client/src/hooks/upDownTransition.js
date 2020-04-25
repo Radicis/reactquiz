@@ -8,7 +8,11 @@ export default function (condition) {
       transform: 'translate3d(0, 1000px, 0)',
       position: 'absolute'
     },
-    enter: { opacity: 1, transform: 'translate3d(0, 0px, 0)' },
+    enter: {
+      opacity: 1,
+      transform: 'translate3d(0, 0px, 0)',
+      position: 'relative'
+    },
     leave: {
       opacity: 0,
       transform: 'translate3d(0, 1000px, 0)',

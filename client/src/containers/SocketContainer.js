@@ -35,6 +35,7 @@ function SocketContainer() {
     });
 
     socket.on('start-quiz', (data) => {
+      console.log('Starting quiz');
       dispatch({
         type: 'START_QUIZ'
       });

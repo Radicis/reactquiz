@@ -5,14 +5,11 @@ import BoolAnswerInput from './BoolAnswerInput/BoolAnswerInput';
 import MultiAnswerInput from './MultiAnswerInput/MultiAnswerInput';
 import TextAnswerInput from './TextAnswerInput/TextAnswerInput';
 import NumberAnswerInput from './NumberAnswerInput/NumberAnswerInput';
-import { animated, config, useSpring } from 'react-spring';
+import { animated } from 'react-spring';
+import upDownTransition from '../../hooks/upDownTransition';
 
-function AnswerInput({ answerType = 'BOOL', choices, submitAnswer }) {
-  const props = useSpring({
-    config: config.stiff,
-    from: { opacity: 0, transform: 'translate3d(0, 1000px, 0)' },
-    to: { opacity: 1, transform: 'translate3d(0px, 0, 0)' }
-  });
+function AnswerInput({ show, answerType = 'BOOL', choices, submitAnswer }) {
+  const transition = upDownTransition(show);
 
   const getAnswerComponent = (type) => {
     switch (type) {
@@ -30,19 +27,28 @@ function AnswerInput({ answerType = 'BOOL', choices, submitAnswer }) {
   };
 
   return (
-    <animated.div
-      style={props}
-      className="flex flex-col justify-center items-center px-4"
-    >
-      {getAnswerComponent(answerType)}
-    </animated.div>
+    <React.Fragment>
+      {transition.map(
+        ({ item, key, props }) =>
+          item && (
+            <animated.div
+              key={key}
+              style={props}
+              className="flex flex-col justify-center items-center px-4"
+            >
+              {getAnswerComponent(answerType)}
+            </animated.div>
+          )
+      )}
+    </React.Fragment>
   );
 }
 
 AnswerInput.propTypes = {
   answerType: PropTypes.string,
   submitAnswer: PropTypes.func,
-  choices: PropTypes.array
+  choices: PropTypes.array,
+  show: PropTypes.bool
 };
 
 export default AnswerInput;

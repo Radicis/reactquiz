@@ -2,14 +2,27 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
 
 import QuestionContainer from './QuestionContainer';
-import AnswerContainer from './AnswerContainer';
 import { animated, useTransition } from 'react-spring';
 import Players from '../components/Players/Players';
+import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
+import Countdown from '../components/Countdown/Countdown';
+import Ready from '../components/Ready/Ready';
 
 function QuizContainer() {
-  const [state] = useContext(Context);
+  const [state, dispatch] = useContext(Context);
 
-  const { player, players, showPlayers } = state;
+  const {
+    socket,
+    player,
+    activeQuestion,
+    showQuestion,
+    showPlayers,
+    players,
+    showWaiting,
+    showReady,
+    showCountdown,
+    isComplete
+  } = state;
 
   const mainTransition = useTransition(player && player.isActive, null, {
     from: { opacity: 0 },
@@ -17,9 +30,12 @@ function QuizContainer() {
     leave: { opacity: 0 }
   });
 
-  useEffect(() => {
-    console.log('players');
-  }, []);
+  const setPlayerReady = () => {
+    socket.emit('set-player-ready');
+    dispatch({
+      type: 'SET_WAITING'
+    });
+  };
 
   return (
     <React.Fragment>
@@ -32,11 +48,13 @@ function QuizContainer() {
               className="flex flex-col flex-grow justify-center p-4"
             >
               <div className="flex flex-col flex-grow justify-center my-4">
-                <QuestionContainer />
-                <Players players={players} showPlayers={showPlayers} />
+                {activeQuestion && showQuestion ? <QuestionContainer /> : ''}
+                {showPlayers ? <Players players={players} /> : ''}
               </div>
-              <div className="flex flex-1 justify-center items-center mb-2">
-                <AnswerContainer />
+              <div className="flex flex-col flex-grow justify-center my-4">
+                <WaitingForPlayers completed={isComplete} show={showWaiting} />
+                { showCountdown ? <Countdown time={5} show={showCountdown} /> : '' }
+                <Ready setPlayerReady={setPlayerReady} show={showReady} />
               </div>
             </animated.div>
           )

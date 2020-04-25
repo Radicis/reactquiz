@@ -21,14 +21,14 @@ function Countdown({ show, time = 5 }) {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!parseInt(value) || value === time) {
-        setVal('GO! GO!');
+        setVal('GO!');
         clearInterval(interval);
         // wait 2s before showing the first question
         setTimeout(() => {
           dispatch({
             type: 'SHOW_ACTIVE_QUESTION'
           });
-        }, 2000);
+        }, 1000);
       } else {
         setVal(value + 1);
       }

@@ -3,15 +3,21 @@ import PropTypes from 'prop-types';
 
 import ImageContent from './ImageContent/ImageContent';
 import VideoContent from './VideoContent/VideoContent';
-import { config, useSpring, animated } from 'react-spring';
+import Answer from '../Answer/Answer';
+import AnswerInput from '../AnswerInput/AnswerInput';
 
-function Question({ type = 'TEXT', path = '', content = '' }) {
-  const props = useSpring({
-    config: config.stiff,
-    from: { opacity: 0, transform: 'translate3d(-1000px, 0, 0)' },
-    to: { opacity: 1, transform: 'translate3d(0px, 0, 0)' }
-  });
-
+function Question({
+  submitAnswer = () => {},
+  type = 'TEXT',
+  answer = '',
+  choices = [],
+  answerType = 'BOOL',
+  showAnswer = false,
+  isCorrect = false,
+  showAnswerInput = true,
+  path = '',
+  content = ''
+}) {
   function renderSwitch(param) {
     switch (param) {
       case 'IMAGE':
@@ -28,16 +34,34 @@ function Question({ type = 'TEXT', path = '', content = '' }) {
   }
 
   return (
-    <animated.div style={props} className="flex flex-col flex-grow">
-      {renderSwitch(type)}
-    </animated.div>
+    <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow justify-center my-4">
+        {renderSwitch(type)}
+      </div>
+      <div className="flex justify-center">
+        <Answer show={showAnswer} answer={answer} isCorrect={isCorrect} />
+        <AnswerInput
+          show={showAnswerInput}
+          submitAnswer={submitAnswer}
+          answerType={answerType}
+          choices={choices}
+        />
+      </div>
+    </div>
   );
 }
 
 Question.propTypes = {
+  submitAnswer: PropTypes.func,
   type: PropTypes.string,
   path: PropTypes.string,
-  content: PropTypes.string
+  content: PropTypes.string,
+  choices: PropTypes.array,
+  answerType: PropTypes.string,
+  answer: PropTypes.string,
+  showAnswer: PropTypes.bool,
+  showAnswerInput: PropTypes.bool,
+  isCorrect: PropTypes.bool
 };
 
 export default Question;

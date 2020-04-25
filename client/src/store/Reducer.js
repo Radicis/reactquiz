@@ -41,7 +41,7 @@ const Reducer = (state, action) => {
     case 'START_QUIZ':
       return {
         ...state,
-        ...toggleAnswerViews(state),
+        ...toggleAnswerViews(state, 'showCountDown'),
         isStarted: true
       };
     case 'SET_PLAYER_COMPLETE':
@@ -58,17 +58,31 @@ const Reducer = (state, action) => {
       };
     case 'SET_ACTIVE_QUESTION':
       return {
-        ...state,
+        ...toggleAnswerViews(state, 'showCountdown'),
         activeQuestion: action.payload
       };
     case 'SHOW_ACTIVE_QUESTION':
       return {
-        ...toggleAnswerViews(state, 'showQuestion'),
+        ...state,
+        showAnswer: false,
+        showWaiting: false,
+        showReady: false,
+        showPlayers: false,
+        showAnswerInput: true,
+        showQuestion: true,
+        showCountdown: false,
         questionStartTime: new Date()
       };
     case 'SET_AND_SHOW_ACTIVE_QUESTION':
       return {
-        ...toggleAnswerViews(state, 'showQuestion'),
+        ...state,
+        showAnswer: false,
+        showWaiting: false,
+        showReady: false,
+        showPlayers: false,
+        showAnswerInput: true,
+        showQuestion: true,
+        showCountdown: false,
         activeQuestion: action.payload,
         questionStartTime: new Date()
       };

@@ -2,47 +2,44 @@ import React, { useContext } from 'react';
 import { Context } from '../store/Store';
 
 import Question from '../components/Question/Question';
-import { config, useSpring, animated } from 'react-spring';
 
 function QuestionContainer() {
   const [state] = useContext(Context);
-  const { activeQuestion, isComplete, isStarted, winner, isReadyToStart } = state;
+  const {
+    socket,
+    activeQuestion,
+    questionStartTime,
+    answer,
+    isCorrect,
+    showAnswer,
+    showAnswerInput
+  } = state;
 
-  const props = useSpring({
-    config: config.stiff,
-    from: { opacity: 0, transform: 'translate3d(-1000px, 0, 0)' },
-    to: { opacity: 1, transform: 'translate3d(0px, 0, 0)' }
-  });
+  const submitAnswer = (playerAnswer) => {
+    const { id: questionIndex, answer } = activeQuestion;
+    const isCorrect = playerAnswer === answer;
+    socket.emit('set-player-answer-for-question', {
+      questionIndex,
+      isCorrect,
+      playerAnswer,
+      answeredTime: new Date() - questionStartTime
+    });
+  };
 
   return (
     <div className="flex flex-col justify-center h-full p-4">
-      {isStarted && activeQuestion ? (
-        <Question
-          type={activeQuestion.type}
-          path={activeQuestion.path}
-          content={activeQuestion.content}
-        />
-      ) : (
-        ''
-      )}
-      {isStarted && isComplete ? (
-        <animated.div
-          style={props}
-          className="flex flex-col justify-center items-center text-2xl flex-grow"
-        >
-          <div className="font-bold mb-4">Quiz Complete!</div>
-          {winner ? <div>{winner} Wins!</div> : ''}
-        </animated.div>
-      ) : (
-        ''
-      )}
-      {!isStarted && isReadyToStart ? (
-        <animated.div style={props} className="flex justify-center">
-          Ready To Start!
-        </animated.div>
-      ) : (
-        ''
-      )}
+      <Question
+        type={activeQuestion.type}
+        path={activeQuestion.path}
+        answerType={activeQuestion.answerType}
+        content={activeQuestion.content}
+        choices={activeQuestion.choices}
+        submitAnswer={submitAnswer}
+        answer={answer}
+        isCorrect={isCorrect}
+        showAnswer={showAnswer}
+        showAnswerInput={showAnswerInput}
+      />
     </div>
   );
 }
