@@ -1,31 +1,67 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import { animated, config, useTransition } from 'react-spring';
+import { Context } from '../../store/Store';
+import upDownTransition from '../../hooks/upDownTransition';
 
-function Countdown({ time }) {
-  const [go, setGo] = useState(false);
-  const goGo = () => {
-    setGo(true);
-  };
+function Countdown({ show, time = 5 }) {
+  const [value, setVal] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [state, dispatch] = useContext(Context);
+
+  const transition = upDownTransition(show);
+
+  const countTransition = useTransition(value, (value) => value, {
+    config: config.wobbly,
+    from: { opacity: 0, transform: 'scale(0)' },
+    enter: { opacity: 1, transform: 'scale(5)' },
+    leave: { opacity: 0, transform: 'scale(0)' }
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!parseInt(value) || value === time) {
+        setVal('GO! GO!');
+        clearInterval(interval);
+        // wait 2s before showing the first question
+        setTimeout(() => {
+          dispatch({
+            type: 'SHOW_ACTIVE_QUESTION'
+          });
+        }, 2000);
+      } else {
+        setVal(value + 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [value]);
+
   return (
-    <div className="flex flex-grow items-center justify-center">
-      {go ? (
-        <div className="text-4xl font-semibold">GO!</div>
-      ) : (
-        <CountdownCircleTimer
-          isPlaying
-          durationSeconds={time}
-          colors={[['#63B3ED']]}
-          strokeLinecap="square"
-          onComplete={goGo}
-        />
+    <React.Fragment>
+      {transition.map(
+        ({ item, key, props }) =>
+          item && (
+            <animated.div
+              key={key}
+              style={props}
+              className="flex flex-grow items-center justify-center relative"
+            >
+              {countTransition.map(({ item, key, props }) => (
+                <animated.div key={key} style={props} className="absolute">
+                  {item}
+                </animated.div>
+              ))}
+            </animated.div>
+          )
       )}
-    </div>
+    </React.Fragment>
   );
 }
 
 Countdown.propTypes = {
-  time: PropTypes.number
+  time: PropTypes.number,
+  show: PropTypes.bool
 };
 
 export default Countdown;

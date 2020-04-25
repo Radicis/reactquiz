@@ -38,6 +38,7 @@ function SocketContainer() {
       dispatch({
         type: 'START_QUIZ'
       });
+      // Set but don't show
       dispatch({
         type: 'SET_ACTIVE_QUESTION',
         payload: data
@@ -46,11 +47,7 @@ function SocketContainer() {
 
     socket.on('next-question', (data) => {
       dispatch({
-        type: 'SET_ACTIVE_QUESTION',
-        payload: null
-      });
-      dispatch({
-        type: 'SET_ACTIVE_QUESTION',
+        type: 'SET_AND_SHOW_ACTIVE_QUESTION',
         payload: data
       });
     });

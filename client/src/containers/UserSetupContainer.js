@@ -2,18 +2,18 @@ import React, { useContext } from 'react';
 import { Context } from '../store/Store';
 
 import UserSetup from '../components/UserSetup/UserSetup';
-import { useSpring, animated, config } from 'react-spring';
-import Countdown from '../components/Countdown/Countdown';
+import { useTransition, animated, config } from 'react-spring';
 
 function UserSetupContainer() {
   const [state] = useContext(Context);
 
   const { socket, player } = state;
 
-  const props = useSpring({
+  const transition = useTransition(player && !player.isActive, null, {
     config: config.wobbly,
-    transform: player ? 'translate3d(0px, 0, 0)' : 'translate3d(-1000px, 0, 0)',
-    display: player && player.isActive ? 'none' : 'block'
+    from: { opacity: 0, transform: 'scale(0)', position: 'absolute' },
+    enter: { opacity: 1, transform: 'scale(1)', position: 'relative' },
+    leave: { opacity: 0, transform: 'scale(0)', position: 'absolute' }
   });
 
   const setPlayerName = (name) => {
@@ -22,9 +22,20 @@ function UserSetupContainer() {
   };
 
   return (
-    <animated.div style={props} className="flex flex-grow">
-      {player ? <UserSetup setPlayerName={setPlayerName} /> : ''}
-    </animated.div>
+    <React.Fragment>
+      {transition.map(
+        ({ item, key, props }) =>
+          item && (
+            <animated.div
+              key={key}
+              style={props}
+              className="flex flex-grow w-full h-full"
+            >
+              <UserSetup setPlayerName={setPlayerName} />
+            </animated.div>
+          )
+      )}
+    </React.Fragment>
   );
 }
 

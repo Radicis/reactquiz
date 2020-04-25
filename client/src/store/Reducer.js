@@ -3,9 +3,17 @@ const toggleAnswerViews = (state, type) => {
     showAnswer: false,
     showWaiting: false,
     showReady: false,
+    showPlayers: false,
     showAnswerInput: false,
+    showQuestion: false,
     showCountdown: false
   };
+  if (!type) {
+    return {
+      ...state,
+      ...values // reset all
+    };
+  }
   return {
     ...state,
     ...values,
@@ -33,41 +41,39 @@ const Reducer = (state, action) => {
     case 'START_QUIZ':
       return {
         ...state,
-        showAnswer: false,
-        showPlayers: false,
-        showWaiting: false,
-        isComplete: false,
+        ...toggleAnswerViews(state),
         isStarted: true
       };
     case 'SET_PLAYER_COMPLETE':
       return {
-        ...state,
-        showAnswer: false,
+        ...toggleAnswerViews(state, 'showWaiting'),
         activeQuestion: null,
-        showWaiting: true,
         isComplete: true
       };
     case 'SET_QUIZ_COMPLETE':
       return {
-        ...state,
-        showAnswer: false,
+        ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
-        showPlayers: true,
-        showWaiting: false,
         isComplete: true
       };
     case 'SET_ACTIVE_QUESTION':
       return {
         ...state,
+        activeQuestion: action.payload
+      };
+    case 'SHOW_ACTIVE_QUESTION':
+      return {
+        ...toggleAnswerViews(state, 'showQuestion'),
+        questionStartTime: new Date()
+      };
+    case 'SET_AND_SHOW_ACTIVE_QUESTION':
+      return {
+        ...toggleAnswerViews(state, 'showQuestion'),
         activeQuestion: action.payload,
-        showAnswer: false,
-        showAnswerInput: true,
         questionStartTime: new Date()
       };
     case 'SET_COUNTDOWN':
       return toggleAnswerViews(state, 'showCountdown');
-    case 'SET_SHOW_WAITING':
-      return toggleAnswerViews(state, 'showWaiting');
     case 'SHOW_ANSWER':
       return toggleAnswerViews(state, 'showAnswer');
     case 'SET_SHOW_ANSWER_INPUT':

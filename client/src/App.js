@@ -6,6 +6,7 @@ import ErrorContainer from './containers/ErrorContainer';
 import QuizContainer from './containers/QuizContainer';
 import UserSetupContainer from './containers/UserSetupContainer';
 import OwnerControlsContainer from './containers/OwnerControlsContainer';
+import PlayerRaceContainer from './containers/PlayerRaceContainer';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <ErrorContainer />
         <UserSetupContainer />
         <QuizContainer />
+        <PlayerRaceContainer />
         <OwnerControlsContainer />
       </main>
       <div className="absolute bottom-0 w-full z-40 right-0 mr-4 text-sm font-semibold text-right mb-1 text-gray-400">
