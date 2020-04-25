@@ -16,7 +16,7 @@ const initialState = {
   showWaiting: false,
   showPlayers: true,
   showAnswer: false,
-  isComplete: true,
+  isComplete: false,
   showReady: true,
   showCountDown: false,
   isCorrect: false

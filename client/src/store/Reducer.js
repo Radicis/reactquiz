@@ -1,5 +1,3 @@
-/* eslint-disable no-case-declarations */
-
 const toggleAnswerViews = (state, type) => {
   const values = {
     showAnswer: false,
@@ -8,43 +6,21 @@ const toggleAnswerViews = (state, type) => {
     showAnswerInput: false,
     showCountdown: false
   };
-  switch (type) {
-    case 'showCountdown':
-      return {
-        ...state,
-        ...values,
-        showCountdown: true
-      };
-    case 'showAnswer':
-      return {
-        ...state,
-        ...values,
-        showAnswer: true
-      };
-    case 'showWaiting':
-      return {
-        ...state,
-        ...values,
-        showWaiting: true
-      };
-    case 'showReady':
-      return {
-        ...state,
-        ...values,
-        showReady: true
-      };
-    case 'showAnswerInput':
-      return {
-        ...state,
-        ...values,
-        showAnswerInput: true
-      };
-    default:
-      return {
-        ...state,
-        values
-      };
+  return {
+    ...state,
+    ...values,
+    [type]: true
+  };
+};
+
+const updatePlayer = (player, players) => {
+  const { id } = player;
+  const playersCopy = [...players];
+  const playerIndex = playersCopy.findIndex((p) => p.id === id);
+  if (playerIndex !== -1) {
+    playersCopy.splice(playerIndex, 1, player);
   }
+  return playersCopy;
 };
 
 const Reducer = (state, action) => {
@@ -68,8 +44,8 @@ const Reducer = (state, action) => {
         ...state,
         showAnswer: false,
         activeQuestion: null,
-        showPlayers: true,
-        showWaiting: true
+        showWaiting: true,
+        isComplete: true
       };
     case 'SET_QUIZ_COMPLETE':
       return {
@@ -112,16 +88,10 @@ const Reducer = (state, action) => {
         showWaiting: true
       };
     case 'UPDATE_PLAYER':
-      // Find and update the player
-      const { id } = action.payload;
-      const playerIndex = state.players.findIndex((p) => p.id === id);
-      if (playerIndex !== -1) {
-        state.players.splice(playerIndex, 1, action.payload);
-      }
       return {
         ...state,
         player: action.payload,
-        players: state.players
+        players: updatePlayer(action.payload, state.players)
       };
     case 'SET_PLAYERS':
       return {

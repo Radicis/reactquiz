@@ -20,7 +20,8 @@ function AnswerContainer() {
     showWaiting,
     showReady,
     showAnswerInput,
-    showCountdown
+    showCountdown,
+    isComplete
   } = state;
 
   const props = useSpring({
@@ -51,11 +52,12 @@ function AnswerContainer() {
     <React.Fragment>
       {showWaiting ? (
         <animated.div style={props} className="flex justify-center">
-          <WaitingForPlayers />
+          <WaitingForPlayers completed={isComplete} />
         </animated.div>
       ) : (
         ''
       )}
+
       {showCountdown ? (
         <animated.div style={props} className="flex justify-center">
           <Countdown time={10} />
@@ -63,6 +65,26 @@ function AnswerContainer() {
       ) : (
         ''
       )}
+
+      {showReady ? (
+        <animated.div style={props} className="flex justify-center">
+          <Ready setPlayerReady={setPlayerReady} />{' '}
+        </animated.div>
+      ) : (
+        ''
+      )}
+
+      {showAnswer ? (
+        <animated.div style={props} className="flex justify-center">
+          <Answer
+            answer={activeQuestion.answer.toString()}
+            isCorrect={isCorrect}
+          />
+        </animated.div>
+      ) : (
+        ''
+      )}
+
       {activeQuestion && showAnswerInput ? (
         <animated.div style={props} className="flex justify-center">
           <AnswerInput
@@ -72,25 +94,7 @@ function AnswerContainer() {
           />
         </animated.div>
       ) : (
-        <React.Fragment>
-          {showReady ? (
-            <animated.div style={props} className="flex justify-center">
-              <Ready setPlayerReady={setPlayerReady} />{' '}
-            </animated.div>
-          ) : (
-            ''
-          )}
-          {showAnswer ? (
-            <animated.div style={props} className="flex justify-center">
-              <Answer
-                answer={activeQuestion.answer.toString()}
-                isCorrect={isCorrect}
-              />
-            </animated.div>
-          ) : (
-            ''
-          )}
-        </React.Fragment>
+        ''
       )}
     </React.Fragment>
   );

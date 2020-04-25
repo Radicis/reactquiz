@@ -25,13 +25,13 @@ function QuestionContainer() {
       ) : (
         ''
       )}
-      {isStarted && isComplete && winner ? (
+      {isStarted && isComplete ? (
         <animated.div
           style={props}
           className="flex flex-col justify-center items-center text-2xl flex-grow"
         >
           <div className="font-bold mb-4">Quiz Complete!</div>
-          <div>{winner} Wins!</div>
+          {winner ? <div>{winner} Wins!</div> : ''}
         </animated.div>
       ) : (
         ''
