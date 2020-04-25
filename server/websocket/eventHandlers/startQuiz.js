@@ -21,8 +21,6 @@ module.exports = {
 
     quiz.reset();
 
-    const nextQuestion = quiz.getNextQuestion();
-
-    io.sockets.emit('start-quiz', nextQuestion);
+    io.sockets.emit('start-quiz', quiz.getQuestions());
   }
 };

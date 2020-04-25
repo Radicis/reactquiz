@@ -56,6 +56,11 @@ const Reducer = (state, action) => {
         activeQuestion: null,
         isComplete: true
       };
+    case 'SET_QUESTIONS':
+      return {
+        ...state,
+        questions: action.payload
+      };
     case 'SET_ACTIVE_QUESTION':
       return {
         ...toggleAnswerViews(state, 'showCountdown'),

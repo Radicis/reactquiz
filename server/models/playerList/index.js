@@ -24,6 +24,15 @@ class PlayerList {
     this.playerIds.splice(this.playerIds.indexOf(playerId), 1);
   }
 
+  resetPlayers () {
+    this.playerIds.forEach((id) => {
+      const player = GlobalPlayerList.findPlayerById(id);
+      if (player) {
+        player.resetProgress();
+      }
+    });
+  }
+
   /**
    * Returns the players array enriched from the global list
    * @returns {[]|Array}

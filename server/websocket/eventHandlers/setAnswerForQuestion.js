@@ -16,15 +16,9 @@ module.exports = {
 
 	const quiz = QuizList.getQuiz('test');
 
-	quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
+	const progress = quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
 
-	const nextQuestion = quiz.getNextQuestion(questionIndex);
-
-	if (nextQuestion) {
-	  io.to(playerId).emit('next-question', {...nextQuestion, id: questionIndex + 1});
-	} else {
-	  io.sockets.emit('player-complete');
-	}
+	io.sockets.emit('player-progress', progress);
 
   }
 };

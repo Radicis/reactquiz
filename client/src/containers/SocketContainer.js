@@ -34,22 +34,19 @@ function SocketContainer() {
       });
     });
 
-    socket.on('start-quiz', (data) => {
+    socket.on('start-quiz', (questions) => {
       console.log('Starting quiz');
       dispatch({
         type: 'START_QUIZ'
       });
+      dispatch({
+        type: 'SET_QUESTIONS',
+        payload: questions
+      });
       // Set but don't show
       dispatch({
         type: 'SET_ACTIVE_QUESTION',
-        payload: data
-      });
-    });
-
-    socket.on('next-question', (data) => {
-      dispatch({
-        type: 'SET_AND_SHOW_ACTIVE_QUESTION',
-        payload: data
+        payload: questions[0]
       });
     });
 

@@ -24,10 +24,7 @@ class Quiz {
 
   reset() {
     this.questionList = new QuestionList();
-  }
-
-  getNextQuestion (prevQuestionIndex) {
-    return this.questionList.getNextQuestion(prevQuestionIndex)
+    this.playerList.resetPlayers();
   }
 
   getQuestions () {
@@ -111,7 +108,9 @@ class Quiz {
         isCorrect,
         answeredTime
       });
+      player.incrementProgress();
     }
+    return player.getProgress();
   }
 }
 

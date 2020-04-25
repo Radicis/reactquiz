@@ -8,6 +8,7 @@ class Player {
     this.score = 0;
     this.isActive = false;
     this.isReady = false;
+    this.progress = 0;
     console.log(`Player ${name} created with ID: ${id}`);
   }
 
@@ -18,6 +19,18 @@ class Player {
 
   setIsOwner () {
     this.isOwner = true;
+  }
+
+  incrementProgress () {
+    this.progress++;
+  }
+
+  getProgress () {
+    return this.progress;
+  }
+
+  resetProgress () {
+    this.progress = 0;
   }
 
   setReady() {
