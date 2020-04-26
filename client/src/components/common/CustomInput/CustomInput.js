@@ -6,14 +6,16 @@ function CustomInput({
   handleKeyDown,
   placeHolder,
   maxLength,
+  minLength,
   type = 'text'
 }) {
   return (
     <input
-      className="rounded-full border-2 border-gray-500 shadow-xl w-full py-2 px-6 font-semibold text-2xl text-gray-600"
+      className="rounded-full border-2 bg-white border-gray-500 shadow-xl w-full py-2 px-6 font-semibold text-2xl outline-none"
       type={type}
       onChange={handleChange}
       maxLength={maxLength || 99}
+      minLength={minLength || 2}
       placeholder={placeHolder}
       onKeyPress={handleKeyDown}
     />
@@ -23,7 +25,8 @@ function CustomInput({
 CustomInput.propTypes = {
   placeHolder: PropTypes.string,
   type: PropTypes.string,
-  maxLength: PropTypes.string,
+  maxLength: PropTypes.number,
+  minLength: PropTypes.number,
   handleChange: PropTypes.func,
   handleKeyDown: PropTypes.func
 };

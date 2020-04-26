@@ -1,48 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ImageContent from './ImageContent/ImageContent';
-import VideoContent from './VideoContent/VideoContent';
-import Answer from '../Answer/Answer';
 import AnswerInput from '../AnswerInput/AnswerInput';
 
 function Question({
   submitAnswer = () => {},
-  type = 'TEXT',
-  answer = '',
   choices = [],
   answerType = 'BOOL',
-  showAnswer = false,
-  isCorrect = false,
-  showAnswerInput = true,
-  path = '',
+  answer = '',
   content = ''
 }) {
-  function renderSwitch(param) {
-    switch (param) {
-      case 'IMAGE':
-        return <ImageContent path={path} content={content} />;
-      case 'VIDEO':
-        return <VideoContent path={path} content={content} />;
-      default:
-        return (
-          <div className="flex justify-center items-center text-center p-4 flex-grow text-question relative">
-            {content}
-          </div>
-        );
-    }
-  }
-
   return (
-    <div className="flex flex-col justify-center flex-grow question">
-      <div className="flex flex-col flex-grow my-4">{renderSwitch(type)}</div>
-      <div className="flex justify-center flex-grow">
-        <Answer show={showAnswer} answer={answer} isCorrect={isCorrect} />
+    <div className="flex flex-col justify-center w-full flex-grow">
+      <div className="flex flex-col flex-1 mb-8 justify-center text-center border text-2xl shadow-2xl bg-white p-8 rounded-lg question relative">
+        {content}
+      </div>
+      <div className="flex justify-center flex-2 border shadow-2xl bg-white p-4 rounded-lg answer relative">
         <AnswerInput
-          show={showAnswerInput}
           submitAnswer={submitAnswer}
           answerType={answerType}
           choices={choices}
+          answer={answer}
         />
       </div>
     </div>
@@ -52,13 +30,10 @@ function Question({
 Question.propTypes = {
   submitAnswer: PropTypes.func,
   type: PropTypes.string,
-  path: PropTypes.string,
   content: PropTypes.string,
+  answer: PropTypes.string,
   choices: PropTypes.array,
   answerType: PropTypes.string,
-  answer: PropTypes.string,
-  showAnswer: PropTypes.bool,
-  showAnswerInput: PropTypes.bool,
   isCorrect: PropTypes.bool
 };
 

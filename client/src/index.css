@@ -12,15 +12,14 @@
 
 body {
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   max-width: 800px;
   margin: auto auto;
-  @apply text-black;
+  @apply text-gray-900;
   background: radial-gradient(
       circle at 100% 50%,
       transparent 20%,
@@ -41,35 +40,64 @@ body {
   background-size: 75px 100px;
 }
 
+.question::after,
+.answer::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 97%;
+  bottom: -10px;
+  left: 1.5%;
+  position: absolute;
+  z-index: -1;
+  background: #ccc;
+  border-radius: 0.5rem;
+  opacity: 0.5;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.answer-button {
+  @apply mb-6;
+}
+
+.answer-button:last-of-type {
+  @apply mb-0;
+}
+
+.wave {
+  position: absolute;
+  height: 27%;
+  width: 120%;
+  background: deeppink;
+  top: 0;
+}
+
+.wave::before,
+.wave::after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 50% 100%;
+}
+
+.wave::before {
+  width: 53.5%;
+  height: 83%;
+  background-color: deeppink;
+  right: 0;
+  top: 40%;
+}
+.wave::after {
+  width: 58.5%;
+  height: 60%;
+  @apply bg-gray-200;
+  left: 0;
+  top: 80%;
+}
+
 main {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
     0 10px 10px -5px rgba(0, 0, 0, 0.75);
-}
-
-.question {
-  transform: skew(-1deg);
-}
-
-.question-image,
-.question-video {
-  max-width: 500px;
-  max-height: 300px;
-  width: 80%;
-}
-
-.text-question::before {
-  content: '';
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  font-size: 10rem;
-  text-align: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  opacity: 0.05;
 }
 
 .timer {
@@ -98,37 +126,70 @@ main {
   position: absolute;
 }
 
+.finish {
+  background-image: linear-gradient(45deg, #222 25%, transparent 25%),
+    linear-gradient(-45deg, #222 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #222 75%),
+    linear-gradient(-45deg, transparent 75%, #222 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  height: 100%;
+  width: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.player {
+  transform: translate3d(0, 0, 0);
+}
+
 @keyframes bounce {
-  0%,
-  20%,
-  53%,
-  80%,
-  100% {
+  from {
     transform: translate3d(0, 0, 0);
   }
-
-  40%,
-  43% {
-    transform: translate3d(0, -30px, 0);
-  }
-
-  70% {
-    transform: translate3d(0, -15px, 0);
-  }
-
-  90% {
-    -webkit-transform: translate3d(0, -4px, 0);
-    transform: translate3d(0, -4px, 0);
+  to {
+    transform: translate3d(0, 10px, 0);
   }
 }
 
 .bounce {
-  animation-name: bounce;
-  transform-origin: center bottom;
+  animation: bounce 250ms;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+  animation-iteration-count: infinite;
+}
+
+.sleep {
+  position: relative;
+  overflow: visible;
+}
+
+.sleep::after {
+  color: #999;
+  font-size: 12px;
+  content: 'Zzz';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  animation: pulse 1500ms;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+  animation-iteration-count: infinite;
+  overflow: visible;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
 }
 
 .number {
-  text-shadow: 1px 10px 5px #aba8a8, 2px 2px 2px rgba(206,89,55,0);
+  text-shadow: 1px 10px 5px #aba8a8, 2px 2px 2px rgba(206, 89, 55, 0);
 }
 
 @keyframes grow {

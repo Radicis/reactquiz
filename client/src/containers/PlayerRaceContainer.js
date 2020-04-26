@@ -4,12 +4,14 @@ import PlayerRace from '../components/PlayerRace/PlayerRace';
 
 function PlayerRaceContainer() {
   const [state] = useContext(Context);
-  const { players, showPlayerRace } = state;
+  const { players, questions = [], showPlayers = true } = state;
 
   return (
-    <React.Fragment>
-      {players && showPlayerRace ? <PlayerRace players={players} /> : ''}
-    </React.Fragment>
+    <PlayerRace
+      players={players}
+      numberOfQuestions={questions.length}
+      showPlayers={showPlayers}
+    />
   );
 }
 

@@ -2,40 +2,34 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
 
 import QuestionsContainer from './QuestionsContainer';
-import { animated, useTransition } from 'react-spring';
-import Players from '../components/Players/Players';
+import { animated, useSpring, useTransition } from 'react-spring';
 import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
 import Countdown from '../components/Countdown/Countdown';
-import Ready from '../components/Ready/Ready';
+import ControlsContainer from './ControlsContainer';
+import PlayerRaceContainer from './PlayerRaceContainer';
 
 function QuizContainer() {
-  const [state, dispatch] = useContext(Context);
+  const [state] = useContext(Context);
 
   const {
-    socket,
     player,
     activeQuestion,
     showQuestion,
-    showPlayers,
-    players,
     showWaiting,
-    showReady,
     showCountdown,
-    isComplete
+    isComplete,
+    showPlayers
   } = state;
+
+  const heightProps = useSpring({
+    height: !showPlayers ? '70%' : '20%'
+  });
 
   const mainTransition = useTransition(player && player.isActive, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 }
   });
-
-  const setPlayerReady = () => {
-    socket.emit('set-player-ready');
-    dispatch({
-      type: 'SET_WAITING'
-    });
-  };
 
   return (
     <React.Fragment>
@@ -45,21 +39,22 @@ function QuizContainer() {
             <animated.div
               key={key}
               style={props}
-              className="flex flex-col flex-grow justify-center p-4"
+              className="flex flex-col h-full w-full justify-center items-center p-4 relative"
             >
-              <div className="flex flex-col flex-grow justify-center my-4">
-                {activeQuestion && showQuestion ? <QuestionsContainer /> : ''}
-                {showPlayers ? <Players players={players} /> : ''}
-              </div>
-              <div className="flex flex-col flex-grow justify-center my-4">
+              <animated.div
+                style={heightProps}
+                className="flex w-full items-center flex-col justify-center absolute top-0 mt-12 p-4 left-0"
+              >
                 <WaitingForPlayers completed={isComplete} show={showWaiting} />
+                {activeQuestion && showQuestion ? <QuestionsContainer /> : ''}
                 {showCountdown ? (
                   <Countdown time={1} show={showCountdown} />
                 ) : (
                   ''
                 )}
-                <Ready setPlayerReady={setPlayerReady} show={showReady} />
-              </div>
+                <ControlsContainer />
+              </animated.div>
+              <PlayerRaceContainer />
             </animated.div>
           )
       )}

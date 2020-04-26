@@ -1,10 +1,7 @@
 const toggleAnswerViews = (state, type) => {
   const values = {
-    showAnswer: false,
     showWaiting: false,
     showReady: false,
-    showPlayers: false,
-    showAnswerInput: false,
     showQuestion: false,
     showCountdown: false
   };
@@ -42,15 +39,16 @@ const Reducer = (state, action) => {
       return {
         ...state,
         ...toggleAnswerViews(state, 'showCountDown'),
-        isStarted: true
+        isStarted: true,
+        showPlayers: false
       };
-    case 'SET_PLAYER_COMPLETE':
+    case 'SET_QUIZ_COMPLETE':
       return {
-        ...toggleAnswerViews(state, 'showWaiting'),
+        ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
         isComplete: true
       };
-    case 'SET_QUIZ_COMPLETE':
+    case 'SET_PLAYER_COMPLETE':
       return {
         ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
@@ -69,34 +67,29 @@ const Reducer = (state, action) => {
     case 'SHOW_ACTIVE_QUESTION':
       return {
         ...state,
-        showAnswer: false,
         showWaiting: false,
         showReady: false,
-        showPlayers: false,
-        showAnswerInput: true,
         showQuestion: true,
         showCountdown: false,
+        showPlayers: false,
         questionStartTime: new Date()
       };
     case 'SET_AND_SHOW_ACTIVE_QUESTION':
       return {
         ...state,
-        showAnswer: false,
         showWaiting: false,
         showReady: false,
-        showPlayers: false,
-        showAnswerInput: true,
         showQuestion: true,
         showCountdown: false,
+        showPlayers: false,
         activeQuestion: action.payload,
         questionStartTime: new Date()
       };
     case 'SET_COUNTDOWN':
-      return toggleAnswerViews(state, 'showCountdown');
-    case 'SHOW_ANSWER':
-      return toggleAnswerViews(state, 'showAnswer');
-    case 'SET_SHOW_ANSWER_INPUT':
-      return toggleAnswerViews(state, 'showAnswerInput');
+      return {
+        ...toggleAnswerViews(state, 'showCountdown'),
+        showPlayers: false
+      };
     case 'SET_WAITING':
       return toggleAnswerViews(state, 'showWaiting');
     case 'SET_SHOW_READY':

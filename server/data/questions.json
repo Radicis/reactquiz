@@ -4,14 +4,14 @@
     "type": "TEXT",
     "content": "Joe has 2 balls",
     "answerType": "BOOL",
-    "answer": false
+    "answer": "false"
   },
   {
     "id": 2,
     "type": "TEXT",
     "content": "True or false, The Bahamas is made up of over 700 islands?",
     "answerType": "BOOL",
-    "answer": true
+    "answer": "true"
   },
   {
     "id": 3,
@@ -27,7 +27,12 @@
     "type": "TEXT",
     "content": "Marble is a common name for which chemical compound?",
     "answerType": "MULTI",
-    "choices": ["Calcium Carbonate", "Calcium Chloride", "Calcium Bicarbonate", "Calcium Dioxide"],
+    "choices": [
+      "Calcium Carbonate",
+      "Calcium Chloride",
+      "Calcium Bicarbonate",
+      "Calcium Dioxide"
+    ],
     "answer": "Calcium Carbonate"
   }
 ]

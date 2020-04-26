@@ -12,14 +12,12 @@ module.exports = {
 	  return false;
 	}
 	const {io, player, questionIndex, isCorrect} = options;
-	const {id: playerId} = player;
 
 	const quiz = QuizList.getQuiz('test');
 
-	const progress = quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
+	quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
 
-	io.sockets.emit('player-progress', progress);
-	io.sockets.emit('player-progress', progress);
+	io.sockets.emit('update-player', player);
 
   }
 };

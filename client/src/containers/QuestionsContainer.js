@@ -11,29 +11,26 @@ function QuestionsContainer() {
     socket,
     activeQuestion,
     questionStartTime,
-    answer,
-    isCorrect,
     showAnswer,
-    questions,
-    showAnswerInput
+    questions
   } = state;
 
   const transition = useTransition(index, (index) => index, {
     config: config.stiff,
     from: {
-      transform: 'scale(2) skew(5deg)',
+      transform: 'translate3d(-1000px,0,0)',
       position: 'absolute'
     },
     enter: {
       opacity: 1,
-      transform: 'scale(1) skew(1deg)',
+      transform: 'translate3d(0,0,0)',
       position: 'relative'
     },
     leave: {
-      transform: 'scale(0) skew(5deg)',
+      transform: 'translate3d(1000px,0,0)',
       position: 'absolute',
-      width: '100%',
-      height: '100%'
+      height: '100%',
+      width: '100%'
     }
   });
 
@@ -46,17 +43,20 @@ function QuestionsContainer() {
       playerAnswer,
       answeredTime: new Date() - questionStartTime
     });
-    if (questions[index + 1]) {
-      dispatch({
-        type: 'SET_AND_SHOW_ACTIVE_QUESTION',
-        payload: questions[index + 1]
-      });
-      setQuestionIndex(index + 1);
-    } else {
-      dispatch({
-        type: 'SET_QUIZ_COMPLETE'
-      });
-    }
+    // allow time to show correctness of the answer
+    setTimeout(() => {
+      if (questions[index + 1]) {
+        dispatch({
+          type: 'SET_AND_SHOW_ACTIVE_QUESTION',
+          payload: questions[index + 1]
+        });
+        setQuestionIndex(index + 1);
+      } else {
+        dispatch({
+          type: 'SET_PLAYER_COMPLETE'
+        });
+      }
+    }, 1000);
   };
 
   return (
@@ -66,19 +66,16 @@ function QuestionsContainer() {
           <animated.div
             key={key}
             style={props}
-            className="flex flex-grow justify-center p-4 bg-white border rounded-lg shadow relative"
+            className="flex flex-grow w-full justify-center relative"
           >
             <Question
               type={activeQuestion.type}
-              path={activeQuestion.path}
               answerType={activeQuestion.answerType}
               content={activeQuestion.content}
               choices={activeQuestion.choices}
               submitAnswer={submitAnswer}
-              answer={answer}
-              isCorrect={isCorrect}
+              answer={activeQuestion.answer}
               showAnswer={showAnswer}
-              showAnswerInput={showAnswerInput}
             />
           </animated.div>
         );

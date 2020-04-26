@@ -12,8 +12,18 @@ class Player {
     console.log(`Player ${name} created with ID: ${id}`);
   }
 
+  getInitials (name) {
+    const nameArr = name.split(' ');
+    if (nameArr.length > 1) {
+      return nameArr[0][0].toUpperCase() + nameArr[1][0].toUpperCase()
+    }
+    const letters = name.split('');
+    return letters[0].toUpperCase() + letters[1].toUpperCase();
+  }
+
   setName(name) {
     this.name = name;
+    this.initials = this.getInitials(name);
     this.isActive = true;
   }
 

@@ -70,6 +70,7 @@ function SocketContainer() {
     });
 
     socket.on('update-player', (data) => {
+      console.log(data);
       dispatch({
         type: 'UPDATE_PLAYER',
         payload: data

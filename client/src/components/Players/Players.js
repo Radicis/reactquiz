@@ -22,8 +22,8 @@ function Players({ players, showPlayers = false }) {
                 players.map((player) => (
                   <Player
                     key={player.id}
-                    name={player.name}
-                    score={player.score}
+                    initials={player.initials}
+                    progress={player.progress}
                     isReady={player.isReady}
                   />
                 ))

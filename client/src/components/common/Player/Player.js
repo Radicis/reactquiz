@@ -1,23 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { animated, useSpring, config } from 'react-spring';
 
-function Player({ name, score, isReady }) {
+const padding = 28 + 38;
+
+function Player({ numberOfQuestions, initials, isReady, progress }) {
+  const getPosition = (prog) => {
+    if (!prog) {
+      return 0;
+    }
+    let width = window.innerWidth;
+    if (width >= 800) {
+      width = 800 - padding; // remove padding
+    }
+    const percentage = 100 / (numberOfQuestions / prog) / 100;
+    const newLeft = percentage * (width - padding);
+    console.log(`New left: ${newLeft}`);
+    return newLeft;
+  };
+  const move = useSpring({
+    config: config.stiff,
+    transform: 'translate3d(0,0,0)',
+    p: getPosition(progress)
+  });
   return (
-    <div
-      className={`flex flex-row border-2 m-2 justify-center items-center ${
-        isReady ? 'bg-green-400 bounce' : 'bg-yellow-400 sleep'
-      } px-4 py-2 rounded-full text-lg overflow-hidden`}
+    <animated.div
+      style={{
+        ...move,
+        transform: move.p.interpolate((y) => {
+          return `translate3d(${y}px,0,0)`;
+        })
+      }}
+      className={`player absolute flex flex-row border z-10 justify-center items-center 
+      p-2 rounded-full text-sm overflow-hidden left-0 shadow-lg cursor-pointer
+      ${isReady ? 'bg-green-400 bounce' : 'bg-yellow-400 sleep'}`}
     >
-      <div className="flex flex-grow truncate mr-2">{name}</div>
-      <div className="font-bold">{score}</div>
-    </div>
+      {initials}
+    </animated.div>
   );
 }
 
 Player.propTypes = {
-  name: PropTypes.string,
-  score: PropTypes.number,
-  isReady: PropTypes.bool
+  initials: PropTypes.string,
+  isReady: PropTypes.bool,
+  progress: PropTypes.number,
+  numberOfQuestions: PropTypes.number
 };
 
 export default Player;

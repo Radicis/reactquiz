@@ -21,6 +21,7 @@ module.exports = {
 
     // if this is the first player, they own the quiz
     if (quiz.getPlayers().length === 0) {
+      console.log('Setting owner');
       quiz.setOwner(playerId);
     }
 

@@ -108,8 +108,8 @@ class Quiz {
         isCorrect,
         answeredTime
       });
-      player.incrementProgress();
     }
+    player.incrementProgress();
     return player.getProgress();
   }
 }

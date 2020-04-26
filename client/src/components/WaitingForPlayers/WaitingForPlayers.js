@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import loader from '../../images/loader.svg';
 import { animated } from 'react-spring';
-import upDownTransition from '../../hooks/upDownTransition';
+import scaleTransition from '../../hooks/scaleTransition';
 
 function WaitingForPlayers({ show, completed }) {
-  const transition = upDownTransition(show);
+  const transition = scaleTransition(show);
   return (
     <React.Fragment>
       {transition.map(

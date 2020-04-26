@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { animated } from 'react-spring';
-import upDownTransition from '../../hooks/upDownTransition';
+import scaleTransition from '../../hooks/scaleTransition';
 
 function Ready({ show, setPlayerReady }) {
-  const transition = upDownTransition(show);
+  const transition = scaleTransition(show);
   return (
     <React.Fragment>
       {transition.map(

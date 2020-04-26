@@ -15,12 +15,9 @@ const initialState = {
   activeQuestion: null,
   showWaiting: false,
   showPlayers: true,
-  showAnswer: false,
   isComplete: false,
-  showPlayerRace: false,
   showReady: true,
-  showCountDown: false,
-  isCorrect: false
+  showCountDown: false
 };
 
 // eslint-disable-next-line react/prop-types
