@@ -3,10 +3,9 @@ import { Context } from '../store/Store';
 
 import QuestionsContainer from './QuestionsContainer';
 import { animated, useSpring, useTransition } from 'react-spring';
-import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
 import Countdown from '../components/Countdown/Countdown';
-import ControlsContainer from './ControlsContainer';
 import PlayerRaceContainer from './PlayerRaceContainer';
+import StatusContainer from './StatusContainer';
 
 function QuizContainer() {
   const [state] = useContext(Context);
@@ -15,14 +14,12 @@ function QuizContainer() {
     player,
     activeQuestion,
     showQuestion,
-    showWaiting,
     showCountdown,
-    isComplete,
     showPlayers
   } = state;
 
   const heightProps = useSpring({
-    height: !showPlayers ? '70%' : '20%'
+    height: !showPlayers ? '80%' : '20%'
   });
 
   const mainTransition = useTransition(player && player.isActive, null, {
@@ -39,20 +36,24 @@ function QuizContainer() {
             <animated.div
               key={key}
               style={props}
-              className="flex flex-col h-full w-full justify-center items-center p-4 relative"
+              className="flex flex-col h-full w-full relative mt-12"
             >
               <animated.div
                 style={heightProps}
-                className="flex w-full items-center flex-col justify-center absolute top-0 mt-12 p-4 left-0"
+                className="flex w-full flex-col justify-center top-0 p-4 left-0"
               >
-                <WaitingForPlayers completed={isComplete} show={showWaiting} />
-                {activeQuestion && showQuestion ? <QuestionsContainer /> : ''}
+                {activeQuestion && showQuestion ? (
+                  <QuestionsContainer />
+                ) : !showCountdown ? (
+                  <StatusContainer />
+                ) : (
+                  ''
+                )}
                 {showCountdown ? (
                   <Countdown time={1} show={showCountdown} />
                 ) : (
                   ''
                 )}
-                <ControlsContainer />
               </animated.div>
               <PlayerRaceContainer />
             </animated.div>

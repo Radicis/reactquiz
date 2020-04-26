@@ -1,11 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Player from '../common/Player/Player';
-import { useSpring, animated } from 'react-spring';
+import Player from './Player/Player';
+import { useSpring, animated, config } from 'react-spring';
+
+const padding = 30;
 
 function PlayerRace({ showPlayers, numberOfQuestions, players }) {
+  const width = window.innerWidth >= 800 ? 800 : window.innerWidth;
+
   const props = useSpring({
-    height: showPlayers ? '70%' : '20%'
+    config: config.wobbly,
+    height: showPlayers ? '70%' : '15%',
+    position: showPlayers ? 'relative' : 'absolute',
+    borderRadius: showPlayers ? '0.5rem' : '0',
+    borderTopRightRadius: showPlayers ? '0.5rem' : '3rem',
+    borderTopLeftRadius: showPlayers ? '0.5rem' : '3rem',
+    margin: showPlayers ? '1rem' : '0rem',
+    width: showPlayers ? `${width - padding}px` : `${width}px`
   });
 
   const finishProps = useSpring({
@@ -16,16 +27,20 @@ function PlayerRace({ showPlayers, numberOfQuestions, players }) {
   return (
     <animated.div
       style={props}
-      className="flex bg-white shadow-2xl rounded-t-xl overflow-hidden flex-row flex-grow justify-center w-full absolute bottom-0 left-0 flex-wrap items-center mt-4 flex-wrap"
+      className="players shadow-2xl bottom-0 left-0 p-4 overflow-hidden relative bg-white"
     >
       {players.length > 0 ? (
         players.map((player) => (
           <Player
             progress={player.progress}
+            color={player.color}
             key={player.id}
             initials={player.initials}
+            name={player.name}
             numberOfQuestions={numberOfQuestions}
+            showPlayers={showPlayers}
             isReady={player.isReady}
+            isOwner={player.isOwner}
           />
         ))
       ) : (

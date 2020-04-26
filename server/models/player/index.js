@@ -1,6 +1,9 @@
 /**
  * Class to encapsulate player functionality
  */
+
+const letters = '56789ABCDEF';
+
 class Player {
   constructor({ name, id }) {
     this.name = 'UNKNOWN'; // default
@@ -8,6 +11,11 @@ class Player {
     this.score = 0;
     this.isActive = false;
     this.isReady = false;
+    this.color = '#';
+    for (let i = 0; i < 6; i++) {
+      this.color += letters[Math.floor(Math.random() * 11)];
+    }
+    console.log(this.color);
     this.progress = 0;
     console.log(`Player ${name} created with ID: ${id}`);
   }

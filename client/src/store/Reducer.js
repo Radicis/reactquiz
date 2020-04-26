@@ -52,6 +52,7 @@ const Reducer = (state, action) => {
       return {
         ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
+        showWaiting: true,
         isComplete: true
       };
     case 'SET_QUESTIONS':

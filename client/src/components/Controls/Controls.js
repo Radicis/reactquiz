@@ -15,8 +15,8 @@ function Controls({
   return (
     <React.Fragment>
       {player && player.isActive ? (
-        <div className="flex flex-row items-center">
-          {showReady ? (
+        <div className="flex flex-row items-center justify-center">
+          {!player.isOwner && showReady ? (
             <CustomButton
               label="Ready"
               clickAction={setPlayerReady}
@@ -25,7 +25,7 @@ function Controls({
           ) : (
             ''
           )}
-          {player.isOwner && (isComplete || !isStarted) ? (
+          {isComplete && player.isOwner && (isComplete || !isStarted) ? (
             <CustomButton
               label="Start"
               clickAction={() => startQuiz()}

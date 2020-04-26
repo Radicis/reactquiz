@@ -13,6 +13,7 @@ function BoolAnswerInput({ answer, setAnswer }) {
       <AnswerButton
         correct={answer === 'true'}
         showCorrect={showAnswer}
+        disabled={showAnswer}
         label="True"
         grow={true}
         clickAction={() => handleAnswerInput('true')}
@@ -20,6 +21,7 @@ function BoolAnswerInput({ answer, setAnswer }) {
       <AnswerButton
         correct={answer === 'false'}
         showCorrect={showAnswer}
+        disabled={showAnswer}
         label="False"
         grow={true}
         clickAction={() => handleAnswerInput('false')}

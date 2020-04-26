@@ -20,7 +20,7 @@ function UserSetup({ setPlayerName }) {
   };
 
   return (
-    <div className="flex flex-col top-0 left-0 h-full w-full items-center justify-center user-setup-container">
+    <div className="flex flex-col top-0 left-0 h-full w-full items-center justify-center">
       <span className="mb-4 text-3xl font-semibold">Welcome to Quiz!</span>
       <div className="my-8">
         <CustomInput

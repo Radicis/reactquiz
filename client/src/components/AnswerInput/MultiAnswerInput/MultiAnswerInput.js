@@ -13,6 +13,7 @@ function MultiAnswerInput({ answer, choices = [], setAnswer }) {
       <AnswerButton
         correct={answer === choice}
         showCorrect={showAnswer}
+        disabled={showAnswer}
         key={choice}
         label={choice}
         grow={true}

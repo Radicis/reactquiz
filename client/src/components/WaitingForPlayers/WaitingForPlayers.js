@@ -17,10 +17,10 @@ function WaitingForPlayers({ show, completed }) {
               style={props}
               className="p-4 h-full w-full items-center text-center justify-center flex flex-col"
             >
-              <div className="">
+              <div className="text-lg sm:text-2xl">
                 Waiting for everyone to be {completed ? 'done' : 'ready'}..
               </div>
-              <img className="h-24" src={loader} alt="Loading.." />
+              <img className="h-16" src={loader} alt="Loading.." />
             </animated.div>
           )
       )}
