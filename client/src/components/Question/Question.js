@@ -34,11 +34,9 @@ function Question({
   }
 
   return (
-    <div className="flex flex-col flex-grow">
-      <div className="flex flex-col flex-grow justify-center my-4">
-        {renderSwitch(type)}
-      </div>
-      <div className="flex justify-center">
+    <div className="flex flex-col justify-center flex-grow question">
+      <div className="flex flex-col flex-grow my-4">{renderSwitch(type)}</div>
+      <div className="flex justify-center flex-grow">
         <Answer show={showAnswer} answer={answer} isCorrect={isCorrect} />
         <AnswerInput
           show={showAnswerInput}

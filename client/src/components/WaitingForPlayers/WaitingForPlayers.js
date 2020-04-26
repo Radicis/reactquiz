@@ -15,7 +15,7 @@ function WaitingForPlayers({ show, completed }) {
             <animated.div
               key={key}
               style={props}
-              className="p-4 h-full w-full items-center justify-center flex flex-col"
+              className="p-4 h-full w-full items-center text-center justify-center flex flex-col"
             >
               <div className="">
                 Waiting for everyone to be {completed ? 'done' : 'ready'}..

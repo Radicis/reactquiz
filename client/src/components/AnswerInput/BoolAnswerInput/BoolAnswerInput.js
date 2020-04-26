@@ -4,7 +4,7 @@ import CustomButton from '../../common/CustomButton/CustomButton';
 
 function BoolAnswerInput({ setAnswer }) {
   return (
-    <div className="p-4 flex flex-row">
+    <div className="flex flex-col justify-center">
       <CustomButton label="True" clickAction={() => setAnswer(true)} />
       <CustomButton label="False" clickAction={() => setAnswer(false)} />
     </div>

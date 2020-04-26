@@ -6,11 +6,8 @@ import MultiAnswerInput from './MultiAnswerInput/MultiAnswerInput';
 import TextAnswerInput from './TextAnswerInput/TextAnswerInput';
 import NumberAnswerInput from './NumberAnswerInput/NumberAnswerInput';
 import { animated } from 'react-spring';
-import upDownTransition from '../../hooks/upDownTransition';
 
 function AnswerInput({ show, answerType = 'BOOL', choices, submitAnswer }) {
-  const transition = upDownTransition(show);
-
   const getAnswerComponent = (type) => {
     switch (type) {
       case 'BOOL':
@@ -27,20 +24,9 @@ function AnswerInput({ show, answerType = 'BOOL', choices, submitAnswer }) {
   };
 
   return (
-    <React.Fragment>
-      {transition.map(
-        ({ item, key, props }) =>
-          item && (
-            <animated.div
-              key={key}
-              style={props}
-              className="flex flex-col justify-center items-center px-4"
-            >
-              {getAnswerComponent(answerType)}
-            </animated.div>
-          )
-      )}
-    </React.Fragment>
+    <div className="flex flex-col justify-center flex-grow">
+      {getAnswerComponent(answerType)}
+    </div>
   );
 }
 

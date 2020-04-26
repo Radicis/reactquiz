@@ -5,7 +5,7 @@ import { Context } from '../../store/Store';
 import upDownTransition from '../../hooks/upDownTransition';
 
 function Countdown({ show, time = 5 }) {
-  const [value, setVal] = useState(1);
+  const [value, setVal] = useState(time);
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(Context);
 
@@ -20,7 +20,7 @@ function Countdown({ show, time = 5 }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!parseInt(value) || value === time) {
+      if (!parseInt(value) || value <= 1) {
         setVal('GO!');
         clearInterval(interval);
         // wait 2s before showing the first question
@@ -30,7 +30,7 @@ function Countdown({ show, time = 5 }) {
           });
         }, 1000);
       } else {
-        setVal(value + 1);
+        setVal(value - 1);
       }
     }, 1000);
 
@@ -48,7 +48,11 @@ function Countdown({ show, time = 5 }) {
               className="flex flex-grow items-center justify-center relative"
             >
               {countTransition.map(({ item, key, props }) => (
-                <animated.div key={key} style={props} className="absolute">
+                <animated.div
+                  key={key}
+                  style={props}
+                  className="number absolute"
+                >
                   {item}
                 </animated.div>
               ))}

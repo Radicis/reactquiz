@@ -19,6 +19,7 @@ module.exports = {
 	const progress = quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
 
 	io.sockets.emit('player-progress', progress);
+	io.sockets.emit('player-progress', progress);
 
   }
 };

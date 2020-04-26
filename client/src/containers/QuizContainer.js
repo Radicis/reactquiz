@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
 
-import QuestionContainer from './QuestionContainer';
+import QuestionsContainer from './QuestionsContainer';
 import { animated, useTransition } from 'react-spring';
 import Players from '../components/Players/Players';
 import WaitingForPlayers from '../components/WaitingForPlayers/WaitingForPlayers';
@@ -48,12 +48,16 @@ function QuizContainer() {
               className="flex flex-col flex-grow justify-center p-4"
             >
               <div className="flex flex-col flex-grow justify-center my-4">
-                {activeQuestion && showQuestion ? <QuestionContainer /> : ''}
+                {activeQuestion && showQuestion ? <QuestionsContainer /> : ''}
                 {showPlayers ? <Players players={players} /> : ''}
               </div>
               <div className="flex flex-col flex-grow justify-center my-4">
                 <WaitingForPlayers completed={isComplete} show={showWaiting} />
-                { showCountdown ? <Countdown time={5} show={showCountdown} /> : '' }
+                {showCountdown ? (
+                  <Countdown time={1} show={showCountdown} />
+                ) : (
+                  ''
+                )}
                 <Ready setPlayerReady={setPlayerReady} show={showReady} />
               </div>
             </animated.div>

@@ -11,7 +11,7 @@ function CustomButton({
 }) {
   return (
     <button
-      className={`bg-white shadow transition duration-200 text-lg text-gray-600 border-2 border-gray-400 hover:border-blue-500 py-2 px-4 rounded-full font-semibold mr-4 mb-2 relative cursor-pointer hover:text-blue-400 hover:border-blue-100 ${
+      className={`bg-white shadow transition duration-200 text-lg text-gray-600 border-2 border-gray-400 hover:border-blue-500 py-2 px-4 rounded-full font-semibold mb-4 relative cursor-pointer hover:text-blue-400 hover:border-blue-100 ${
         active ? 'text-blue-600' : ''
       }
 				${disabled ? 'pointer-events-none opacity-50 border-gray-200' : ''}
