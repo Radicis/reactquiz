@@ -16,9 +16,9 @@ function App() {
         className="overflow-hidden h-full flex flex-col text-lg relative border-l-0 border-r-0 border-gray-400
       bg-gray-200 md:border-r-2 md:border-l-2 text-2xl font-semibold text-gray-800"
       >
-        <div className="tracking-widest flex flex-row w-full absolute text-2xl font-light flex-grow-0 px-4 mt-2 text-gray-100 z-10">
+        <div className="tracking-widest flex flex-row w-full justify-center items-center absolute text-2xl font-light flex-grow-0 px-4 mt-2 text-gray-100 z-10">
           <span className="flex flex-grow">Quiz!</span>
-          <span>{baseUrl}/test</span>
+          <span className="text-xl">{baseUrl}/test</span>
         </div>
         <ErrorContainer />
         <div className="wave" />
