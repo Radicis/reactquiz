@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRight,
+  faCheck,
+  faLink
+} from '@fortawesome/free-solid-svg-icons';
 import CustomButton from '../common/CustomButton/CustomButton';
 
 function Controls({
@@ -10,12 +14,13 @@ function Controls({
   isStarted,
   startQuiz,
   setPlayerReady,
+  showLinkModal,
   showReady
 }) {
   return (
     <React.Fragment>
       {player && player.isActive ? (
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center justify-center flex-grow">
           {!player.isOwner && showReady ? (
             <CustomButton
               label="Ready"
@@ -25,12 +30,21 @@ function Controls({
           ) : (
             ''
           )}
-          {isComplete && player.isOwner && (isComplete || !isStarted) ? (
-            <CustomButton
-              label="Start"
-              clickAction={() => startQuiz()}
-              faIcon={faArrowRight}
-            />
+          {(!isStarted || isComplete) &&
+          player.isOwner &&
+          (!isComplete || !isStarted) ? (
+            <div className="flex flex-row justify-around flex-grow">
+              <CustomButton
+                label="Start"
+                clickAction={startQuiz}
+                faIcon={faArrowRight}
+              />
+              <CustomButton
+                label="Link"
+                clickAction={showLinkModal}
+                faIcon={faLink}
+              />
+            </div>
           ) : (
             ''
           )}
@@ -46,6 +60,7 @@ Controls.propTypes = {
   player: PropTypes.object,
   startQuiz: PropTypes.func,
   setPlayerReady: PropTypes.func,
+  showLinkModal: PropTypes.func,
   showReady: PropTypes.bool,
   isComplete: PropTypes.bool,
   alwaysShow: PropTypes.bool,

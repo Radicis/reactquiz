@@ -10,7 +10,7 @@ function PlayerRace({ showPlayers, numberOfQuestions, players }) {
 
   const props = useSpring({
     config: config.wobbly,
-    height: showPlayers ? '70%' : '15%',
+    height: showPlayers ? '74%' : '15%',
     position: showPlayers ? 'relative' : 'absolute',
     borderRadius: showPlayers ? '0.5rem' : '0',
     borderTopRightRadius: showPlayers ? '0.5rem' : '3rem',
@@ -27,7 +27,7 @@ function PlayerRace({ showPlayers, numberOfQuestions, players }) {
   return (
     <animated.div
       style={props}
-      className="players shadow-2xl bottom-0 left-0 p-4 overflow-hidden relative bg-white"
+      className="players shadow-2xl border bottom-0 left-0 p-4 overflow-hidden relative bg-white"
     >
       {players.length > 0 ? (
         players.map((player) => (
