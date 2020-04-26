@@ -44,33 +44,25 @@ body {
 .players,
 .status,
 .answer {
-  z-index: 1;
   background: white;
 }
 
-.question > *,
-.players > *,
-.status > *,
-.answer > * {
-  z-index: 2;
+.question:before,
+.answer:before,
+.status:before{
+  content: '';
+  display: block;
+  height: 100%;
+  width: 97%;
+  bottom: -10px;
+  left: 1.5%;
+  position: absolute;
+  z-index: -1;
+  background: #ccc;
+  border-radius: 0.5rem;
+  opacity: 0.5;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
-
-/*.question:after,*/
-/*.players:after,*/
-/*.status:after,*/
-/*.answer:after {*/
-/*  content: '';*/
-/*  display: block;*/
-/*  height: 100%;*/
-/*  width: 97%;*/
-/*  bottom: -10px;*/
-/*  left: 1.5%;*/
-/*  position: absolute;*/
-/*  background: #ccc;*/
-/*  border-radius: 0.5rem;*/
-/*  opacity: 0.5;*/
-/*  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);*/
-/*}*/
 
 .answer-button {
   @apply mb-6;

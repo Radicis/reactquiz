@@ -47,7 +47,7 @@ function Player({
       }}
       className={`
       flex flex-grow
-      player relative z-10 left-0`}
+      player relative left-0`}
     >
       {!showPlayers ? (
         <div

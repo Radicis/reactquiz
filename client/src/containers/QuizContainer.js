@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../store/Store';
 
 import QuestionsContainer from './QuestionsContainer';
@@ -19,7 +19,8 @@ function QuizContainer() {
   } = state;
 
   const heightProps = useSpring({
-    height: !showPlayers ? '80%' : '20%'
+    height: !showPlayers ? '80%' : '20%',
+    zIndex: 1 // hack to prevent the after from becoming invisible
   });
 
   const mainTransition = useTransition(player && player.isActive, null, {

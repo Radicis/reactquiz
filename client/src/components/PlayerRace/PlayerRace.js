@@ -16,7 +16,8 @@ function PlayerRace({ showPlayers, numberOfQuestions, players }) {
     borderTopRightRadius: showPlayers ? '0.5rem' : '3rem',
     borderTopLeftRadius: showPlayers ? '0.5rem' : '3rem',
     margin: showPlayers ? '1rem' : '0rem',
-    width: showPlayers ? `${width - padding}px` : `${width}px`
+    width: showPlayers ? `${width - padding}px` : `${width}px`,
+    zIndex: 1 // hack to prevent the after from becoming invisible
   });
 
   const finishProps = useSpring({
