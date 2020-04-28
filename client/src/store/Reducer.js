@@ -30,10 +30,11 @@ const updatePlayer = (player, players) => {
 
 const Reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_SOCKET':
+    case 'RESET':
       return {
-        ...state,
-        socket: action.payload
+        ...toggleAnswerViews(state, 'showCountDown'),
+        players: [],
+        player: { ...state.player, isActive: false }
       };
     case 'START_QUIZ':
       return {

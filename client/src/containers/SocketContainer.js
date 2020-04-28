@@ -63,10 +63,12 @@ function SocketContainer() {
     });
 
     socket.on('init-player', (data) => {
+      const { id } = data;
       dispatch({
         type: 'SET_PLAYER',
         payload: data
       });
+      localStorage.setItem('playerId', id); // store the playerId for reconnects
     });
 
     socket.on('update-player', (data) => {

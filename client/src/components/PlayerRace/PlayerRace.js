@@ -12,9 +12,10 @@ function PlayerRace({ showPlayers, numberOfQuestions, players }) {
     config: config.wobbly,
     height: showPlayers ? '74%' : '15%',
     position: showPlayers ? 'relative' : 'absolute',
-    borderRadius: showPlayers ? '0.5rem' : '0',
     borderTopRightRadius: showPlayers ? '0.5rem' : '3rem',
     borderTopLeftRadius: showPlayers ? '0.5rem' : '3rem',
+    borderBottomRightRadius: showPlayers ? '0.5rem' : '0rem',
+    borderBottomLeftRadius: showPlayers ? '0.5rem' : '0rem',
     margin: showPlayers ? '1rem' : '0rem',
     width: showPlayers ? `${width - padding}px` : `${width}px`,
     zIndex: 1 // hack to prevent the after from becoming invisible

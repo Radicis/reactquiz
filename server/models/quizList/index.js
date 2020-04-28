@@ -5,14 +5,13 @@ const Quiz = require('../quiz');
  */
 class QuizList {
   constructor() {
-    this.quizzes = {
-      test: new Quiz('Test Quiz', 'test')
-    };
+    this.quizzes = {};
   }
 
   addQuiz(name) {
     const newQuiz = new Quiz(name);
     this.quizzes[newQuiz.id] = newQuiz;
+    return newQuiz;
   }
 
   /**

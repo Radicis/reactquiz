@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
+import { withRouter } from 'react-router-dom';
 
 import QuestionsContainer from './QuestionsContainer';
 import { animated, useSpring, useTransition } from 'react-spring';
 import Countdown from '../components/Countdown/Countdown';
 import PlayerRaceContainer from './PlayerRaceContainer';
 import StatusContainer from './StatusContainer';
+import PropTypes from 'prop-types';
 
-function QuizContainer() {
+function QuizContainer({ match }) {
   const [state] = useContext(Context);
 
   const {
@@ -17,6 +19,11 @@ function QuizContainer() {
     showCountdown,
     showPlayers
   } = state;
+
+  useEffect(() => {
+    const { quizId } = match.params;
+    console.log(`Checking to see if quizId: ${quizId} is active`);
+  });
 
   const heightProps = useSpring({
     height: !showPlayers ? '80%' : '20%',
@@ -64,4 +71,8 @@ function QuizContainer() {
   );
 }
 
-export default QuizContainer;
+QuizContainer.propTypes = {
+  match: PropTypes.object
+};
+
+export default withRouter(QuizContainer);

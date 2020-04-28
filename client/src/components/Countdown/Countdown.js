@@ -35,7 +35,7 @@ function Countdown({ show, time = 5 }) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [value]);
+  }, [value, dispatch]);
 
   return (
     <React.Fragment>

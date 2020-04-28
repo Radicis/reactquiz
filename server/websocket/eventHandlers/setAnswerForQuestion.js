@@ -1,7 +1,5 @@
 const {apply} = require('../middleware');
 
-const QuizList = require('../../models/quizList');
-
 module.exports = {
   name: 'setAnswerForQuestion',
   method: (options, ...args) => {
@@ -11,9 +9,7 @@ module.exports = {
 	  console.log(e);
 	  return false;
 	}
-	const {io, player, questionIndex, isCorrect} = options;
-
-	const quiz = QuizList.getQuiz('test');
+	const { io, player, questionIndex, isCorrect, quiz } = options;
 
 	quiz.setPlayerAnswerForQuestion({player, questionIndex, isCorrect});
 

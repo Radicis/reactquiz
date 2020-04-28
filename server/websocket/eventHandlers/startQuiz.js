@@ -13,11 +13,9 @@ module.exports = {
       return false;
     }
 
-    const { io } = options;
+    const { io, quiz } = options;
 
     console.log('Starting Quiz');
-
-    const quiz = QuizList.getQuiz('test');
 
     quiz.reset();
 

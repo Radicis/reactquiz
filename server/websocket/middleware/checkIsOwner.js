@@ -3,8 +3,7 @@ const QuizList = require('../../models/quizList');
 module.exports = {
   name: 'checkIsOwner',
   method: (options) => {
-    const { id: playerId } = options;
-    const quiz = QuizList.getQuiz('test');
+    const { id: playerId, quiz } = options;
     if (!quiz) {
       throw new Error('No quiz found');
     }

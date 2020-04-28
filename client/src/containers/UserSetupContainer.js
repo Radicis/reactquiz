@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
+import { withRouter } from 'react-router-dom';
 
 import UserSetup from '../components/UserSetup/UserSetup';
 import { useTransition, animated, config } from 'react-spring';
+import PropTypes from 'prop-types';
 
-function UserSetupContainer() {
-  const [state] = useContext(Context);
+function UserSetupContainer({ history }) {
+  const [state, dispatch] = useContext(Context);
 
   const { socket, player } = state;
 
@@ -16,9 +18,21 @@ function UserSetupContainer() {
     leave: { opacity: 0, transform: 'scale(0)', position: 'absolute' }
   });
 
+  useEffect(() => {
+    console.log(player);
+    dispatch({
+      type: 'RESET'
+    });
+  }, [dispatch]);
+
   const setPlayerName = (name) => {
     // Emit the set name event on the socket
     socket.emit('set-name', { name });
+    goToQuiz();
+  };
+
+  const goToQuiz = () => {
+    history.push('/t5478t5849hf');
   };
 
   return (
@@ -39,4 +53,8 @@ function UserSetupContainer() {
   );
 }
 
-export default UserSetupContainer;
+UserSetupContainer.propTypes = {
+  history: PropTypes.object
+};
+
+export default withRouter(UserSetupContainer);

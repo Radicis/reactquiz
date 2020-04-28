@@ -3,7 +3,15 @@ import Reducer from './Reducer';
 import io from 'socket.io-client';
 import { host, port, protocol } from '../config';
 
-const newSocket = io(`${protocol}://${host}:${port}`);
+const playerId = localStorage.getItem('playerId');
+
+let connString = `${protocol}://${host}:${port}`;
+
+if (playerId) {
+  connString = `${connString}?playerId=${playerId}`;
+}
+
+const newSocket = io(connString);
 
 const initialState = {
   socket: newSocket,
