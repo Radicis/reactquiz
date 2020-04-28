@@ -35,7 +35,6 @@ function SocketContainer() {
     });
 
     socket.on('start-quiz', (questions) => {
-      console.log('Starting quiz');
       dispatch({
         type: 'START_QUIZ'
       });
@@ -72,7 +71,6 @@ function SocketContainer() {
     });
 
     socket.on('update-player', (data) => {
-      console.log(data);
       dispatch({
         type: 'UPDATE_PLAYER',
         payload: data

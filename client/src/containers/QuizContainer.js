@@ -1,6 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
+import * as axios from 'axios';
 import { withRouter } from 'react-router-dom';
+
+import { host, port, protocol } from '../config';
 
 import QuestionsContainer from './QuestionsContainer';
 import { animated, useSpring, useTransition } from 'react-spring';
@@ -9,7 +12,7 @@ import PlayerRaceContainer from './PlayerRaceContainer';
 import StatusContainer from './StatusContainer';
 import PropTypes from 'prop-types';
 
-function QuizContainer({ match }) {
+function QuizContainer({ match, history }) {
   const [state] = useContext(Context);
 
   const {
@@ -23,7 +26,14 @@ function QuizContainer({ match }) {
   useEffect(() => {
     const { quizId } = match.params;
     console.log(`Checking to see if quizId: ${quizId} is active`);
-  });
+    axios
+      .get(`${protocol}://${host}:${5001}/${quizId}`)
+      .then((res) => {
+        console.log(res);
+        history.push(`/${quizId}`);
+      })
+      .catch(() => history.push('/'));
+  }, []);
 
   const heightProps = useSpring({
     height: !showPlayers ? '80%' : '20%',
@@ -72,7 +82,8 @@ function QuizContainer({ match }) {
 }
 
 QuizContainer.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default withRouter(QuizContainer);

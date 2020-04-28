@@ -1,5 +1,10 @@
+const express = require('express');
+const cors = require('cors');
 const socketIO = require('socket.io');
-const server = require('http').createServer();
+
+const app = express();
+app.use(cors());
+const server = require('http').createServer(app);
 
 // Create the websocket server and set cors
 const io = socketIO(server, { origins: '*:*' });
@@ -18,6 +23,16 @@ const {
 const { middleware } = require('./middleware');
 const { getPlayer, checkIsOwner, getQuiz, requirePlayer, requireQuiz } = middleware;
 
+const QuizList = require('../models/quizList');
+
+app.get("/:quizId", (req, res) => {
+  const { quizId } = req.params;
+  if (QuizList.getQuiz(quizId)) {
+    return res.status(200).send('OK');
+  }
+  return res.status(404).send('Not active');
+});
+
 // Listen for connection events to create new players and set event listeners for that socket
 io.on('connection', (socket) => {
   connection({ socket, io }, getQuiz, getPlayer);
@@ -25,7 +40,7 @@ io.on('connection', (socket) => {
   // Listen for the set-name event to properly set a player name and update it from UNKNOWN
   socket.on('set-name', ({ name }) => {
     const { id: playerId } = socket;
-    setName({ socket, io, playerId, name }, requirePlayer);
+    setName({ socket, io, playerId, name }, requireQuiz, requirePlayer);
   });
 
   socket.on('set-player-ready', () => {
@@ -56,4 +71,4 @@ io.on('connection', (socket) => {
   });
 });
 
-module.exports = server;
+module.exports = { app, server };

@@ -27,7 +27,7 @@ function App() {
           <div className="wave" />
           <Switch>
             <Route path="/:quizId">
-              <QuizContainer />;
+              <QuizContainer />
             </Route>
             <Route path="/">
               <UserSetupContainer />

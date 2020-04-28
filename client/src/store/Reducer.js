@@ -34,7 +34,13 @@ const Reducer = (state, action) => {
       return {
         ...toggleAnswerViews(state, 'showCountDown'),
         players: [],
-        player: { ...state.player, isActive: false }
+        player: { ...state.player, isActive: false },
+        quizId: null
+      };
+    case 'SET_QUIZ':
+      return {
+        ...state,
+        quizId: action.payload
       };
     case 'START_QUIZ':
       return {

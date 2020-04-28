@@ -19,7 +19,7 @@ function UserSetupContainer({ history }) {
   });
 
   useEffect(() => {
-    console.log(player);
+    // Reset the player on component load (back)
     dispatch({
       type: 'RESET'
     });
@@ -28,11 +28,6 @@ function UserSetupContainer({ history }) {
   const setPlayerName = (name) => {
     // Emit the set name event on the socket
     socket.emit('set-name', { name });
-    goToQuiz();
-  };
-
-  const goToQuiz = () => {
-    history.push('/t5478t5849hf');
   };
 
   return (
