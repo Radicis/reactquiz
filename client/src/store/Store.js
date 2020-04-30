@@ -1,16 +1,9 @@
 import React, { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
+import { host, protocol, socketPort } from '../config';
 import io from 'socket.io-client';
-import { host, port, protocol } from '../config';
 
-const playerId = localStorage.getItem('playerId');
-
-let connString = `${protocol}://${host}:${port}`;
-
-if (playerId) {
-  connString = `${connString}?playerId=${playerId}`;
-}
-
+const connString = `${protocol}://${host}:${socketPort}`;
 const newSocket = io(connString);
 
 const initialState = {

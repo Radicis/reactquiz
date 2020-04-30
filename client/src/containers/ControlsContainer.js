@@ -13,7 +13,8 @@ function ControlsContainer() {
     activeQuestion,
     isStarted,
     isComplete,
-    showReady
+    showReady,
+    quizId
   } = state;
 
   const setPlayerReady = () => {
@@ -29,7 +30,7 @@ function ControlsContainer() {
 
   const startQuiz = () => {
     // Emit the set name event on the socket
-    socket.emit('start-quiz');
+    socket.emit('start-quiz', ({quizId}));
   };
 
   return (

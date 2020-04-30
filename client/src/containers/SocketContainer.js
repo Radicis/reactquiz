@@ -6,8 +6,12 @@ function SocketContainer() {
 
   const { socket } = state;
 
-  useEffect(() => {
+  const initSocket = () => {
     socket.on('connect', () => {
+      console.log('Socket Connected');
+      dispatch({
+        type: 'RESET'
+      });
       dispatch({
         type: 'SET_CONNECTED'
       });
@@ -20,7 +24,7 @@ function SocketContainer() {
       });
     });
 
-    socket.on('connect_error', () => {
+    socket.on('connect_error', (err) => {
       dispatch({
         type: 'SET_ERROR',
         payload: 'Connection Error'
@@ -34,10 +38,14 @@ function SocketContainer() {
       });
     });
 
-    socket.on('start-quiz', (questions) => {
+    socket.on('join-quiz', () => {
+      console.log('Quiz joined');
       dispatch({
-        type: 'START_QUIZ'
+        type: 'SET_JOINED'
       });
+    });
+
+    socket.on('start-quiz', (questions) => {
       dispatch({
         type: 'SET_QUESTIONS',
         payload: questions
@@ -46,6 +54,9 @@ function SocketContainer() {
       dispatch({
         type: 'SET_ACTIVE_QUESTION',
         payload: questions[0]
+      });
+      dispatch({
+        type: 'START_QUIZ'
       });
     });
 
@@ -77,20 +88,17 @@ function SocketContainer() {
       });
     });
 
-    socket.on('set-owner', (data) => {
-      dispatch({
-        type: 'UPDATE_PLAYER',
-        payload: data
-      });
-    });
-
     socket.on('players', (data) => {
       dispatch({
         type: 'SET_PLAYERS',
         payload: data
       });
     });
-  }, [dispatch, socket]); // Pass in array here to prevent re-render
+  };
+
+  useEffect(() => {
+    initSocket();
+  }, [dispatch]); // Pass in array here to prevent re-render
   return <div />;
 }
 

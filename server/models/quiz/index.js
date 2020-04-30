@@ -1,14 +1,15 @@
 const UUID = require('uuid').v4;
 const QuestionList = require('../questionList');
 const PlayerList = require('../playerList');
+const Player = require('../player');
+const GlobalPlayerList = require('../../models/playerList/global');
 
 /**
  * Class to encapsulate quiz functionality
  */
 class Quiz {
-  constructor(name, id) {
+  constructor(id) {
     this.id = id || UUID(); // allow to set the id manually
-    this.name = name || 'Untitled Quiz';
     this.questionList = new QuestionList();
     this.playerList = new PlayerList();
   }
@@ -41,10 +42,18 @@ class Quiz {
 
   /**
    * Add a player to the local player list for this quiz
-   * @param playerId
+   * @param name
    */
-  addPlayer(playerId) {
+  addPlayer(name) {
+    const player = new Player({ name });
+    const { id: playerId } = player;
+    // Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
+    GlobalPlayerList.addPlayer(player);
+    if (this.playerList.getPlayers().length === 0) {
+      this.setOwner(playerId);
+    }
     this.playerList.addPlayer(playerId);
+    return player;
   }
 
   /**

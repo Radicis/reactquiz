@@ -33,14 +33,19 @@ const Reducer = (state, action) => {
     case 'RESET':
       return {
         ...toggleAnswerViews(state, 'showCountDown'),
-        players: [],
-        player: { ...state.player, isActive: false },
+        player: null,
         quizId: null
       };
-    case 'SET_QUIZ':
+    case 'INIT':
       return {
         ...state,
-        quizId: action.payload
+        quizId: action.payload.quizId,
+        playerId: action.payload.playerId
+      };
+    case 'SET_PLAYER_NAME':
+      return {
+        ...state,
+        playerName: action.payload
       };
     case 'START_QUIZ':
       return {
@@ -133,6 +138,13 @@ const Reducer = (state, action) => {
       return {
         ...state,
         error: false,
+        connected: true
+      };
+    case 'SET_JOINED':
+      return {
+        ...state,
+        error: false,
+        joined: true,
         connected: true
       };
     case 'SET_ERROR':

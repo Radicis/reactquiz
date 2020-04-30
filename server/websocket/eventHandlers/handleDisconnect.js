@@ -20,7 +20,7 @@ module.exports = {
     // Wait for the specified timeout then delete the player to allow for reconnects w/cookies
     setTimeout(() => {
       // const quiz = QuizList.getQuiz(quizId);
-      GlobalPlayerList.removePlayer(playerId);
+      // GlobalPlayerList.removePlayer(playerId);
       // const remainingPlayers = quiz.getPlayers();
       // // if the removed player was the owner then promote the new 0 index player
       // if (quiz.checkIsOwner(playerId)) {

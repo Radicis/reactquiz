@@ -15,7 +15,7 @@ function Player({
   isOwner,
   totalTime,
   numCorrect,
-  numInCorrect,
+  numIncorrect,
   showPlayers
 }) {
   const getPosition = (prog) => {
@@ -53,19 +53,19 @@ function Player({
         <div
           style={{ background: color || '#ccc' }}
           className={`rounded-full shadow-lg p-2 overflow-hidden text-sm cursor-pointer
-      ${isOwner || isReady ? 'bounce' : 'sleep'}`}
+          ${isOwner || isReady ? 'bounce' : 'sleep'}`}
         >
           {initials || '??'}
         </div>
       ) : (
         <div
           style={{ background: color || '#ccc' }}
-          className="text-lg rounded-lg shadow-lg py-2 px-6 overflow-hidden flex flex-grow"
+          className="text-lg rounded-lg shadow-lg py-2 px-6 overflow-hidden flex flex-grow mb-4"
         >
           <div className="flex flex-grow">{name || 'UNKNOWN'}</div>
           <div>{totalTime}</div>
           <div>{numCorrect}</div>
-          <div>{numInCorrect}</div>
+          <div>{numIncorrect}</div>
           <div>{score || 0}</div>
         </div>
       )}

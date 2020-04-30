@@ -1,50 +1,40 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
-import * as axios from 'axios';
-import { withRouter } from 'react-router-dom';
-
-import { host, port, protocol } from '../config';
-
 import QuestionsContainer from './QuestionsContainer';
 import { animated, useSpring, useTransition } from 'react-spring';
 import Countdown from '../components/Countdown/Countdown';
 import PlayerRaceContainer from './PlayerRaceContainer';
 import StatusContainer from './StatusContainer';
-import PropTypes from 'prop-types';
 
-function QuizContainer({ match, history }) {
+function QuizContainer() {
   const [state] = useContext(Context);
 
   const {
-    player,
     activeQuestion,
+    connected,
     showQuestion,
     showCountdown,
-    showPlayers
+    showPlayers,
+    socket,
+    joined,
+    playerId,
+    quizId
   } = state;
-
-  useEffect(() => {
-    const { quizId } = match.params;
-    console.log(`Checking to see if quizId: ${quizId} is active`);
-    axios
-      .get(`${protocol}://${host}:${5001}/${quizId}`)
-      .then((res) => {
-        console.log(res);
-        history.push(`/${quizId}`);
-      })
-      .catch(() => history.push('/'));
-  }, []);
 
   const heightProps = useSpring({
     height: !showPlayers ? '80%' : '20%',
     zIndex: 1 // hack to prevent the after from becoming invisible
   });
 
-  const mainTransition = useTransition(player && player.isActive, null, {
+  const mainTransition = useTransition(socket && connected && joined, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 }
   });
+
+  useEffect(() => {
+    socket.emit('join-quiz', { quizId, playerId });
+  }, []);
 
   return (
     <React.Fragment>
@@ -81,9 +71,4 @@ function QuizContainer({ match, history }) {
   );
 }
 
-QuizContainer.propTypes = {
-  match: PropTypes.object,
-  history: PropTypes.object
-};
-
-export default withRouter(QuizContainer);
+export default QuizContainer;

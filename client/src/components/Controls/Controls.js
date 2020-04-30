@@ -30,9 +30,7 @@ function Controls({
           ) : (
             ''
           )}
-          {(!isStarted || isComplete) &&
-          player.isOwner &&
-          (!isComplete || !isStarted) ? (
+          {player.isOwner ? (
             <div className="flex flex-row justify-around flex-grow">
               <CustomButton
                 label="Start"

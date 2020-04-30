@@ -1,23 +1,26 @@
+const UUID = require('uuid').v4;
+
 /**
  * Class to encapsulate player functionality
  */
-
 const letters = '56789ABCDEF';
 
 class Player {
   constructor({ name, id }) {
-    this.name = 'UNKNOWN'; // default
-    this.id = id;
+    this.name = name;
+    this.id = UUID();
     this.score = 0;
     this.isActive = false;
     this.isReady = false;
+    this.isOwner = false;
+    this.socketId = id;
+    this.initials = this.getInitials(name);
     this.color = '#';
     for (let i = 0; i < 6; i++) {
       this.color += letters[Math.floor(Math.random() * 11)];
     }
-    console.log(this.color);
     this.progress = 0;
-    console.log(`Player ${name} created with ID: ${id}`);
+    console.log(`Player ${name} created with ID: ${this.id}`);
   }
 
   getInitials (name) {
@@ -29,10 +32,8 @@ class Player {
     return letters[0].toUpperCase() + letters[1].toUpperCase();
   }
 
-  setName(name) {
-    this.name = name;
-    this.initials = this.getInitials(name);
-    this.isActive = true;
+  setActiveSocketId(id) {
+    this.socketId = id;
   }
 
   setIsOwner () {

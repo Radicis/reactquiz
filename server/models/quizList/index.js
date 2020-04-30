@@ -8,8 +8,8 @@ class QuizList {
     this.quizzes = {};
   }
 
-  addQuiz(name) {
-    const newQuiz = new Quiz(name);
+  addQuiz() {
+    const newQuiz = new Quiz('123');
     this.quizzes[newQuiz.id] = newQuiz;
     return newQuiz;
   }
