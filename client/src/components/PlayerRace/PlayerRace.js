@@ -35,6 +35,7 @@ function PlayerRace({ showPlayers, numberOfQuestions, players }) {
         players.map((player) => (
           <Player
             progress={player.progress}
+            score={player.score}
             color={player.color}
             key={player.id}
             initials={player.initials}

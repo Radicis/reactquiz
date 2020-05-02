@@ -1,7 +1,6 @@
 const toggleAnswerViews = (state, type) => {
   const values = {
     showWaiting: false,
-    showReady: false,
     showQuestion: false,
     showCountdown: false
   };
@@ -50,22 +49,23 @@ const Reducer = (state, action) => {
     case 'START_QUIZ':
       return {
         ...state,
-        ...toggleAnswerViews(state, 'showCountDown'),
+        ...toggleAnswerViews(state, 'showCountdown'),
         isStarted: true,
+        isComplete: false,
         showPlayers: false
       };
     case 'SET_QUIZ_COMPLETE':
       return {
         ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
-        isComplete: true
+        isComplete: true,
+        players: action.payload
       };
     case 'SET_PLAYER_COMPLETE':
       return {
         ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
-        showWaiting: true,
-        isComplete: true
+        showWaiting: true
       };
     case 'SET_QUESTIONS':
       return {
@@ -81,7 +81,6 @@ const Reducer = (state, action) => {
       return {
         ...state,
         showWaiting: false,
-        showReady: false,
         showQuestion: true,
         showCountdown: false,
         showPlayers: false,
@@ -91,7 +90,6 @@ const Reducer = (state, action) => {
       return {
         ...state,
         showWaiting: false,
-        showReady: false,
         showQuestion: true,
         showCountdown: false,
         showPlayers: false,
@@ -105,13 +103,6 @@ const Reducer = (state, action) => {
       };
     case 'SET_WAITING':
       return toggleAnswerViews(state, 'showWaiting');
-    case 'SET_SHOW_READY':
-      return toggleAnswerViews(state, 'showReady');
-    case 'SET_PLAYER':
-      return {
-        ...state,
-        player: action.payload
-      };
     case 'SET_PLAYER_ANSWER':
       return {
         ...state,
@@ -145,7 +136,8 @@ const Reducer = (state, action) => {
         ...state,
         error: false,
         joined: true,
-        connected: true
+        connected: true,
+        player: action.payload
       };
     case 'SET_ERROR':
       return {

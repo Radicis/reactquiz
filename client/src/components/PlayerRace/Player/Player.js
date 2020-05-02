@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { animated, useSpring, config } from 'react-spring';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import {
+  faQuestion,
+  faCheck,
+  faCrown
+} from '@fortawesome/free-solid-svg-icons';
 
 const padding = 20;
 
@@ -58,15 +65,26 @@ function Player({
           {initials || '??'}
         </div>
       ) : (
-        <div
-          style={{ background: color || '#ccc' }}
-          className="text-lg rounded-lg shadow-lg py-2 px-6 overflow-hidden flex flex-grow mb-4"
-        >
-          <div className="flex flex-grow">{name || 'UNKNOWN'}</div>
-          <div>{totalTime}</div>
-          <div>{numCorrect}</div>
-          <div>{numIncorrect}</div>
-          <div>{score || 0}</div>
+        <div className="flex flex-row mb-4 flex-grow">
+          <div className="text-gray-600 mr-4 status-icon">
+            {isOwner ? (
+              <FontAwesomeIcon icon={faCrown} />
+            ) : isReady ? (
+              <FontAwesomeIcon icon={faCheck} />
+            ) : (
+              <FontAwesomeIcon icon={faQuestion} />
+            )}
+          </div>
+          <div
+            style={{ background: color || '#ccc' }}
+            className="text-lg rounded-lg shadow-lg py-2 px-6 overflow-hidden flex flex-grow"
+          >
+            <div className="flex flex-grow">{name || 'UNKNOWN'}</div>
+            <div>{totalTime}</div>
+            <div>{numCorrect}</div>
+            <div>{numIncorrect}</div>
+            <div>{score || 0}</div>
+          </div>
         </div>
       )}
     </animated.div>

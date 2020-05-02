@@ -3,7 +3,7 @@ const QuizList = require('../../models/quizList');
 
 module.exports = {
   name: 'nextQuestion',
-  method: (options) => {
+  method: options => {
     const { io, question } = options;
     const { questionTime = defaultQuestionTime } = question;
 

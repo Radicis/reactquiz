@@ -12,7 +12,9 @@ function QuestionsContainer() {
     activeQuestion,
     questionStartTime,
     showAnswer,
-    questions
+    questions,
+    playerId,
+    quizId
   } = state;
 
   const transition = useTransition(index, (index) => index, {
@@ -35,12 +37,14 @@ function QuestionsContainer() {
   });
 
   const submitAnswer = (playerAnswer) => {
-    const { id: questionIndex, answer } = activeQuestion;
+    const { answer } = activeQuestion;
     const isCorrect = playerAnswer === answer;
     socket.emit('set-player-answer-for-question', {
-      questionIndex,
+      questionIndex: index || 0,
       isCorrect,
       playerAnswer,
+      playerId,
+      quizId,
       answeredTime: new Date() - questionStartTime
     });
     // allow time to show correctness of the answer
@@ -54,6 +58,10 @@ function QuestionsContainer() {
       } else {
         dispatch({
           type: 'SET_PLAYER_COMPLETE'
+        });
+        socket.emit('set-player-complete', {
+          playerId,
+          quizId
         });
       }
     }, 1000);

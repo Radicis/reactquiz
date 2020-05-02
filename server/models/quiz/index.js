@@ -12,15 +12,19 @@ class Quiz {
     this.id = id || UUID(); // allow to set the id manually
     this.questionList = new QuestionList();
     this.playerList = new PlayerList();
+    this.answers = this.questionList.getQuestions().reduce((acc, curr, id) => {
+      acc[id] = [];
+      return acc;
+    }, {});
   }
 
-  setOwner (playerId) {
+  setOwner(playerId) {
     this.owner = playerId;
     this.playerList.findPlayerById(playerId).setIsOwner();
   }
 
-  checkIsOwner (playerId) {
-    return this.owner === playerId
+  checkIsOwner(playerId) {
+    return this.owner === playerId;
   }
 
   reset() {
@@ -28,8 +32,8 @@ class Quiz {
     this.playerList.resetPlayers();
   }
 
-  getQuestions () {
-    return this.questionList.getQuestions()
+  getQuestions() {
+    return this.questionList.getQuestions();
   }
 
   /**
@@ -56,70 +60,58 @@ class Quiz {
     return player;
   }
 
-  /**
-   * Calculates and assigns the scores for the active question
-   */
-  calculateScoresForPlayer() {
-    this.questionList.getQuestions().forEach(question => {
-      const { answer, answerType, answers } = question;
-      for (let [playerId, value] of Object.entries(answers)) {
-        let correct = false;
-        // find the player in the local player list
-        const player = this.playerList.findPlayerById(playerId);
-        if (player) {
-          const { answer, time } = value;
-          const playerAnswer = answer;
+  allPlayersComplete() {
+    return this.playerList.getPlayers().every(p => p.isComplete);
+  }
 
-          // Determine if score it to be awarded based on the answerType
-          switch (answerType) {
-          case 'MULTI':
-            if (answer === playerAnswer) {
-              correct = true;
-            }
-            break;
-          case 'BOOL':
-            if (answer === playerAnswer) {
-              correct = true;
-            }
-            break;
-          default:
-            break;
+  calculateScores() {
+    Object.keys(this.answers).forEach((questionId, val) => {
+      const answers = this.answers[questionId];
+      if (Array.isArray(answers)) {
+        const questionAnswer = this.questionList.getQuestions()[questionId];
+        answers.forEach(answer => {
+          const { playerId } = answer;
+          const player = this.playerList.findPlayerById(playerId);
+          if (player) {
+            player.addScore(1);
+            player.addScore(this.getTimeScore({ answers, playerId }));
           }
-
-          let scoreToAdd = 0;
-
-          if (correct) {
-            const speedRatio = this.getSpeedRatio({playerId, answers});
-            // check how fast they were in relation to the other players
-            scoreToAdd = 1 * speedRatio;
-          }
-
-          // Update the players score
-          player.setScore(player.score + scoreToAdd);
-        }
+        });
       }
     });
   }
 
-  getSpeedRatio ({playerId, answers}) {
-    // get all speeds of correct answers
-
-    // get the players speed
+  getTimeScore({ answers, playerId }) {
+    // fastest or so close it doesn't matter gets 2 points;
+    const playerAnswer = answers.find(a => a.playerId === playerId);
+    const { answeredTime: fastestTime } = answers[0];
+    if (playerAnswer) {
+      const { answeredTime } = playerAnswer;
+      if (answeredTime === fastestTime) {
+        return 2;
+      }
+      const timeRatio = fastestTime / (answeredTime - fastestTime);
+      console.log(timeRatio);
+    }
   }
 
-  setPlayerAnswerForQuestion({ player, questionIndex, isCorrect, playerAnswer, answeredTime }) {
-    const questionAnswers = this.questionList[questionIndex];
-    if (isCorrect && questionAnswers) {
-      const { id: playerId } = player;
-      questionAnswers.push({
+  setPlayerAnswerForQuestion({
+    player,
+    questionIndex,
+    isCorrect,
+    playerAnswer,
+    answeredTime
+  }) {
+    const { id: playerId } = player;
+    if (isCorrect) {
+      this.answers[questionIndex].push({
         playerId,
         playerAnswer,
-        isCorrect,
         answeredTime
       });
+      player.incrementProgress();
+      return player.getProgress();
     }
-    player.incrementProgress();
-    return player.getProgress();
   }
 }
 

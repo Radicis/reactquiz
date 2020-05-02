@@ -34,7 +34,7 @@ function SetupContainer({ history }) {
             playerId
           }
         });
-        history.push(`/quiz/${quizId}`);
+        history.push('/quiz');
       })
       .catch(() => {
         console.log('No quiz found');
@@ -46,7 +46,6 @@ function SetupContainer({ history }) {
   };
 
   const createQuiz = () => {
-    console.log(playerName);
     axios
       .post(`${protocol}://${host}:${port}`, { name: playerName })
       .then((res) => {
@@ -71,13 +70,14 @@ function SetupContainer({ history }) {
   };
 
   return (
-    <div className="flex flex-col top-0 left-0 h-full w-full items-center justify-center">
+    <div className="flex flex-col top-0 left-0 h-full w-full items-center justify-center relative z-10">
       <span className="mb-4 text-3xl font-semibold">Welcome to Quiz!</span>
-      {!playerName ? (
-        <UserSetup setName={setName} />
-      ) : (
-        <QuizSetup createQuiz={createQuiz} joinQuiz={joinQuiz} />
-      )}
+      <UserSetup setName={setName} show={!playerName} />
+      <QuizSetup
+        createQuiz={createQuiz}
+        joinQuiz={joinQuiz}
+        show={playerName}
+      />
     </div>
   );
 }

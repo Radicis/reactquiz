@@ -1,7 +1,7 @@
 const { apply } = require('../middleware');
 
 module.exports = {
-  name: 'setPlayerReady',
+  name: 'setPlayerComplete',
   method: (options, ...args) => {
     try {
       options = apply(options, args);
@@ -10,10 +10,21 @@ module.exports = {
       return false;
     }
     const { io, player, quiz } = options;
+
+    player.setComplete(true)
+
     const { id: quizId } = quiz;
-    player.setReady();
-    console.log(`Setting player ${player.name} to ready`);
-    // Broadcast the player list to ALL connected sockets to update the players list
+
     io.to(quizId).emit('update-player', player);
+
+    // Check if all players are complete
+    const allComplete = quiz.allPlayersComplete()
+
+    if (allComplete) {
+      // Calculate the scores
+      quiz.calculateScores();
+      // Emit the quiz complete event
+      io.to(quizId).emit('quiz-complete', quiz.getPlayers());
+    }
   }
 };

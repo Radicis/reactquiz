@@ -15,12 +15,12 @@ function WaitingForPlayers({ show, completed }) {
             <animated.div
               key={key}
               style={props}
-              className="p-4 h-full w-full items-center text-center justify-center flex flex-col"
+              className="p-4 h-full w-full items-center text-center relative justify-center flex flex-col"
             >
               <div className="text-lg sm:text-2xl">
                 Waiting for everyone to be {completed ? 'done' : 'ready'}..
               </div>
-              <img className="h-16" src={loader} alt="Loading.." />
+              {/*<img className="h-16 absolute" src={loader} alt="Loading.." />*/}
             </animated.div>
           )
       )}

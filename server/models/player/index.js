@@ -10,9 +10,9 @@ class Player {
     this.name = name;
     this.id = UUID();
     this.score = 0;
-    this.isActive = false;
     this.isReady = false;
     this.isOwner = false;
+    this.isComplete = false;
     this.socketId = id;
     this.initials = this.getInitials(name);
     this.color = '#';
@@ -36,6 +36,10 @@ class Player {
     this.socketId = id;
   }
 
+  setComplete(val) {
+    this.isComplete = val;
+  }
+
   setIsOwner () {
     this.isOwner = true;
   }
@@ -54,6 +58,10 @@ class Player {
 
   setReady() {
     this.isReady = true;
+  }
+
+  addScore (val) {
+    this.score = this.score + val;
   }
 
   setScore(score) {

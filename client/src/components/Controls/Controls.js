@@ -8,20 +8,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from '../common/CustomButton/CustomButton';
 
-function Controls({
-  player,
-  isComplete,
-  isStarted,
-  startQuiz,
-  setPlayerReady,
-  showLinkModal,
-  showReady
-}) {
+function Controls({ player, show, startQuiz, setPlayerReady, showLinkModal }) {
   return (
     <React.Fragment>
-      {player && player.isActive ? (
+      {show ? (
         <div className="flex flex-row items-center justify-center flex-grow">
-          {!player.isOwner && showReady ? (
+          {!player.isOwner && !player.isReady ? (
             <CustomButton
               label="Ready"
               clickAction={setPlayerReady}
@@ -59,10 +51,7 @@ Controls.propTypes = {
   startQuiz: PropTypes.func,
   setPlayerReady: PropTypes.func,
   showLinkModal: PropTypes.func,
-  showReady: PropTypes.bool,
-  isComplete: PropTypes.bool,
-  alwaysShow: PropTypes.bool,
-  isStarted: PropTypes.bool
+  show: PropTypes.bool
 };
 
 export default Controls;

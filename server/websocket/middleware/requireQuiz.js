@@ -2,7 +2,7 @@ const QuizList = require('../../models/quizList');
 
 module.exports = {
   name: 'requireQuiz',
-  method: (options) => {
+  method: options => {
     const { quizId } = options;
     const quiz = QuizList.getQuiz(quizId);
 

@@ -18,6 +18,7 @@ const {
   setPlayerReady,
   setAnswerForQuestion,
   handleDisconnect,
+  setPlayerComplete
 } = require('./events');
 
 // Import middleware
@@ -26,8 +27,8 @@ const { checkIsOwner, requirePlayer, requireQuiz } = middleware;
 
 const QuizList = require('../models/quizList');
 
-app.post("/", (req, res) => {
-  const { name } = req.body
+app.post('/', (req, res) => {
+  const { name } = req.body;
   // Create a new quiz
   const newQuiz = QuizList.addQuiz();
   const { id: quizId } = newQuiz;
@@ -36,7 +37,7 @@ app.post("/", (req, res) => {
 });
 
 // Check if quiz is active
-app.get("/:quizId", (req, res) => {
+app.get('/:quizId', (req, res) => {
   const { quizId } = req.params;
   if (QuizList.getQuiz(quizId)) {
     return res.json('OK');
@@ -45,7 +46,7 @@ app.get("/:quizId", (req, res) => {
 });
 
 // Join quiz
-app.post("/:quizId", (req, res) => {
+app.post('/:quizId', (req, res) => {
   const { quizId } = req.params;
   const { name } = req.body;
   const quiz = QuizList.getQuiz(quizId);
@@ -58,23 +59,45 @@ app.post("/:quizId", (req, res) => {
 });
 
 // Listen for connection events to create new players and set event listeners for that socket
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   socket.on('join-quiz', ({ quizId, playerId }) => {
     joinQuiz({ socket, io, quizId, playerId }, requireQuiz, requirePlayer);
   });
 
-  socket.on('set-player-ready', ({ quizId }) => {
-    setPlayerReady({ socket, io, quizId }, requireQuiz, requirePlayer);
+  socket.on('set-player-ready', ({ quizId, playerId }) => {
+    setPlayerReady(
+      { socket, io, playerId, quizId },
+      requireQuiz,
+      requirePlayer
+    );
   });
 
   socket.on('start-quiz', ({ quizId, playerId }) => {
     // create a new question set and reset scores then emit new values to clients
-    startQuiz({ socket, io, playerId, quizId }, requirePlayer, requireQuiz, checkIsOwner);
+    startQuiz(
+      { socket, io, playerId, quizId },
+      requirePlayer,
+      requireQuiz,
+      checkIsOwner
+    );
   });
 
-  socket.on('set-player-answer-for-question', ({ playerId, quizId, questionIndex, isCorrect }) => {
-    setAnswerForQuestion(
-        { socket, io, playerId, quizId, questionIndex, isCorrect }, requirePlayer, requireQuiz
+  socket.on(
+    'set-player-answer-for-question',
+    ({ playerId, quizId, questionIndex, isCorrect }) => {
+      setAnswerForQuestion(
+        { socket, io, playerId, quizId, questionIndex, isCorrect },
+        requirePlayer,
+        requireQuiz
+      );
+    }
+  );
+
+  socket.on('set-player-complete', ({ playerId, quizId }) => {
+    setPlayerComplete(
+      { socket, io, playerId, quizId },
+      requirePlayer,
+      requireQuiz
     );
   });
 

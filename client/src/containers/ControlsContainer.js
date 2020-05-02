@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../store/Store';
-
 import Controls from '../components/Controls/Controls';
-
 import { baseUrl } from '../config';
 
 function ControlsContainer() {
@@ -13,8 +11,8 @@ function ControlsContainer() {
     activeQuestion,
     isStarted,
     isComplete,
-    showReady,
-    quizId
+    quizId,
+    playerId
   } = state;
 
   const setPlayerReady = () => {
@@ -25,24 +23,22 @@ function ControlsContainer() {
   };
 
   const showLinkModal = () => {
-    alert(`${baseUrl}/3837fy547gmn4c56g`);
+    alert(`${baseUrl}/${quizId}`);
   };
 
   const startQuiz = () => {
     // Emit the set name event on the socket
-    socket.emit('start-quiz', ({quizId}));
+    socket.emit('start-quiz', { quizId, playerId });
   };
 
   return (
     <Controls
       player={player}
       activeQuestion={activeQuestion}
-      isStarted={isStarted}
       startQuiz={startQuiz}
-      isComplete={isComplete}
-      showReady={showReady}
       setPlayerReady={setPlayerReady}
       showLinkModal={showLinkModal}
+      show={!isStarted || isComplete}
     />
   );
 }

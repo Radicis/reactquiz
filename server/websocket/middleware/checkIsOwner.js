@@ -1,6 +1,6 @@
 module.exports = {
   name: 'checkIsOwner',
-  method: (options) => {
+  method: options => {
     const { player, quiz } = options;
     if (!quiz) {
       throw new Error('No quiz found');

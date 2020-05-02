@@ -24,7 +24,7 @@ function SocketContainer() {
       });
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on('connect_error', () => {
       dispatch({
         type: 'SET_ERROR',
         payload: 'Connection Error'
@@ -38,10 +38,12 @@ function SocketContainer() {
       });
     });
 
-    socket.on('join-quiz', () => {
-      console.log('Quiz joined');
+    socket.on('join-quiz', (player) => {
+      const { id: playerId } = player;
+      localStorage.setItem('playerId', playerId); // store the playerId for reconnects
       dispatch({
-        type: 'SET_JOINED'
+        type: 'SET_JOINED',
+        payload: player
       });
     });
 
@@ -60,9 +62,11 @@ function SocketContainer() {
       });
     });
 
-    socket.on('quiz-complete', () => {
+    socket.on('quiz-complete', (players) => {
+      console.log(players);
       dispatch({
-        type: 'SET_QUIZ_COMPLETE'
+        type: 'SET_QUIZ_COMPLETE',
+        payload: players
       });
     });
 
@@ -70,15 +74,6 @@ function SocketContainer() {
       dispatch({
         type: 'SET_PLAYER_COMPLETE'
       });
-    });
-
-    socket.on('init-player', (data) => {
-      const { id } = data;
-      dispatch({
-        type: 'SET_PLAYER',
-        payload: data
-      });
-      localStorage.setItem('playerId', id); // store the playerId for reconnects
     });
 
     socket.on('update-player', (data) => {

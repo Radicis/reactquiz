@@ -64,6 +64,10 @@ body {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
+.status-icon {
+  width: 3rem;
+}
+
 .answer-button {
   @apply mb-6;
 }
