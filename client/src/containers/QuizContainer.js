@@ -34,7 +34,7 @@ function QuizContainer() {
 
   useEffect(() => {
     socket.emit('join-quiz', { quizId, playerId });
-  }, []);
+  }, [socket, playerId, quizId]);
 
   return (
     <React.Fragment>

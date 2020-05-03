@@ -65,8 +65,12 @@ function Player({
           {initials || '??'}
         </div>
       ) : (
-        <div className="flex flex-row mb-4 flex-grow">
-          <div className="text-gray-600 mr-4 status-icon">
+        <div className="flex flex-row mb-4 flex-grow items-center">
+          <div
+            className={`text-gray-600 mr-4 status-icon flex justify-center ${
+              !isOwner && isReady ? 'slow-bounce' : ''
+            }`}
+          >
             {isOwner ? (
               <FontAwesomeIcon icon={faCrown} />
             ) : isReady ? (

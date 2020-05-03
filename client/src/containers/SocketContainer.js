@@ -6,9 +6,8 @@ function SocketContainer() {
 
   const { socket } = state;
 
-  const initSocket = () => {
+  useEffect(() => {
     socket.on('connect', () => {
-      console.log('Socket Connected');
       dispatch({
         type: 'RESET'
       });
@@ -89,11 +88,7 @@ function SocketContainer() {
         payload: data
       });
     });
-  };
-
-  useEffect(() => {
-    initSocket();
-  }, [dispatch]); // Pass in array here to prevent re-render
+  }, [dispatch, socket]); // Pass in array here to prevent re-render
   return <div />;
 }
 

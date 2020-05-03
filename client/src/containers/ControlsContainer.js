@@ -16,7 +16,7 @@ function ControlsContainer() {
   } = state;
 
   const setPlayerReady = () => {
-    socket.emit('set-player-ready');
+    socket.emit('set-player-ready', { playerId, quizId });
     dispatch({
       type: 'SET_WAITING'
     });

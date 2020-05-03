@@ -49,7 +49,6 @@ function SetupContainer({ history }) {
     axios
       .post(`${protocol}://${host}:${port}`, { name: playerName })
       .then((res) => {
-        console.log('Quiz created');
         const { quizId, playerId } = res.data;
         dispatch({
           type: 'INIT',
@@ -60,8 +59,7 @@ function SetupContainer({ history }) {
         });
         history.push('/quiz');
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         dispatch({
           type: 'SET_ERROR',
           payload: 'Something went wrong'
