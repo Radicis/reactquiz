@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/Store';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -8,16 +8,19 @@ import * as axios from 'axios';
 import { host, port, protocol } from '../config';
 import QuizSetup from '../components/QuizSetup/QuizSetup';
 
-function SetupContainer({ history }) {
+function SetupContainer({ history, match }) {
   const [state, dispatch] = useContext(Context);
 
-  const { playerName } = state;
+  const { playerName, quizId } = state;
 
   const setName = (name) => {
     dispatch({
       type: 'SET_PLAYER_NAME',
       payload: name
     });
+    if (quizId) {
+      joinQuiz(quizId);
+    }
   };
 
   const joinQuiz = (localQuizId) => {
@@ -37,11 +40,11 @@ function SetupContainer({ history }) {
         history.push('/quiz');
       })
       .catch(() => {
-        console.log('No quiz found');
         dispatch({
           type: 'SET_ERROR',
-          payload: 'Quiz not found'
+          payload: { message: 'Quiz not found' }
         });
+        history.push('/');
       });
   };
 
@@ -64,8 +67,20 @@ function SetupContainer({ history }) {
           type: 'SET_ERROR',
           payload: 'Something went wrong'
         });
+        history.push('/');
       });
   };
+
+  useEffect(() => {
+    const { params } = match;
+    if (params && 'quizId' in params) {
+      const { quizId: paramQuizId } = params;
+      dispatch({
+        type: 'SET_QUIZ_ID',
+        payload: paramQuizId
+      });
+    }
+  }, [dispatch, match]);
 
   return (
     <div className="flex flex-col top-0 left-0 h-full w-full items-center justify-center relative z-10">
@@ -74,14 +89,15 @@ function SetupContainer({ history }) {
       <QuizSetup
         createQuiz={createQuiz}
         joinQuiz={joinQuiz}
-        show={playerName}
+        show={!!playerName}
       />
     </div>
   );
 }
 
 SetupContainer.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object
 };
 
 export default withRouter(SetupContainer);

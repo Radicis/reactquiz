@@ -47,7 +47,7 @@ function QuestionsContainer() {
       quizId,
       answeredTime: new Date() - questionStartTime
     });
-    // allow time to show correctness of the answer
+    // Allow time to show correctness of the answer to the player
     setTimeout(() => {
       if (questions[index + 1]) {
         dispatch({
@@ -71,21 +71,23 @@ function QuestionsContainer() {
     <React.Fragment>
       {transition.map(({ item, key, props }) => {
         return (
-          <animated.div
-            key={key}
-            style={props}
-            className="flex flex-grow w-full justify-center relative"
-          >
-            <Question
-              type={activeQuestion.type}
-              answerType={activeQuestion.answerType}
-              content={activeQuestion.content}
-              choices={activeQuestion.choices}
-              submitAnswer={submitAnswer}
-              answer={activeQuestion.answer}
-              showAnswer={showAnswer}
-            />
-          </animated.div>
+          item && (
+            <animated.div
+              key={key}
+              style={props}
+              className="flex flex-grow w-full justify-center relative"
+            >
+              <Question
+                type={activeQuestion.type}
+                answerType={activeQuestion.answerType}
+                content={activeQuestion.content}
+                choices={activeQuestion.choices}
+                submitAnswer={submitAnswer}
+                answer={activeQuestion.answer}
+                showAnswer={showAnswer}
+              />
+            </animated.div>
+          )
         );
       })}
     </React.Fragment>

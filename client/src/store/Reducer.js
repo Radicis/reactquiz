@@ -30,9 +30,18 @@ const updatePlayer = (player, players) => {
 const Reducer = (state, action) => {
   switch (action.type) {
     case 'RESET':
+      localStorage.clear();
       return {
-        ...toggleAnswerViews(state, 'showCountDown'),
+        ...toggleAnswerViews(state),
+        error: null,
+        activeQuestion: null,
+        questions: [],
+        isStarted: false,
+        isComplete: false,
+        showPlayers: true,
+        players: [],
         player: null,
+        playerId: null,
         quizId: null
       };
     case 'INIT':
@@ -45,6 +54,16 @@ const Reducer = (state, action) => {
       return {
         ...state,
         playerName: action.payload
+      };
+    case 'SET_PLAYER_ID':
+      return {
+        ...state,
+        playerId: action.payload
+      };
+    case 'SET_QUIZ_ID':
+      return {
+        ...state,
+        quizId: action.payload
       };
     case 'START_QUIZ':
       return {
@@ -120,11 +139,6 @@ const Reducer = (state, action) => {
         ...state,
         players: action.payload
       };
-    case 'SET_LOADING':
-      return {
-        ...state,
-        loading: action.payload
-      };
     case 'SET_CONNECTED':
       return {
         ...state,
@@ -144,6 +158,11 @@ const Reducer = (state, action) => {
         ...state,
         error: action.payload,
         loading: action.payload ? false : state.loading
+      };
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.payload
       };
     default:
       return state;

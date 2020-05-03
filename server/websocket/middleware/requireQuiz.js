@@ -1,3 +1,4 @@
+const SocketError = require('../helpers/socketError');
 const QuizList = require('../../models/quizList');
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
     const quiz = QuizList.getQuiz(quizId);
 
     if (!quiz) {
-      throw new Error('Quiz not found');
+      throw new SocketError({ message: 'Quiz not found', exit: true });
     }
     options.quiz = quiz;
     return options;

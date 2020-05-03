@@ -18,6 +18,7 @@ function QuizContainer() {
     socket,
     joined,
     playerId,
+    player,
     quizId
   } = state;
 
@@ -26,11 +27,15 @@ function QuizContainer() {
     zIndex: 1 // hack to prevent the after from becoming invisible
   });
 
-  const mainTransition = useTransition(socket && connected && joined, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 }
-  });
+  const mainTransition = useTransition(
+    socket && connected && joined && player,
+    null,
+    {
+      from: { opacity: 0 },
+      enter: { opacity: 1 },
+      leave: { opacity: 0 }
+    }
+  );
 
   useEffect(() => {
     socket.emit('join-quiz', { quizId, playerId });

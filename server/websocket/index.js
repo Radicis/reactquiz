@@ -84,9 +84,25 @@ io.on('connection', socket => {
 
   socket.on(
     'set-player-answer-for-question',
-    ({ playerId, quizId, questionIndex, isCorrect }) => {
+    ({
+      playerId,
+      quizId,
+      questionIndex,
+      isCorrect,
+      answeredTime,
+      playerAnswer
+    }) => {
       setAnswerForQuestion(
-        { socket, io, playerId, quizId, questionIndex, isCorrect },
+        {
+          socket,
+          io,
+          playerId,
+          quizId,
+          questionIndex,
+          isCorrect,
+          answeredTime,
+          playerAnswer
+        },
         requirePlayer,
         requireQuiz
       );

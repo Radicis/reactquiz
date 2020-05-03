@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-function Error({ error = '' }) {
+function Error({ error, clearError }) {
   return (
-    <div>
-      {error ? (
-        <div className="z-20 absolute top-0 left-0 w-full h-full bg-gray-100 flex items-center justify-center">
-          <div className="text-2xl font-semibold text-red-800">{error}</div>
-        </div>
-      ) : (
-        ''
-      )}
-    </div>
+    <React.Fragment>
+      <div className="flex flex-grow">{error}</div>
+      <div onClick={() => clearError()} className="cursor-pointer">
+        <FontAwesomeIcon icon={faTimesCircle} />
+      </div>
+    </React.Fragment>
   );
 }
 
 Error.propTypes = {
-  error: PropTypes.string
+  error: PropTypes.string,
+  clearError: PropTypes.func
 };
 
 export default Error;

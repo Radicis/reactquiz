@@ -30,6 +30,10 @@ class Quiz {
   reset() {
     this.questionList = new QuestionList();
     this.playerList.resetPlayers();
+    this.answers = this.questionList.getQuestions().reduce((acc, curr, id) => {
+      acc[id] = [];
+      return acc;
+    }, {});
   }
 
   getQuestions() {
@@ -87,9 +91,9 @@ class Quiz {
     const { answeredTime: fastestTime } = answers[0];
     if (playerAnswer) {
       const { answeredTime } = playerAnswer;
-      if (answeredTime === fastestTime) {
-        return 2;
-      }
+      // if (answeredTime === fastestTime) {
+      //   return 2;
+      // }
       const timeRatio = fastestTime / (answeredTime - fastestTime);
       console.log(timeRatio);
     }

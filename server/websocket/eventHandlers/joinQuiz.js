@@ -6,7 +6,10 @@ module.exports = {
     try {
       options = apply(options, args);
     } catch (e) {
-      console.log(e);
+      const { socket, io } = options;
+      const { id } = socket;
+      const { message, exit } = e;
+      io.to(id).emit('error', { message, exit });
       return false;
     }
     const { socket, io, player, quiz } = options;
@@ -24,7 +27,6 @@ module.exports = {
     io.to(socketId).emit('join-quiz', player);
 
     // Broadcast the player list to ALL connected sockets
-    const quizPlayers = quiz.getPlayers();
     io.to(quizId).emit('players', quiz.getPlayers());
   }
 };

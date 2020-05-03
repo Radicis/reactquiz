@@ -11,7 +11,7 @@ import CustomButton from '../common/CustomButton/CustomButton';
 function Controls({ player, show, startQuiz, setPlayerReady, showLinkModal }) {
   return (
     <React.Fragment>
-      {show ? (
+      {player && show ? (
         <div className="flex flex-row items-center justify-center flex-grow">
           {!player.isOwner && !player.isReady ? (
             <CustomButton

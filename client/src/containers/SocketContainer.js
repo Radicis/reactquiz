@@ -19,14 +19,14 @@ function SocketContainer() {
     socket.on('connect_timeout', () => {
       dispatch({
         type: 'SET_ERROR',
-        payload: 'Connection Timeout'
+        payload: { message: 'Connection Timeout' }
       });
     });
 
     socket.on('connect_error', () => {
       dispatch({
         type: 'SET_ERROR',
-        payload: 'Connection Error'
+        payload: { message: 'Connection Error' }
       });
     });
 

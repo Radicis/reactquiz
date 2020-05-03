@@ -1,3 +1,4 @@
+const SocketError = require('../helpers/socketError');
 const GlobalPlayerList = require('../../models/playerList/global');
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
     const player = GlobalPlayerList.findPlayerById(playerId);
 
     if (!player) {
-      throw new Error('Player not found');
+      throw new SocketError({ message: 'Player not found', exit: true });
     }
 
     options.player = player;

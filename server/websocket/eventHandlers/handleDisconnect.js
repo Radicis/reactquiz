@@ -11,7 +11,6 @@ module.exports = {
     try {
       options = apply(options, args);
     } catch (e) {
-      console.log(e);
       return false;
     }
     const { io, player } = options;

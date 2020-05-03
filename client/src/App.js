@@ -8,6 +8,7 @@ import ErrorContainer from './containers/ErrorContainer';
 import QuizContainer from './containers/QuizContainer';
 import SetupContainer from './containers/SetupContainer';
 import HeaderContainer from './containers/HeaderContainer';
+import LoadingContainer from './containers/LoadingContainer';
 
 function App() {
   return (
@@ -19,13 +20,14 @@ function App() {
         >
           <HeaderContainer />
           <ErrorContainer />
+          <LoadingContainer />
           <div className="wave" />
           <Switch>
             <Route path="/quiz">
               <SocketContainer />
               <QuizContainer />
             </Route>
-            <Route path="/">
+            <Route path="/:quizId?">
               <SetupContainer />
             </Route>
           </Switch>
