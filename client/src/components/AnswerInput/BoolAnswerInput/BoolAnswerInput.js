@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CustomButton from '../../common/CustomButton/CustomButton';
+import AnswerButton from '../../common/AnswerButton/AnswerButton';
 
-function BoolAnswerInput({ setAnswer }) {
+function BoolAnswerInput({ answer, setAnswer }) {
+  const [showAnswer, setShow] = useState(false);
+  const handleAnswerInput = (value) => {
+    setShow(true);
+    setAnswer(value);
+  };
   return (
-    <div className="p-4 flex flex-row">
-      <CustomButton label="True" clickAction={() => setAnswer(true)} />
-      <CustomButton label="False" clickAction={() => setAnswer(false)} />
+    <div className="flex flex-col flex-grow justify-center">
+      <AnswerButton
+        correct={answer === 'true'}
+        showCorrect={showAnswer}
+        disabled={showAnswer}
+        label="True"
+        grow={true}
+        clickAction={() => handleAnswerInput('true')}
+      />
+      <AnswerButton
+        correct={answer === 'false'}
+        showCorrect={showAnswer}
+        disabled={showAnswer}
+        label="False"
+        grow={true}
+        clickAction={() => handleAnswerInput('false')}
+      />
     </div>
   );
 }
 
 BoolAnswerInput.propTypes = {
-  answer: PropTypes.bool,
-  setAnswer: PropTypes.func
+  setAnswer: PropTypes.func,
+  answer: PropTypes.string
 };
 
 export default BoolAnswerInput;

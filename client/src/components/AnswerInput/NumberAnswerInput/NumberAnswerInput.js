@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CustomInput from '../../common/CustomInput/CustomInput';
-import CustomButton from '../../common/CustomButton/CustomButton';
+import AnswerButton from '../../common/AnswerButton/AnswerButton';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 function NumberAnswerInput({ setAnswer }) {
@@ -26,7 +26,7 @@ function NumberAnswerInput({ setAnswer }) {
         placeHolder="Set your answer"
       />
       <div className="my-2" />
-      <CustomButton
+      <AnswerButton
         label="OK"
         disabled={!answer}
         clickAction={() => setAnswer(answer)}

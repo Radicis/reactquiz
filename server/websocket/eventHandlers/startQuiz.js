@@ -13,22 +13,12 @@ module.exports = {
       return false;
     }
 
-    const { io } = options;
+    const { io, quiz } = options;
 
     console.log('Starting Quiz');
 
-    const quiz = QuizList.getQuiz('test');
-
     quiz.reset();
 
-    const activeQuestion = quiz.getNextActiveQuestion();
-
-    io.sockets.emit('start-quiz');
-
-    if (activeQuestion) {
-      nextQuestion({ io, question: activeQuestion });
-    } else {
-      io.sockets.emit('error', 'No question found!');
-    }
+    io.sockets.emit('start-quiz', quiz.getQuestions());
   }
 };

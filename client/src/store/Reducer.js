@@ -1,96 +1,121 @@
-/* eslint-disable no-case-declarations */
+const toggleAnswerViews = (state, type) => {
+  const values = {
+    showWaiting: false,
+    showQuestion: false,
+    showCountdown: false
+  };
+  if (!type) {
+    return {
+      ...state,
+      ...values // reset all
+    };
+  }
+  return {
+    ...state,
+    ...values,
+    [type]: true
+  };
+};
+
+const updatePlayer = (player, players) => {
+  const { id } = player;
+  const playersCopy = [...players];
+  const playerIndex = playersCopy.findIndex((p) => p.id === id);
+  if (playerIndex !== -1) {
+    playersCopy.splice(playerIndex, 1, player);
+  }
+  return playersCopy;
+};
+
 const Reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_SOCKET':
+    case 'RESET':
       return {
-        ...state,
-        socket: action.payload
+        ...toggleAnswerViews(state, 'showCountDown'),
+        player: null,
+        quizId: null
       };
-    case 'SET_ACCENT':
+    case 'INIT':
       return {
         ...state,
-        accentOpen: action.payload
+        quizId: action.payload.quizId,
+        playerId: action.payload.playerId
+      };
+    case 'SET_PLAYER_NAME':
+      return {
+        ...state,
+        playerName: action.payload
       };
     case 'START_QUIZ':
       return {
         ...state,
-        showAnswer: false,
-        showPlayers: false,
-        showWaiting: false,
+        ...toggleAnswerViews(state, 'showCountdown'),
+        isStarted: true,
         isComplete: false,
-        isStarted: true
+        showPlayers: false
       };
     case 'SET_QUIZ_COMPLETE':
       return {
-        ...state,
-        showAnswer: false,
+        ...toggleAnswerViews(state, 'showPlayers'),
         activeQuestion: null,
-        questionTime: 0,
-        answer: null,
-        showPlayers: true,
-        showWaiting: false,
         isComplete: true,
-        winner: state.players.sort((a, b) => a.score > b.score)[0].name
+        players: action.payload
       };
-    case 'RESET_QUESTION':
+    case 'SET_PLAYER_COMPLETE':
+      return {
+        ...toggleAnswerViews(state, 'showPlayers'),
+        activeQuestion: null,
+        showWaiting: true
+      };
+    case 'SET_QUESTIONS':
       return {
         ...state,
-        activeQuestion: null,
-        questionTime: 0,
-        answer: null,
-        showAnswer: false
+        questions: action.payload
       };
     case 'SET_ACTIVE_QUESTION':
       return {
-        ...state,
-        activeQuestion: action.payload,
-        answer: null,
-        showAnswer: false,
-        showPlayers: false,
-        questionTime: action.payload.questionTime
+        ...toggleAnswerViews(state, 'showCountdown'),
+        activeQuestion: action.payload
       };
-    case 'SHOW_ANSWER':
+    case 'SHOW_ACTIVE_QUESTION':
       return {
         ...state,
-        showAnswer: true,
         showWaiting: false,
-        showPlayers: true
+        showQuestion: true,
+        showCountdown: false,
+        showPlayers: false,
+        questionStartTime: new Date()
       };
+    case 'SET_AND_SHOW_ACTIVE_QUESTION':
+      return {
+        ...state,
+        showWaiting: false,
+        showQuestion: true,
+        showCountdown: false,
+        showPlayers: false,
+        activeQuestion: action.payload,
+        questionStartTime: new Date()
+      };
+    case 'SET_COUNTDOWN':
+      return {
+        ...toggleAnswerViews(state, 'showCountdown'),
+        showPlayers: false
+      };
+    case 'SET_WAITING':
+      return toggleAnswerViews(state, 'showWaiting');
     case 'SET_PLAYER_ANSWER':
       return {
         ...state,
         playerAnswer: action.payload,
         showWaiting: true
       };
-    case 'SET_WAITING':
+    case 'UPDATE_PLAYER':
       return {
         ...state,
-        showWaiting: true
-      };
-    case 'SET_PLAYER':
-      return {
-        ...state,
-        player: action.payload
+        player: action.payload,
+        players: updatePlayer(action.payload, state.players)
       };
     case 'SET_PLAYERS':
-      // update the player too
-      const { player } = state;
-      const players = action.payload;
-      let updatedPlayer;
-      if (player) {
-        updatedPlayer = players.find((p) => p.id === player.id);
-      }
-      // if an updated player is found then update the player in the state
-      if (updatedPlayer) {
-        if (players.length === 1) {
-          updatedPlayer.isOwner = true;
-        }
-        return {
-          ...state,
-          players,
-          player: updatedPlayer
-        };
-      }
       return {
         ...state,
         players: action.payload
@@ -105,6 +130,14 @@ const Reducer = (state, action) => {
         ...state,
         error: false,
         connected: true
+      };
+    case 'SET_JOINED':
+      return {
+        ...state,
+        error: false,
+        joined: true,
+        connected: true,
+        player: action.payload
       };
     case 'SET_ERROR':
       return {

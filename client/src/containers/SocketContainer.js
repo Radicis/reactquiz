@@ -2,13 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
 
 function SocketContainer() {
-  // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(Context);
 
   const { socket } = state;
 
   useEffect(() => {
     socket.on('connect', () => {
+      dispatch({
+        type: 'RESET'
+      });
       dispatch({
         type: 'SET_CONNECTED'
       });
@@ -29,48 +31,54 @@ function SocketContainer() {
     });
 
     socket.on('error', (err) => {
-      console.log(`Error: ${err}`);
       dispatch({
         type: 'SET_ERROR',
         payload: err
       });
     });
 
-    socket.on('start-quiz', () => {
-      console.log('Starting Quiz');
+    socket.on('join-quiz', (player) => {
+      const { id: playerId } = player;
+      localStorage.setItem('playerId', playerId); // store the playerId for reconnects
+      dispatch({
+        type: 'SET_JOINED',
+        payload: player
+      });
+    });
+
+    socket.on('start-quiz', (questions) => {
+      dispatch({
+        type: 'SET_QUESTIONS',
+        payload: questions
+      });
+      // Set but don't show
+      dispatch({
+        type: 'SET_ACTIVE_QUESTION',
+        payload: questions[0]
+      });
       dispatch({
         type: 'START_QUIZ'
       });
     });
 
-    socket.on('next-question', (data) => {
+    socket.on('quiz-complete', (players) => {
+      console.log(players);
       dispatch({
-        type: 'RESET_QUESTION'
+        type: 'SET_QUIZ_COMPLETE',
+        payload: players
       });
+    });
+
+    socket.on('player-complete', () => {
       dispatch({
-        type: 'SET_ACTIVE_QUESTION',
+        type: 'SET_PLAYER_COMPLETE'
+      });
+    });
+
+    socket.on('update-player', (data) => {
+      dispatch({
+        type: 'UPDATE_PLAYER',
         payload: data
-      });
-    });
-
-    socket.on('show-answer', () => {
-      setTimeout(() => {
-        dispatch({
-          type: 'SHOW_ANSWER'
-        });
-      }, 1000); // add a small delay to allow for last minute input
-    });
-
-    socket.on('quiz-complete', () => {
-      dispatch({
-        type: 'SET_QUIZ_COMPLETE'
-      });
-    });
-
-    socket.on('init-player', (player) => {
-      dispatch({
-        type: 'SET_PLAYER',
-        payload: player
       });
     });
 

@@ -1,13 +1,17 @@
 const GlobalPlayerList = require('../../models/playerList/global');
 
 module.exports = {
-  name: 'getPlayer',
-  method: (options) => {
+  name: 'requirePlayer',
+  method: options => {
     const { playerId } = options;
+
     const player = GlobalPlayerList.findPlayerById(playerId);
-    if (player) {
-      return { ...options, player: { ...player } };
+
+    if (!player) {
+      throw new Error('Player not found');
     }
-    throw new Error('Player not found');
+
+    options.player = player;
+    return options;
   }
 };

@@ -1,63 +1,110 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const socketIO = require('socket.io');
-const server = require('http').createServer();
 
-const QuizList = require('../models/quizList');
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+const server = require('http').createServer(app);
 
 // Create the websocket server and set cors
 const io = socketIO(server, { origins: '*:*' });
 
 // Import event handlers
 const {
-  connection,
-  setName,
+  joinQuiz,
   startQuiz,
-  setNextActiveQuestion,
-  setAnswerForActiveQuestion,
-  handleDisconnect
+  setPlayerReady,
+  setAnswerForQuestion,
+  handleDisconnect,
+  setPlayerComplete
 } = require('./events');
 
 // Import middleware
 const { middleware } = require('./middleware');
-const { getPlayer, checkIsOwner } = middleware;
+const { checkIsOwner, requirePlayer, requireQuiz } = middleware;
+
+const QuizList = require('../models/quizList');
+
+app.post('/', (req, res) => {
+  const { name } = req.body;
+  // Create a new quiz
+  const newQuiz = QuizList.addQuiz();
+  const { id: quizId } = newQuiz;
+  const { id: playerId } = newQuiz.addPlayer(name);
+  return res.json({ playerId, quizId });
+});
+
+// Check if quiz is active
+app.get('/:quizId', (req, res) => {
+  const { quizId } = req.params;
+  if (QuizList.getQuiz(quizId)) {
+    return res.json('OK');
+  }
+  return res.status(404).send('Not active');
+});
+
+// Join quiz
+app.post('/:quizId', (req, res) => {
+  const { quizId } = req.params;
+  const { name } = req.body;
+  const quiz = QuizList.getQuiz(quizId);
+  if (quiz) {
+    const { id: quizId } = quiz;
+    const { id: playerId } = quiz.addPlayer(name);
+    return res.json({ quizId, playerId });
+  }
+  return res.status(404).send('Quiz Not Found');
+});
 
 // Listen for connection events to create new players and set event listeners for that socket
-io.on('connection', (socket) => {
-  connection({ socket, io });
-
-  // Listen for the set-name event to properly set a player name and update it from UNKNOWN
-  socket.on('set-name', ({ name }) => {
-    const { id } = socket;
-    setName({ playerId: id, name });
-    // Broadcast the player list to ALL connected sockets to update the players list
-    io.sockets.emit('players', QuizList.getQuiz('test').getPlayers());
+io.on('connection', socket => {
+  socket.on('join-quiz', ({ quizId, playerId }) => {
+    joinQuiz({ socket, io, quizId, playerId }, requireQuiz, requirePlayer);
   });
 
-  socket.on('start-quiz', () => {
-    const { id } = socket;
+  socket.on('set-player-ready', ({ quizId, playerId }) => {
+    setPlayerReady(
+      { socket, io, playerId, quizId },
+      requireQuiz,
+      requirePlayer
+    );
+  });
+
+  socket.on('start-quiz', ({ quizId, playerId }) => {
     // create a new question set and reset scores then emit new values to clients
-    startQuiz({ io, playerId: id }, getPlayer, checkIsOwner);
-  });
-
-  // Listen for set-next-question events and set the active question in the question list
-  socket.on('get-next-question', () => {
-    const { id } = socket;
-    setNextActiveQuestion({ io, playerId: id }, getPlayer, checkIsOwner);
-  });
-
-  socket.on('set-player-answer-for-active-question', ({ answer }) => {
-    const { id } = socket;
-    setAnswerForActiveQuestion(
-      { io, playerId: id, answer },
-      getPlayer,
+    startQuiz(
+      { socket, io, playerId, quizId },
+      requirePlayer,
+      requireQuiz,
       checkIsOwner
     );
   });
 
-  // When a client is disconnected, remove it from the list and broadcast updated player list
-  socket.on('disconnect', () => {
-    const { id } = socket;
-    handleDisconnect({ io, playerId: id }, getPlayer);
+  socket.on(
+    'set-player-answer-for-question',
+    ({ playerId, quizId, questionIndex, isCorrect }) => {
+      setAnswerForQuestion(
+        { socket, io, playerId, quizId, questionIndex, isCorrect },
+        requirePlayer,
+        requireQuiz
+      );
+    }
+  );
+
+  socket.on('set-player-complete', ({ playerId, quizId }) => {
+    setPlayerComplete(
+      { socket, io, playerId, quizId },
+      requirePlayer,
+      requireQuiz
+    );
   });
+
+  // // When a client is disconnected, remove it from the list and broadcast updated player list
+  // socket.on('disconnect', () => {
+  //   handleDisconnect({ socket, io }, requirePlayer);
+  // });
 });
 
-module.exports = server;
+module.exports = { app, server };

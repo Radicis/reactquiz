@@ -1,32 +1,39 @@
 const UUID = require('uuid').v4;
-const { stringSimilarity } = require('string-similarity-js');
 const QuestionList = require('../questionList');
 const PlayerList = require('../playerList');
+const Player = require('../player');
+const GlobalPlayerList = require('../../models/playerList/global');
 
 /**
  * Class to encapsulate quiz functionality
  */
 class Quiz {
-  constructor(name, id) {
+  constructor(id) {
     this.id = id || UUID(); // allow to set the id manually
-    this.name = name || 'Untitled Quiz';
     this.questionList = new QuestionList();
     this.playerList = new PlayerList();
-    this.ownerId = null;
-    this.answers = {};
-  }
-
-  reset() {
-    this.answers = {};
-    this.questionList = new QuestionList();
+    this.answers = this.questionList.getQuestions().reduce((acc, curr, id) => {
+      acc[id] = [];
+      return acc;
+    }, {});
   }
 
   setOwner(playerId) {
-    this.ownerId = playerId;
+    this.owner = playerId;
+    this.playerList.findPlayerById(playerId).setIsOwner();
   }
 
   checkIsOwner(playerId) {
-    return this.ownerId === playerId;
+    return this.owner === playerId;
+  }
+
+  reset() {
+    this.questionList = new QuestionList();
+    this.playerList.resetPlayers();
+  }
+
+  getQuestions() {
+    return this.questionList.getQuestions();
   }
 
   /**
@@ -39,126 +46,71 @@ class Quiz {
 
   /**
    * Add a player to the local player list for this quiz
-   * @param playerId
+   * @param name
    */
-  addPlayer(playerId) {
+  addPlayer(name) {
+    const player = new Player({ name });
+    const { id: playerId } = player;
+    // Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
+    GlobalPlayerList.addPlayer(player);
+    if (this.playerList.getPlayers().length === 0) {
+      this.setOwner(playerId);
+    }
     this.playerList.addPlayer(playerId);
+    return player;
   }
 
-  /**
-   * Getter for the active question
-   * @returns {T | null}
-   */
-  getActiveQuestion() {
-    return this.questionList.getActiveQuestion();
+  allPlayersComplete() {
+    return this.playerList.getPlayers().every(p => p.isComplete);
   }
 
-  getNextActiveQuestion() {
-    return this.questionList.getNextActiveQuestion();
-  }
-
-  /**
-   * Determines which answer si closest to the number
-   * @param playerAnswer
-   * @param answers
-   * @param answer
-   * @returns {boolean}
-   */
-  isClosestNumber(playerAnswer, answers, answer) {
-    const answerValues = Object.keys(answers).map((k) => answers[k]);
-    const closest = answerValues.reduce((prev, curr) => {
-      return Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev;
-    });
-    return closest === playerAnswer;
-  }
-
-  /**
-   * Determines which answer si closest to string similarity or contains the answer
-   * @param playerAnswer
-   * @param answers
-   * @param answer
-   * @returns {boolean}
-   */
-  isClosestString(playerAnswer, answers, answer) {
-    const answerValues = Object.keys(answers).map((k) => answers[k]);
-    const closest = answerValues.reduce((prev, curr) => {
-      return stringSimilarity(prev.toUpperCase(), answer.toUpperCase()) < stringSimilarity(curr.toUpperCase(), answer.toUpperCase())
-        ? curr
-        : prev;
-    });
-    return (
-      closest.toUpperCase() === playerAnswer.toUpperCase() ||
-      answer.toUpperCase().contains(playerAnswer.toUpperCase())
-    );
-  }
-
-  /**
-   * Calculates and assigns the scores for the active question
-   */
-  calculateScoresForActiveQuestion() {
-    const activeQuestion = this.getActiveQuestion();
-    if (activeQuestion) {
-      // for each score compared with the type and answer, set the players scores;
-      const { id, answer, answerType } = activeQuestion;
-      // get the answers
-      const answers = this.answers[id];
-      if (answers) {
-        for (let [playerId, value] of Object.entries(answers)) {
-          let scoreToAdd = 0;
-          // find the player in the local player list
+  calculateScores() {
+    Object.keys(this.answers).forEach((questionId, val) => {
+      const answers = this.answers[questionId];
+      if (Array.isArray(answers)) {
+        const questionAnswer = this.questionList.getQuestions()[questionId];
+        answers.forEach(answer => {
+          const { playerId } = answer;
           const player = this.playerList.findPlayerById(playerId);
           if (player) {
-            const playerAnswer = value;
-            // Determine if score it to be awarded based on the answerType
-            switch (answerType) {
-              case 'MULTI':
-                if (answer === playerAnswer) {
-                  scoreToAdd++;
-                }
-                break;
-              case 'BOOL':
-                if (answer === playerAnswer) {
-                  scoreToAdd++;
-                }
-                break;
-              case 'NUMBER':
-                if (this.isClosestNumber(playerAnswer, answers, answer)) {
-                  scoreToAdd++;
-                }
-                break;
-              case 'TEXT':
-                if (this.isClosestString(playerAnswer, answers, answer)) {
-                  scoreToAdd++;
-                }
-                break;
-              default:
-                break;
-            }
-
-            // Update the players score
-            player.setScore(player.score + scoreToAdd);
+            player.addScore(1);
+            player.addScore(this.getTimeScore({ answers, playerId }));
           }
-        }
+        });
       }
+    });
+  }
+
+  getTimeScore({ answers, playerId }) {
+    // fastest or so close it doesn't matter gets 2 points;
+    const playerAnswer = answers.find(a => a.playerId === playerId);
+    const { answeredTime: fastestTime } = answers[0];
+    if (playerAnswer) {
+      const { answeredTime } = playerAnswer;
+      if (answeredTime === fastestTime) {
+        return 2;
+      }
+      const timeRatio = fastestTime / (answeredTime - fastestTime);
+      console.log(timeRatio);
     }
   }
 
-  /**
-   * Set an answer for a given player for the active question
-   * @param id
-   * @param answer
-   */
-  setPlayerAnswerForActiveQuestion({ playerId, answer }) {
-    const activeQuestion = this.getActiveQuestion();
-    const player = this.playerList.findPlayerById(playerId);
-    if (activeQuestion) {
-      if (this.answers[activeQuestion.id]) {
-        this.answers[activeQuestion.id][player.id] = answer;
-      } else {
-        this.answers[activeQuestion.id] = {
-          [player.id]: answer
-        };
-      }
+  setPlayerAnswerForQuestion({
+    player,
+    questionIndex,
+    isCorrect,
+    playerAnswer,
+    answeredTime
+  }) {
+    const { id: playerId } = player;
+    if (isCorrect) {
+      this.answers[questionIndex].push({
+        playerId,
+        playerAnswer,
+        answeredTime
+      });
+      player.incrementProgress();
+      return player.getProgress();
     }
   }
 }

@@ -1,43 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ImageContent from './ImageContent/ImageContent';
-import VideoContent from './VideoContent/VideoContent';
-import { config, useSpring, animated } from 'react-spring';
+import AnswerInput from '../AnswerInput/AnswerInput';
 
-function Question({ type = 'TEXT', path = '', content = '' }) {
-  const props = useSpring({
-    config: config.stiff,
-    from: { opacity: 0, transform: 'translate3d(-1000px, 0, 0)' },
-    to: { opacity: 1, transform: 'translate3d(0px, 0, 0)' }
-  });
-
-  function renderSwitch(param) {
-    switch (param) {
-      case 'IMAGE':
-        return <ImageContent path={path} content={content} />;
-      case 'VIDEO':
-        return <VideoContent path={path} content={content} />;
-      default:
-        return (
-          <div className="flex justify-center items-center text-center p-4 flex-grow text-question relative">
-            {content}
-          </div>
-        );
-    }
-  }
-
+function Question({
+  submitAnswer = () => {},
+  choices = [],
+  answerType = 'BOOL',
+  answer = '',
+  content = ''
+}) {
   return (
-    <animated.div style={props} className="flex flex-col flex-grow">
-      {renderSwitch(type)}
-    </animated.div>
+    <div className="flex flex-col justify-center w-full flex-grow">
+      <div className="flex flex-col flex-1 mb-8 justify-center text-center border text-2xl shadow-2xl bg-white p-8 rounded-lg question relative">
+        {content}
+      </div>
+      <div className="flex justify-center flex-2 border shadow-2xl bg-white p-4 rounded-lg answer relative">
+        <AnswerInput
+          submitAnswer={submitAnswer}
+          answerType={answerType}
+          choices={choices}
+          answer={answer}
+        />
+      </div>
+    </div>
   );
 }
 
 Question.propTypes = {
+  submitAnswer: PropTypes.func,
   type: PropTypes.string,
-  path: PropTypes.string,
-  content: PropTypes.string
+  content: PropTypes.string,
+  answer: PropTypes.string,
+  choices: PropTypes.array,
+  answerType: PropTypes.string,
+  isCorrect: PropTypes.bool
 };
 
 export default Question;

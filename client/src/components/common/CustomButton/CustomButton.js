@@ -6,15 +6,14 @@ function CustomButton({
   clickAction,
   faIcon,
   label,
-  active = false,
+  grow = false,
   disabled = false
 }) {
   return (
     <button
-      className={`bg-white shadow transition duration-200 text-lg text-gray-600 border-2 border-gray-400 hover:border-blue-500 py-2 px-4 rounded-full font-semibold mr-4 mb-2 relative cursor-pointer hover:text-blue-400 hover:border-blue-100 ${
-        active ? 'text-blue-600' : ''
-      }
+      className={`focus:scale-105 focus:border-gray-700 bg-white active:scale-105 outline-none transform shadow transition duration-200 text-2xl border-2 border-gray-400 py-2 px-8 rounded-full font-semibold relative cursor-pointer
 				${disabled ? 'pointer-events-none opacity-50 border-gray-200' : ''}
+				${grow ? 'flex-grow' : ''}
 			}`}
       style={{ minWidth: '100px' }}
       onClick={clickAction}
@@ -29,6 +28,9 @@ CustomButton.propTypes = {
   label: PropTypes.string,
   faIcon: PropTypes.object,
   active: PropTypes.bool,
+  showCorrect: PropTypes.bool,
+  correct: PropTypes.bool,
+  grow: PropTypes.bool,
   disabled: PropTypes.bool,
   clickAction: PropTypes.func
 };

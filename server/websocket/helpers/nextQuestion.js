@@ -3,7 +3,7 @@ const QuizList = require('../../models/quizList');
 
 module.exports = {
   name: 'nextQuestion',
-  method: (options) => {
+  method: options => {
     const { io, question } = options;
     const { questionTime = defaultQuestionTime } = question;
 
@@ -18,7 +18,6 @@ module.exports = {
       io.sockets.emit('show-answer');
       // Broadcast the player list to ALL connected sockets
       io.sockets.emit('players', quiz.getPlayers());
-      quiz.getNextActiveQuestion();
     }, questionTime);
   }
 };

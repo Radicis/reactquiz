@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CustomButton from '../../common/CustomButton/CustomButton';
+import AnswerButton from '../../common/AnswerButton/AnswerButton';
 
-function MultiAnswerInput({ choices = [], setAnswer }) {
+function MultiAnswerInput({ answer, choices = [], setAnswer }) {
+  const [showAnswer, setShow] = useState(false);
+  const handleAnswerInput = (value) => {
+    setShow(true);
+    setAnswer(value);
+  };
   function renderChoice(choice) {
     return (
-      <CustomButton
+      <AnswerButton
+        correct={answer === choice}
+        showCorrect={showAnswer}
+        disabled={showAnswer}
         key={choice}
         label={choice}
-        clickAction={() => setAnswer(choice)}
+        grow={true}
+        clickAction={() => handleAnswerInput(choice)}
       />
     );
   }
 
   return (
-    <div className="flex flex-row flex-wrap justify-center">{choices.map(renderChoice)}</div>
+    <div className="flex flex-col flex-grow justify-center">
+      {choices.map(renderChoice)}
+    </div>
   );
 }
 
 MultiAnswerInput.propTypes = {
   choices: PropTypes.array,
-  setAnswer: PropTypes.func
+  setAnswer: PropTypes.func,
+  answer: PropTypes.string
 };
 
 export default MultiAnswerInput;
