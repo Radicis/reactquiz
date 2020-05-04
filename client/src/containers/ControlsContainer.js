@@ -11,12 +11,11 @@ function ControlsContainer() {
     activeQuestion,
     isStarted,
     isComplete,
-    quizId,
-    playerId
+    quizId
   } = state;
 
   const setPlayerReady = () => {
-    socket.emit('set-player-ready', { playerId, quizId });
+    socket.emit('set-player-ready');
     dispatch({
       type: 'SET_WAITING'
     });
@@ -27,7 +26,7 @@ function ControlsContainer() {
   };
 
   const startQuiz = () => {
-    socket.emit('start-quiz', { quizId, playerId });
+    socket.emit('start-quiz');
   };
 
   return (

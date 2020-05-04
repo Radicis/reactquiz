@@ -43,8 +43,6 @@ function QuestionsContainer() {
       questionIndex: index || 0,
       isCorrect,
       playerAnswer,
-      playerId,
-      quizId,
       answeredTime: new Date() - questionStartTime
     });
     // Allow time to show correctness of the answer to the player
@@ -56,10 +54,7 @@ function QuestionsContainer() {
         });
         setQuestionIndex(index + 1);
       } else {
-        socket.emit('set-player-complete', {
-          playerId,
-          quizId
-        });
+        socket.emit('set-player-complete');
       }
     }, 1000);
   };

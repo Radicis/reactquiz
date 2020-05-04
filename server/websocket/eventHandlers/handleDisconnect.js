@@ -1,9 +1,9 @@
-const QuizList = require('../../models/quizList');
+// const QuizList = require('../../models/quizList');
 const GlobalPlayerList = require('../../models/playerList/global');
 
 const { apply } = require('../middleware');
 
-const { playerTimeout = 1000 * 60 } = require('../../config');
+const { playerTimeout = 1000 * 30 } = require('../../config');
 
 module.exports = {
   name: 'handleDisconnect',
@@ -11,27 +11,28 @@ module.exports = {
     try {
       options = apply(options, args);
     } catch (e) {
-      return false;
+      console.log(e);
+      // ignore error
     }
-    const { io, player } = options;
-    const { id: playerId, name, quizId = 'test' } = player;
+    const { io, player, quiz } = options;
+    const { id: playerId, name} = player;
     console.log(`Player ${playerId} : ${name} disconnected`);
     // Wait for the specified timeout then delete the player to allow for reconnects w/cookies
     setTimeout(() => {
-      // const quiz = QuizList.getQuiz(quizId);
-      // GlobalPlayerList.removePlayer(playerId);
-      // const remainingPlayers = quiz.getPlayers();
-      // // if the removed player was the owner then promote the new 0 index player
-      // if (quiz.checkIsOwner(playerId)) {
-      //   const newOwner = remainingPlayers[0];
-      //   if (newOwner) {
-      //     quiz.setOwner(newOwner.id);
-      //     io.sockets.emit('set-owner', newOwner);
-      //   }
-      // }
-      // console.log(`Removing player ${playerId} as they timed out`);
-      // io.sockets.emit('players', remainingPlayers);
-      // console.log(`${remainingPlayers.length} players remain`);
+      GlobalPlayerList.removePlayer(playerId);
+      const remainingPlayers = quiz.getPlayers();
+      try {
+        // if the removed player was the owner then promote the new 0 index player
+        if (quiz.checkIsOwner(playerId) && remainingPlayers.length > 0) {
+          const newOwner = remainingPlayers[0];
+          if (newOwner) {
+            quiz.setOwner(newOwner.id);
+            const { id: quizId } = quiz;
+            io.to(quizId).emit('players', quiz.getPlayers());
+          }
+        }
+      } catch (e) {}
+      console.log(`Removing player ${name} ${playerId} as they timed out`);
     }, playerTimeout);
   }
 };

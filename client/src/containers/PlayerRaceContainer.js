@@ -9,13 +9,11 @@ function PlayerRaceContainer() {
     questions = [],
     showPlayers = true,
     socket,
-    playerId,
-    player,
-    quizId
+    player
   } = state;
 
   const kickPlayer = (playerIdToKick) => {
-    socket.emit('kick-player', { playerIdToKick, playerId, quizId });
+    socket.emit('kick-player', { playerIdToKick });
   };
 
   return (

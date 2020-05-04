@@ -34,10 +34,6 @@ function ErrorContainer({ history }) {
       // If the exit code is true then go to landing page and reset the state
       if (exit) {
         history.push('/');
-      } else {
-        // dispatch({
-        //   type: 'SET_ERROR'
-        // });
       }
     } else {
       setLocalErr(null);

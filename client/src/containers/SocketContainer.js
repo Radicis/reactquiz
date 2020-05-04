@@ -14,6 +14,9 @@ function SocketContainer() {
       dispatch({
         type: 'SET_CONNECTED'
       });
+      dispatch({
+        type: 'SET_ERROR'
+      });
     });
 
     socket.on('connect_timeout', () => {
