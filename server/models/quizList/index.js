@@ -9,7 +9,7 @@ class QuizList {
   }
 
   addQuiz() {
-    const newQuiz = new Quiz('123');
+    const newQuiz = new Quiz();
     this.quizzes[newQuiz.id] = newQuiz;
     return newQuiz;
   }

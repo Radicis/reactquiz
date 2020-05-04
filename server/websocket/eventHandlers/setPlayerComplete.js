@@ -26,6 +26,7 @@ module.exports = {
     if (allComplete) {
       // Calculate the scores
       quiz.calculateScores();
+      quiz.resetPlayers();
       // Emit the quiz complete event
       io.to(quizId).emit('quiz-complete', quiz.getPlayers());
     }

@@ -7,7 +7,7 @@ import { animated, useTransition } from 'react-spring';
 
 function ErrorContainer({ history }) {
   const [state, dispatch] = useContext(Context);
-  const [localErr, setLocalErr] = useState(null);
+  const [localErr, setLocalErr] = useState('');
   const { error } = state;
 
   const transition = useTransition(localErr, null, {
@@ -23,6 +23,7 @@ function ErrorContainer({ history }) {
   };
 
   useEffect(() => {
+    console.log(error);
     if (error) {
       const { message, exit } = error;
       if (message && message !== 'websocket error') {
@@ -34,14 +35,14 @@ function ErrorContainer({ history }) {
       if (exit) {
         history.push('/');
       } else {
-        dispatch({
-          type: 'SET_ERROR'
-        });
+        // dispatch({
+        //   type: 'SET_ERROR'
+        // });
       }
     } else {
       setLocalErr(null);
     }
-  }, [error]);
+  }, [setLocalErr, dispatch, error, history]);
 
   return (
     <React.Fragment>
@@ -53,7 +54,10 @@ function ErrorContainer({ history }) {
               style={props}
               className="z-20 px-6 py-4 text-lg absolute bottom-0 left-0 bg-red-900 text-gray-100 w-full flex items-center justify-center shadow-2xl"
             >
-              <Error clearError={clearError} error={localErr} />{' '}
+              <Error
+                clearError={clearError}
+                error={(error && error.message) || 'Unknown Error'}
+              />{' '}
             </animated.div>
           )
       )}

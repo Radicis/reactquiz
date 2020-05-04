@@ -29,6 +29,7 @@ class PlayerList {
       const player = GlobalPlayerList.findPlayerById(id);
       if (player) {
         player.resetProgress();
+        player.resetReady();
       }
     });
   }

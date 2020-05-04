@@ -51,7 +51,7 @@ function UserSetup({ setName, show }) {
 			}`}
                     onClick={() => setName(name)}
                   >
-                    <span className="mr-2">OK</span>
+                    OK
                   </button>
                 </div>
               </div>

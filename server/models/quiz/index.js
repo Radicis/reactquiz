@@ -9,7 +9,7 @@ const GlobalPlayerList = require('../../models/playerList/global');
  */
 class Quiz {
   constructor(id) {
-    this.id = id || UUID(); // allow to set the id manually
+    this.id = Math.floor(1000 + Math.random() * 9000);
     this.questionList = new QuestionList();
     this.playerList = new PlayerList();
     this.answers = this.questionList.getQuestions().reduce((acc, curr, id) => {
@@ -48,6 +48,11 @@ class Quiz {
     return this.playerList.getPlayers();
   }
 
+  resetPlayers() {
+    this.calculated = false;
+    this.playerList.resetPlayers();
+  }
+
   /**
    * Add a player to the local player list for this quiz
    * @param name
@@ -69,33 +74,41 @@ class Quiz {
   }
 
   calculateScores() {
-    Object.keys(this.answers).forEach((questionId, val) => {
-      const answers = this.answers[questionId];
-      if (Array.isArray(answers)) {
-        const questionAnswer = this.questionList.getQuestions()[questionId];
-        answers.forEach(answer => {
-          const { playerId } = answer;
-          const player = this.playerList.findPlayerById(playerId);
-          if (player) {
-            player.addScore(1);
-            player.addScore(this.getTimeScore({ answers, playerId }));
-          }
-        });
-      }
-    });
+    // try not to do this twice..
+    if (!this.calculated) {
+      this.calculated = true;
+      Object.keys(this.answers).forEach((questionId, val) => {
+        const answers = this.answers[questionId];
+        if (Array.isArray(answers)) {
+          answers.forEach(answer => {
+            const { playerId } = answer;
+            const player = this.playerList.findPlayerById(playerId);
+            if (player) {
+              player.addScore(1);
+              player.addScore(this.getTimeScore({ answers, playerId }));
+            }
+          });
+        }
+      });
+    }
   }
 
   getTimeScore({ answers, playerId }) {
+    const threshold = 500; // 500 ms for latency
     // fastest or so close it doesn't matter gets 2 points;
     const playerAnswer = answers.find(a => a.playerId === playerId);
     const { answeredTime: fastestTime } = answers[0];
     if (playerAnswer) {
       const { answeredTime } = playerAnswer;
-      // if (answeredTime === fastestTime) {
-      //   return 2;
-      // }
-      const timeRatio = fastestTime / (answeredTime - fastestTime);
-      console.log(timeRatio);
+      if (
+        answeredTime <= fastestTime ||
+        answeredTime - fastestTime <= threshold
+      ) {
+        return 2;
+      }
+      const timeValue = fastestTime / (answeredTime - fastestTime - threshold);
+      const timeRatio = Math.round(timeValue);
+      return timeRatio;
     }
   }
 

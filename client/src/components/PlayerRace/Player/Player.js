@@ -6,13 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faQuestion,
   faCheck,
-  faCrown
+  faCrown,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
-
-const padding = 20;
 
 function Player({
   numberOfQuestions,
+  numberOfPlayers,
   initials,
   name,
   score,
@@ -20,56 +20,57 @@ function Player({
   progress,
   color,
   isOwner,
-  totalTime,
   numCorrect,
   numIncorrect,
-  showPlayers
+  showPlayers,
+  showKick,
+  playerId,
+  kickPlayer
 }) {
   const getPosition = (prog) => {
     if (!prog) {
       return 10;
     }
-    let width = window.innerWidth;
-    if (width >= 800) {
-      width = 800 - padding; // remove padding
-    }
-    const percentage = 100 / (numberOfQuestions / prog) / 100;
-    return percentage * width - padding;
+    return 100 / (numberOfQuestions / prog);
   };
+
+  const getHeight = () => {
+    if (showPlayers) {
+      return 'auto';
+    }
+    return `${100 / numberOfPlayers}%`;
+  };
+
   const move = useSpring({
     config: config.stiff,
-    transform: `translate3d(${padding}px,0,0)`,
     p: getPosition(progress)
   });
+
   return (
     <animated.div
       style={{
         ...move,
-        transform: move.p.interpolate((y) => {
-          if (showPlayers) {
-            return 'translate3d(0px,0,0)';
+        width: move.p.interpolate((y) => {
+          if (!showPlayers) {
+            return `${y}%`;
           }
-          return `translate3d(${y}px,0,0)`;
-        })
+          return 'auto';
+        }),
+        height: getHeight()
       }}
       className={`
       flex flex-grow
       player relative left-0`}
     >
-      {!showPlayers ? (
-        <div
-          style={{ background: color || '#ccc' }}
-          className={`rounded-full shadow-lg p-2 overflow-hidden text-sm cursor-pointer
-          ${isOwner || isReady ? 'bounce' : 'sleep'}`}
-        >
-          {initials || '??'}
-        </div>
-      ) : (
-        <div className="flex flex-row mb-4 flex-grow items-center">
+      <div
+        className={`flex flex-row flex-grow items-center ${
+          showPlayers ? 'mb-4' : ''
+        }`}
+      >
+        {showPlayers ? (
           <div
-            className={`text-gray-600 mr-4 status-icon flex justify-center ${
-              !isOwner && isReady ? 'slow-bounce' : ''
-            }`}
+            className={`text-gray-600 mr-4 status-icon flex justify-center 
+            ${!isOwner && isReady ? 'slow-bounce' : ''}`}
           >
             {isOwner ? (
               <FontAwesomeIcon icon={faCrown} />
@@ -79,30 +80,55 @@ function Player({
               <FontAwesomeIcon icon={faQuestion} />
             )}
           </div>
-          <div
-            style={{ background: color || '#ccc' }}
-            className="text-lg rounded-lg shadow-lg py-2 px-6 overflow-hidden flex flex-grow"
-          >
-            <div className="flex flex-grow">{name || 'UNKNOWN'}</div>
-            <div>{totalTime}</div>
-            <div>{numCorrect}</div>
-            <div>{numIncorrect}</div>
-            <div>{score || 0}</div>
-          </div>
+        ) : (
+          ''
+        )}
+        <div
+          style={{ background: color || '#ccc' }}
+          className={`overflow-hidden flex flex-grow ${
+            showPlayers
+              ? 'text-lg rounded-lg shadow-lg py-2 px-6'
+              : 'text-sm rounded px-4 py-2'
+          }`}
+        >
+          {showPlayers ? (
+            <React.Fragment>
+              <div className="flex flex-grow">{name || 'UNKNOWN'}</div>
+              <div>{numCorrect}</div>
+              <div>{numIncorrect}</div>
+              <div>{score || 0}</div>
+            </React.Fragment>
+          ) : (
+            <div className="flex flex-grow">{initials || 'UNKNOWN'}</div>
+          )}
         </div>
-      )}
+        {showKick ? (
+          <div
+            className="ml-4 cursor-pointer"
+            onClick={() => kickPlayer(playerId)}
+          >
+            <FontAwesomeIcon icon={faTimesCircle} />
+          </div>
+        ) : (
+          ''
+        )}
+      </div>
     </animated.div>
   );
 }
 
 Player.propTypes = {
   initials: PropTypes.string,
+  kickPlayer: PropTypes.func,
+  playerId: PropTypes.string,
   isReady: PropTypes.bool,
   isOwner: PropTypes.bool,
   showPlayers: PropTypes.bool,
+  showKick: PropTypes.bool,
   color: PropTypes.string,
   name: PropTypes.string,
   progress: PropTypes.number,
+  numberOfPlayers: PropTypes.number,
   numIncorrect: PropTypes.number,
   numCorrect: PropTypes.number,
   totalTime: PropTypes.number,

@@ -15,8 +15,8 @@ function QuizSetup({ joinQuiz, createQuiz, show }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && quizId.length >= 3) {
-      joinQuiz(setId);
+    if (e.key === 'Enter' && quizId.length === 4) {
+      joinQuiz(quizId);
     }
   };
 
@@ -31,7 +31,7 @@ function QuizSetup({ joinQuiz, createQuiz, show }) {
                   handleChange={handleInputChange}
                   handleKeyDown={handleKeyDown}
                   maxLength={15}
-                  placeHolder="Enter Quiz ID"
+                  placeHolder="Enter 4 Digit Quiz Code"
                 />
               </div>
               <div className="flex flex-row justify-center">
@@ -39,7 +39,7 @@ function QuizSetup({ joinQuiz, createQuiz, show }) {
                   <button
                     className={`focus:scale-125 active:scale-125 transform bg-white shadow mr-4 transition duration-200 text-lg border-2 border-gray-400 py-2 px-4 rounded-full font-semibold mb-4 relative cursor-pointer
 				${
-          !quizId || quizId.length <= 1
+          !quizId || quizId.length !== 4
             ? 'pointer-events-none opacity-50 border-gray-200'
             : ''
         }

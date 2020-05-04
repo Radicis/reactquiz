@@ -8,5 +8,6 @@
     }
   ],
   "singleQuote": true,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "linebreak-style": "off"
 }

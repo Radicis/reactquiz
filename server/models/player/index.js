@@ -56,16 +56,16 @@ class Player {
     this.progress = 0;
   }
 
+  resetReady () {
+    this.isReady = false
+  }
+
   setReady() {
     this.isReady = true;
   }
 
   addScore (val) {
     this.score = this.score + val;
-  }
-
-  setScore(score) {
-    this.score = score;
   }
 }
 

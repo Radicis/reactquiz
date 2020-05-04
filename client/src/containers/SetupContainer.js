@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/Store';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -44,7 +44,6 @@ function SetupContainer({ history, match }) {
           type: 'SET_ERROR',
           payload: { message: 'Quiz not found' }
         });
-        history.push('/');
       });
   };
 
@@ -67,7 +66,6 @@ function SetupContainer({ history, match }) {
           type: 'SET_ERROR',
           payload: 'Something went wrong'
         });
-        history.push('/');
       });
   };
 

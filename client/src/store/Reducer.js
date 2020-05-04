@@ -131,7 +131,8 @@ const Reducer = (state, action) => {
     case 'UPDATE_PLAYER':
       return {
         ...state,
-        player: action.payload,
+        player:
+          state.playerId === action.payload.id ? action.payload : state.player,
         players: updatePlayer(action.payload, state.players)
       };
     case 'SET_PLAYERS':
@@ -156,7 +157,7 @@ const Reducer = (state, action) => {
     case 'SET_ERROR':
       return {
         ...state,
-        error: action.payload,
+        error: action.payload || null,
         loading: action.payload ? false : state.loading
       };
     case 'SET_LOADING':

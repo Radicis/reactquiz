@@ -18,6 +18,7 @@ const {
   setPlayerReady,
   setAnswerForQuestion,
   handleDisconnect,
+  kickPlayer,
   setPlayerComplete
 } = require('./events');
 
@@ -114,6 +115,15 @@ io.on('connection', socket => {
       { socket, io, playerId, quizId },
       requirePlayer,
       requireQuiz
+    );
+  });
+
+  socket.on('kick-player', ({ playerIdToKick, playerId, quizId }) => {
+    kickPlayer(
+      { socket, io, playerId, quizId, playerIdToKick },
+      requirePlayer,
+      requireQuiz,
+      checkIsOwner
     );
   });
 

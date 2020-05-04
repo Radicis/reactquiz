@@ -10,7 +10,7 @@ const initialState = {
   socket: newSocket,
   loading: false,
   connected: false,
-  error: '',
+  error: null,
   players: [],
   player: null,
   activeQuestion: null,

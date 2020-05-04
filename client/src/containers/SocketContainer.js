@@ -4,7 +4,7 @@ import { Context } from '../store/Store';
 function SocketContainer() {
   const [state, dispatch] = useContext(Context);
 
-  const { socket } = state;
+  const { socket, playerId } = state;
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -61,8 +61,16 @@ function SocketContainer() {
       });
     });
 
+    socket.on('kicked', (playerIdToKick) => {
+      if (playerIdToKick === playerId) {
+        dispatch({
+          type: 'SET_ERROR',
+          payload: { message: 'You were KICKED!', exit: true }
+        });
+      }
+    });
+
     socket.on('quiz-complete', (players) => {
-      console.log(players);
       dispatch({
         type: 'SET_QUIZ_COMPLETE',
         payload: players
@@ -88,7 +96,7 @@ function SocketContainer() {
         payload: data
       });
     });
-  }, [dispatch, socket]); // Pass in array here to prevent re-render
+  }, [dispatch, socket, playerId]); // Pass in array here to prevent re-render
   return <div />;
 }
 
