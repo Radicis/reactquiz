@@ -38,7 +38,7 @@ function Player({
     if (showPlayers) {
       return 'auto';
     }
-    return `${100 / numberOfPlayers}%`;
+    return `${100 / numberOfPlayers - 2}%`;
   };
 
   const move = useSpring({
@@ -55,8 +55,7 @@ function Player({
             return `${y}%`;
           }
           return 'auto';
-        }),
-        height: getHeight()
+        })
       }}
       className={`
       flex flex-grow
@@ -88,7 +87,7 @@ function Player({
           className={`overflow-hidden flex flex-grow ${
             showPlayers
               ? 'text-lg rounded-lg shadow-lg py-2 px-6'
-              : 'text-sm rounded px-4 py-2'
+              : 'text-sm rounded px-4'
           }`}
         >
           {showPlayers ? (
@@ -99,10 +98,12 @@ function Player({
               <div>{score || 0}</div>
             </React.Fragment>
           ) : (
-            <div className="flex flex-grow">{initials || 'UNKNOWN'}</div>
+            <div className="flex flex-grow text-xs">
+              {initials || 'UNKNOWN'}
+            </div>
           )}
         </div>
-        {showKick ? (
+        {showKick && showPlayers ? (
           <div
             className="ml-4 cursor-pointer"
             onClick={() => kickPlayer(playerId)}

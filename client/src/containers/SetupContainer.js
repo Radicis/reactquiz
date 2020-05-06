@@ -19,14 +19,14 @@ function SetupContainer({ history, match }) {
       payload: name
     });
     if (quizId) {
-      joinQuiz(quizId);
+      joinQuiz(quizId, name);
     }
   };
 
-  const joinQuiz = (localQuizId) => {
+  const joinQuiz = (localQuizId, name) => {
     axios
       .post(`${protocol}://${host}:${port}/${localQuizId}`, {
-        name: playerName
+        name: playerName || name
       })
       .then((res) => {
         const { quizId, playerId } = res.data;

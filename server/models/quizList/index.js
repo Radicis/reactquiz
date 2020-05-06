@@ -14,6 +14,10 @@ class QuizList {
     return newQuiz;
   }
 
+  removeQuiz (quizId) {
+    delete this.quizzes[quizId];
+  }
+
   /**
    * Getter for the active question
    * @returns {T | null}

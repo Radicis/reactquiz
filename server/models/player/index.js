@@ -13,7 +13,6 @@ class Player {
     this.isReady = false;
     this.isOwner = false;
     this.isComplete = false;
-    this.socketId = id;
     this.initials = this.getInitials(name);
     this.color = '#';
     for (let i = 0; i < 6; i++) {
@@ -33,7 +32,7 @@ class Player {
   }
 
   setActiveSocketId(id) {
-    this.socketId = id;
+    this.id = id;
   }
 
   setComplete(val) {
