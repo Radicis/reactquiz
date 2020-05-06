@@ -12,9 +12,7 @@ function QuestionsContainer() {
     activeQuestion,
     questionStartTime,
     showAnswer,
-    questions,
-    playerId,
-    quizId
+    questions
   } = state;
 
   const transition = useTransition(index, (index) => index, {

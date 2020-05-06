@@ -23,7 +23,6 @@ function ErrorContainer({ history }) {
   };
 
   useEffect(() => {
-    console.log(error);
     if (error) {
       const { message, exit } = error;
       if (message && message !== 'websocket error') {

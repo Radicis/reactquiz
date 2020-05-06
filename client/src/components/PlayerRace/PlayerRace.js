@@ -14,10 +14,19 @@ function PlayerRace({
     height: showPlayers ? '69%' : '10%',
     zIndex: 1 // hack to prevent the after from becoming invisible
   });
+  const isTopThree = (player) => {
+    const { progress } = player;
+    const progressArr = players.map((p) => p.progress).sort((a, b) => a - b);
+    if (progressArr.length <= 3) {
+      return true;
+    }
+    progressArr.length = 3;
+    return progressArr.includes(progress);
+  };
   return (
     <animated.div
       style={props}
-      className={`players rounded-lg m-4 shadow-2xl border bottom-0 left-0 overflow-hidden relative bg-white ${
+      className={`players rounded-lg m-4 shadow-2xl border flex flex-col bottom-0 left-0 overflow-hidden relative bg-white ${
         showPlayers ? 'p-4' : 'p-2'
       }`}
     >
@@ -25,6 +34,8 @@ function PlayerRace({
         players.map((player) => (
           <Player
             progress={player.progress}
+            isComplete={player.isComplete}
+            isTopThree={isTopThree(player)}
             score={player.score}
             color={player.color}
             initials={player.initials}

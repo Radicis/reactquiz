@@ -12,7 +12,8 @@ import {
 
 function Player({
   numberOfQuestions,
-  numberOfPlayers,
+  isTopThree,
+  isComplete,
   initials,
   name,
   score,
@@ -35,10 +36,11 @@ function Player({
   };
 
   const getHeight = () => {
-    if (showPlayers) {
+    if (showPlayers || (isTopThree && !isComplete)) {
       return 'auto';
     }
-    return `${100 / numberOfPlayers - 2}%`;
+    // If not then show them as a line
+    return '2%';
   };
 
   const move = useSpring({
@@ -55,26 +57,22 @@ function Player({
             return `${y}%`;
           }
           return 'auto';
-        })
+        }),
+        height: getHeight()
       }}
       className={`
-      flex flex-grow
       player relative left-0`}
     >
-      <div
-        className={`flex flex-row flex-grow items-center ${
-          showPlayers ? 'mb-4' : ''
-        }`}
-      >
+      <div className={`flex flex-row ${showPlayers ? 'mb-4 items-start' : ''}`}>
         {showPlayers ? (
           <div
-            className={`text-gray-600 mr-4 status-icon flex justify-center 
+            className={`text-gray-600 self-center mr-4 status-icon flex justify-center 
             ${!isOwner && isReady ? 'slow-bounce' : ''}`}
           >
             {isOwner ? (
-              <FontAwesomeIcon icon={faCrown} />
+              <FontAwesomeIcon icon={faCrown} color="orange" />
             ) : isReady ? (
-              <FontAwesomeIcon icon={faCheck} />
+              <FontAwesomeIcon icon={faCheck} color="green" />
             ) : (
               <FontAwesomeIcon icon={faQuestion} />
             )}
@@ -87,7 +85,7 @@ function Player({
           className={`overflow-hidden flex flex-grow ${
             showPlayers
               ? 'text-lg rounded-lg shadow-lg py-2 px-6'
-              : 'text-sm rounded px-4'
+              : 'text-sm rounded px-4 items-center'
           }`}
         >
           {showPlayers ? (
@@ -99,16 +97,16 @@ function Player({
             </React.Fragment>
           ) : (
             <div className="flex flex-grow text-xs">
-              {initials || 'UNKNOWN'}
+              {isTopThree ? initials || 'UNKNOWN' : ''}
             </div>
           )}
         </div>
         {showKick && showPlayers ? (
           <div
-            className="ml-4 cursor-pointer"
+            className="ml-2 cursor-pointer"
             onClick={() => kickPlayer(playerId)}
           >
-            <FontAwesomeIcon icon={faTimesCircle} />
+            <FontAwesomeIcon icon={faTimesCircle} size="xs" />
           </div>
         ) : (
           ''
@@ -129,7 +127,8 @@ Player.propTypes = {
   color: PropTypes.string,
   name: PropTypes.string,
   progress: PropTypes.number,
-  numberOfPlayers: PropTypes.number,
+  isTopThree: PropTypes.bool,
+  isComplete: PropTypes.bool,
   numIncorrect: PropTypes.number,
   numCorrect: PropTypes.number,
   totalTime: PropTypes.number,

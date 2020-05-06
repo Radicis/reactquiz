@@ -1,18 +1,10 @@
 import React, { useContext } from 'react';
 import { Context } from '../store/Store';
 import Controls from '../components/Controls/Controls';
-import { baseUrl } from '../config';
 
 function ControlsContainer() {
   const [state, dispatch] = useContext(Context);
-  const {
-    socket,
-    player,
-    activeQuestion,
-    isStarted,
-    isComplete,
-    quizId
-  } = state;
+  const { socket, player, activeQuestion, isStarted, isComplete } = state;
 
   const setPlayerReady = () => {
     socket.emit('set-player-ready');
@@ -22,7 +14,10 @@ function ControlsContainer() {
   };
 
   const showLinkModal = () => {
-    alert(`${baseUrl}/${quizId}`);
+    dispatch({
+      type: 'SHOW_LINK_MODAL',
+      payload: true
+    });
   };
 
   const startQuiz = () => {

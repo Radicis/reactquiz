@@ -28,5 +28,10 @@ module.exports = {
 
     // Broadcast the player list to ALL connected sockets
     io.to(quizId).emit('players', quiz.getPlayers());
+
+    // if quiz is in progress then send the status event
+    if (quiz.isInProgress()) {
+      io.to(socketId).emit('start-quiz', quiz.getQuestions());
+    }
   }
 };

@@ -13,8 +13,6 @@ if (playerId) {
   connString = `${connString}?playerId=${playerId}`;
 }
 
-console.log(connString);
-
 const newSocket = io(connString);
 
 const initialState = {

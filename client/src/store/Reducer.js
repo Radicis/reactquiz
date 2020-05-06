@@ -42,7 +42,8 @@ const Reducer = (state, action) => {
         players: [],
         player: null,
         playerId: null,
-        quizId: null
+        quizId: null,
+        showLinkModal: false
       };
     case 'INIT':
       return {
@@ -164,6 +165,11 @@ const Reducer = (state, action) => {
       return {
         ...state,
         loading: action.payload
+      };
+    case 'SHOW_LINK_MODAL':
+      return {
+        ...state,
+        showLinkModal: action.payload
       };
     default:
       return state;

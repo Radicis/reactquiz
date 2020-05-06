@@ -13,6 +13,7 @@ import SetupContainer from './containers/SetupContainer';
 import HeaderContainer from './containers/HeaderContainer';
 import LoadingContainer from './containers/LoadingContainer';
 import { useTransition, animated } from 'react-spring';
+import LinkModalContainer from './containers/ModalContainer';
 
 function App() {
   const location = useLocation();
@@ -31,6 +32,7 @@ function App() {
         <HeaderContainer />
         <ErrorContainer />
         <LoadingContainer />
+        <LinkModalContainer />
         <div className="wave" />
         {transitions.map(
           ({ item, props, key }) =>

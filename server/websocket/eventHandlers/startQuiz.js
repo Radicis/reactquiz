@@ -15,6 +15,7 @@ module.exports = {
 
     const { io, quiz } = options;
     quiz.reset();
+    quiz.setInProgress(true);
     io.sockets.emit('start-quiz', quiz.getQuestions());
   }
 };

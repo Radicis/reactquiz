@@ -30,6 +30,7 @@ class PlayerList {
       if (player) {
         player.resetProgress();
         player.resetReady();
+        player.setComplete(false);
       }
     });
   }

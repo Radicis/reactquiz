@@ -18,6 +18,14 @@ class Quiz {
     }, {});
   }
 
+  setInProgress(val) {
+    this.inProgress = val;
+  }
+
+  isInProgress () {
+    return this.inProgress
+  }
+
   setOwner(playerId) {
     this.owner = playerId;
     this.playerList.findPlayerById(playerId).setIsOwner();
