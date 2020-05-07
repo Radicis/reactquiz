@@ -11,7 +11,7 @@ import QuizSetup from '../components/QuizSetup/QuizSetup';
 function SetupContainer({ history, match }) {
   const [state, dispatch] = useContext(Context);
 
-  const { playerName, quizId } = state;
+  const { playerName, quizId, playerId } = state;
 
   const setName = (name) => {
     dispatch({
@@ -26,7 +26,8 @@ function SetupContainer({ history, match }) {
   const joinQuiz = (localQuizId, name) => {
     axios
       .post(`${protocol}://${host}:${port}/${localQuizId}`, {
-        name: playerName || name
+        name: playerName || name,
+        playerId
       })
       .then((res) => {
         const { quizId, playerId } = res.data;

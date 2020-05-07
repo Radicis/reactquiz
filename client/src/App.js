@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Switch,
-  Route,
-  useLocation
-} from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 import Store from './store/Store';
 import SocketContainer from './containers/SocketContainer';
@@ -14,6 +10,7 @@ import HeaderContainer from './containers/HeaderContainer';
 import LoadingContainer from './containers/LoadingContainer';
 import { useTransition, animated } from 'react-spring';
 import LinkModalContainer from './containers/ModalContainer';
+import Divider from './components/Divider/Divider';
 
 function App() {
   const location = useLocation();
@@ -29,11 +26,11 @@ function App() {
         className="overflow-hidden h-full flex flex-col text-lg relative border-l-0 border-r-0 border-gray-400
       bg-gray-200 md:border-r-2 md:border-l-2 text-2xl font-semibold text-gray-800"
       >
+        <Divider />
         <HeaderContainer />
         <ErrorContainer />
         <LoadingContainer />
         <LinkModalContainer />
-        <div className="wave" />
         {transitions.map(
           ({ item, props, key }) =>
             item && (

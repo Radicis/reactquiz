@@ -26,7 +26,7 @@ function PlayerRace({
   return (
     <animated.div
       style={props}
-      className={`players rounded-lg m-4 shadow-2xl border flex flex-col bottom-0 left-0 overflow-hidden relative bg-white ${
+      className={`players rounded-lg mx-4 my-2 shadow-2xl border flex flex-col bottom-0 left-0 overflow-hidden relative bg-white ${
         showPlayers ? 'p-4' : 'p-2'
       }`}
     >

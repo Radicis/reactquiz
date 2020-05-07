@@ -22,6 +22,7 @@ const initialState = {
   error: null,
   players: [],
   player: null,
+  playerId,
   activeQuestion: null,
   showWaiting: false,
   showPlayers: true,

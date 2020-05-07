@@ -40,7 +40,7 @@ function Player({
       return 'auto';
     }
     // If not then show them as a line
-    return '2%';
+    return '3px';
   };
 
   const move = useSpring({
@@ -60,10 +60,13 @@ function Player({
         }),
         height: getHeight()
       }}
-      className={`
-      player relative left-0`}
+      className="player relative left-0"
     >
-      <div className={`flex flex-row ${showPlayers ? 'mb-4 items-start' : ''}`}>
+      <div
+        className={`flex flex-row w-full h-full ${
+          showPlayers ? 'mb-4 items-start' : ''
+        }`}
+      >
         {showPlayers ? (
           <div
             className={`text-gray-600 self-center mr-4 status-icon flex justify-center 
@@ -82,10 +85,10 @@ function Player({
         )}
         <div
           style={{ background: color || '#ccc' }}
-          className={`overflow-hidden flex flex-grow ${
+          className={`flex flex-grow ${
             showPlayers
               ? 'text-lg rounded-lg shadow-lg py-2 px-6'
-              : 'text-sm rounded px-4 items-center'
+              : 'text-sm rounded overflow-hidden px-4 items-center'
           }`}
         >
           {showPlayers ? (

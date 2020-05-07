@@ -1,16 +1,36 @@
-const UUID = require('uuid').v4;
 const QuestionList = require('../questionList');
 const PlayerList = require('../playerList');
 const Player = require('../player');
 const GlobalPlayerList = require('../../models/playerList/global');
 
 /**
+ * Define the chunk method in the prototype of an array
+ * that returns an array with arrays of the given size.
+ *
+ * @param chunkSize {Integer} Size of every group
+ */
+Object.defineProperty(Array.prototype, 'chunk', {
+  value: function(chunkSize){
+    var temporal = [];
+
+    for (let i = 0; i < this.length; i+= chunkSize){
+      temporal.push(this.slice(i,i+chunkSize));
+    }
+
+    return temporal;
+  }
+});
+
+/**
  * Class to encapsulate quiz functionality
  */
 class Quiz {
-  constructor(id) {
+  constructor() {
     this.id = Math.floor(1000 + Math.random() * 9000);
     this.questionList = new QuestionList();
+    // split up the questions into equal rounds
+    // this.rounds = this.questionList.getQuestions().chunk(this.questionList.getQuestions().length);
+    // this.currentRound = 0;
     this.playerList = new PlayerList();
     this.answers = this.questionList.getQuestions().reduce((acc, curr, id) => {
       acc[id] = [];
@@ -61,15 +81,22 @@ class Quiz {
     this.playerList.resetPlayers();
   }
 
+  findPlayerById(playerId) {
+    return this.playerList.findPlayerById(playerId);
+  }
+
   /**
    * Add a player to the local player list for this quiz
    * @param name
+   * @param dontAddToGlobal
    */
-  addPlayer(name) {
+  addPlayer(name, dontAddToGlobal) {
     const player = new Player({ name });
     const { id: playerId } = player;
     // Add the player to the Global PlayerList with UNKNOWN as the name. We need to listen for a set name event later to set it
-    GlobalPlayerList.addPlayer(player);
+    if (!dontAddToGlobal) {
+      GlobalPlayerList.addPlayer(player);
+    }
     if (this.playerList.getPlayers().length === 0) {
       this.setOwner(playerId);
     }

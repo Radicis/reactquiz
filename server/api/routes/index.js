@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const QuizList = require('../../models/quizList');
+const GlobalPlayerList = require('../../models/playerList/global');
 
 router.post('/', (req, res) => {
   const { name } = req.body;
@@ -23,12 +24,28 @@ router.get('/:quizId', (req, res) => {
 // Join quiz
 router.post('/:quizId', (req, res) => {
   const { quizId } = req.params;
-  const { name } = req.body;
+  const { name, playerId = null } = req.body;
   const quiz = QuizList.getQuiz(quizId);
   if (quiz) {
     const { id: quizId } = quiz;
-    const { id: playerId } = quiz.addPlayer(name);
-    return res.json({ quizId, playerId });
+    // Check if the player ID is already in the system
+    if (playerId) {
+      const existingPlayer = GlobalPlayerList.findPlayerById(playerId);
+      if (existingPlayer) {
+        const { id: existingPlayerId } = existingPlayer;
+        // Check if they had joined this quiz
+        const quizPlayer = quiz.findPlayerById(existingPlayerId);
+        if (quizPlayer) {
+          return res.json({ quizId, playerId: existingPlayerId });
+        }
+        const { id: playerId } = quiz.addPlayer(name, true);
+        return res.json({ quizId, playerId });
+      }
+      const { id: playerId } = quiz.addPlayer(name);
+      return res.json({ quizId, playerId });
+    }
+    const { id: newPlayerId } = quiz.addPlayer(name);
+    return res.json({ quizId, playerId: newPlayerId });
   }
   return res.status(404).send('Quiz Not Found');
 });

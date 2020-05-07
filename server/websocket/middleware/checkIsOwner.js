@@ -1,3 +1,4 @@
+const SocketError = require('../helpers/socketError');
 module.exports = {
   name: 'checkIsOwner',
   method: options => {

@@ -19,7 +19,6 @@ module.exports = {
 
     // Leave any player specific one so it doesn't pollute the rooms list
     const { name } = player;
-    console.log(`Player ${name} joined quiz ${quizId}`);
 
     // Socket joined quiz
     socket.join(quizId);
