@@ -5,5 +5,19 @@
     "content": "Joe has 2 balls",
     "answerType": "BOOL",
     "answer": "false"
+  },
+  {
+    "id": 2,
+    "type": "TEXT",
+    "content": "Joe has 4 balls",
+    "answerType": "BOOL",
+    "answer": "false"
+  },
+  {
+    "id": 3,
+    "type": "TEXT",
+    "content": "Joe has 3 balls",
+    "answerType": "BOOL",
+    "answer": "false"
   }
 ]

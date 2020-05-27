@@ -8,7 +8,6 @@ const QuizRoute = ({ component: Component, ...rest }) => {
   const [state, dispatch] = useContext(Context);
   const { quizId, playerId } = state;
   useEffect(() => {
-    console.log('Private');
     const checkActive = quizId && playerId;
     setActive(checkActive);
     if (!checkActive) {

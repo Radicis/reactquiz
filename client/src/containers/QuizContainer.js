@@ -22,8 +22,6 @@ function QuizContainer() {
     quizId
   } = state;
 
-  console.log('Quiz');
-
   const heightProps = useSpring({
     height: !showPlayers ? '80%' : '20%',
     zIndex: 1 // hack to prevent the after from becoming invisible

@@ -142,8 +142,7 @@ class Quiz {
         return 2;
       }
       const timeValue = fastestTime / (answeredTime - fastestTime - threshold);
-      const timeRatio = Math.round(timeValue);
-      return timeRatio;
+      return Math.round(timeValue);
     }
   }
 
@@ -161,9 +160,9 @@ class Quiz {
         playerAnswer,
         answeredTime
       });
-      player.incrementProgress();
-      return player.getProgress();
     }
+    player.incrementProgress();
+    return player.getProgress();
   }
 }
 

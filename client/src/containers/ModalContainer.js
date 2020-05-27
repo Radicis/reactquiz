@@ -33,7 +33,9 @@ function LinkModalContainer() {
             >
               <LinkModal
                 hide={hide}
-                url={`${baseUrl}${clientPort ? `:${clientPort}` : ''}/${quizId}`}
+                url={`${baseUrl}${
+                  clientPort ? `:${clientPort}` : ''
+                }/${quizId}`}
               />
             </animated.div>
           )
